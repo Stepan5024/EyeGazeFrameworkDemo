@@ -27,7 +27,7 @@ class GazeTrackingServer:
         self.is_active = True
         self.initialize_server_socket()
         self.monitor_mm = (200, 100)  # размер монитора в миллиметрах
-        self.monitor_pixels = (1700, 800)  # разрешение монитора в пикселях
+        self.monitor_pixels = (1920, 1080)  # разрешение монитора в пикселях
         self.gaze_points = collections.deque(maxlen=64)
         self.video_stream = VideoStream()
         self.model = self.init_model_CNN()
@@ -52,10 +52,11 @@ class GazeTrackingServer:
         threading.current_thread()._delete()
 
     def reset_inactivity_timer(self):
-        if self.inactivity_timer:
-            self.inactivity_timer.cancel()
-        self.inactivity_timer = Timer(20.0, self.shutdown_server)
-        self.inactivity_timer.start()
+        if self.active_clients == 0:
+            if self.inactivity_timer:
+                self.inactivity_timer.cancel()
+            self.inactivity_timer = Timer(20.0, self.shutdown_server)
+            self.inactivity_timer.start()
         
     def close_resources(self):
         """Close resources before restarting or shutting down."""
@@ -94,25 +95,41 @@ class GazeTrackingServer:
    
     def client_handler(self, conn, addr):
         print(f"Connected by {addr}")
-        while True:
-            img = self.video_stream.read_frame()
-            if self.gaze_pipeline_CNN is not None:
-                self.gaze_pipeline_CNN.calculate_gaze_point(img)
-                x_value = self.gaze_pipeline_CNN.get_x()
-                y_value = self.gaze_pipeline_CNN.get_y()
-                print(f"Point on screen {x_value} {y_value}")
-            _, img_encoded = cv2.imencode('.jpg', img)
-            img_bytes = img_encoded.tobytes()
-            img_hex = img_bytes.hex()
-            data = {
-                'x': x_value,
-                'y': y_value,
-                'img': img_hex
-            }
-            message = json.dumps(data).encode('utf-8')
-            message_length = len(message)
-            conn.sendall(message_length.to_bytes(4, 'big'))
-            conn.sendall(message)
+        try:
+            while True:
+                img = self.video_stream.read_frame()
+                # Проверяем, что img не None и не пустое.
+                if self.is_active and img is not None and img.size != 0 and self.gaze_pipeline_CNN is not None:
+                
+                    self.gaze_pipeline_CNN.calculate_gaze_point(img)
+                    x_value = self.gaze_pipeline_CNN.get_x()
+                    y_value = self.gaze_pipeline_CNN.get_y()
+                    print(f"Point on screen {x_value} {y_value}")
+                    try:
+                        _, img_encoded = cv2.imencode('.jpg', img)
+                        img_bytes = img_encoded.tobytes()
+                        img_hex = img_bytes.hex()
+                        data = {
+                            'x': x_value,
+                            'y': y_value,
+                            'img': img_hex
+                        }
+                        message = json.dumps(data).encode('utf-8')
+                        message_length = len(message)
+                        conn.sendall(message_length.to_bytes(4, 'big'))
+                        conn.sendall(message)
+                    except cv2.error as e:
+                        print("Ошибка при кодировании изображения:", e)
+                else:
+                    print("Получен пустой кадр.")
+        except socket.error as e:
+            print(f"Socket error {e}")
+        except Exception as e:
+            print(f"Exception in client_handler: {e}")
+        finally:
+            conn.close()  # Закрыть соединение с клиентом
+            self.active_clients -= 1
+            print(f"Client {addr} disconnected. Total clients: {self.active_clients}")
         
         
     def run(self):

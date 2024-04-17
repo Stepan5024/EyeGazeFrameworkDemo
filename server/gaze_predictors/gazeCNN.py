@@ -70,6 +70,8 @@ class GazeCNN():
     def calculate_gaze_point(self, frame):
         default_return = (None, None, None, None, None) # Подстраивайте под количество возвращаемых переменных
         rvec, tvec = None, None
+        if frame is None:
+            return default_return
         height, width, _ = frame.shape
         image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         image_rgb.flags.writeable = False

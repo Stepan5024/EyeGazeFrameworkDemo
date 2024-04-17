@@ -25,22 +25,22 @@ class VideoStream:
             self.cap.release()
     
     def read_frame(self):
-        if self.fps is not None:
+        """if self.fps is not None:
             # Запоминаем время начала для контроля частоты кадров
-            start_time = time.time()
+            start_time = time.time()"""
         # Чтение одного кадра
         ret, frame = self.cap.read()
         if not ret:
             print("Не удается прочитать видеокадр")  # Логирование ошибки
             return None  # Возврат None в случае ошибки
             #raise IOError("Не удается прочитать видеокадр")
-        if self.fps is not None:
+        """if self.fps is not None:
             # Вычисляем время, которое необходимо подождать до следующего кадра
             elapsed_time = time.time() - start_time
             time_to_wait = self.frame_interval - elapsed_time
             if time_to_wait > 0:
                 print(f"wait {time_to_wait}")
-                time.sleep(time_to_wait)
+                time.sleep(time_to_wait)"""
         return frame
 
     def convert_color(self, frame, to_rgb=True):

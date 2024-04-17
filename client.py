@@ -24,10 +24,11 @@ class VideoThread(QThread):
     def __init__(self):
         super().__init__()
         self.gaze_points = collections.deque(maxlen=64)
-        self.monitor_pixels = (1700, 800)  # Оконные размеры для второго окна
+        screen_width, screen_height = pag.size()
+        self.monitor_pixels = (screen_width, screen_height)  # Оконные размеры для второго окна
 
     def run(self):
-        display = np.zeros((self.monitor_pixels[1], self.monitor_pixels[0], 3), dtype=np.uint8)
+        display = np.ones((self.monitor_pixels[1], self.monitor_pixels[0], 3), dtype=np.uint8)
         while True:
 
             if not client_socket:  # Если сокет закрыт или не определен
@@ -76,7 +77,7 @@ class VideoThread(QThread):
             
             point_on_screen = (x_value, y_value)
             self.gaze_points.appendleft(point_on_screen)
-            display.fill(0)
+            display.fill(255)
             for idx in range(1, len(self.gaze_points)):
                 thickness = round((len(self.gaze_points) - idx) / len(self.gaze_points) * 5) + 1
                 cv2.line(display, self.gaze_points[idx - 1], self.gaze_points[idx], (0, 0, 255), thickness)
@@ -337,6 +338,8 @@ class App(QWidget):
             self.close()
 
 if __name__ == '__main__':
+    width, height = pag.size()
+    print(f"width {width}, height {height}")
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
