@@ -31,7 +31,6 @@ class GazeTrackingServer:
         self.gaze_points = collections.deque(maxlen=64)
         self.video_stream = VideoStream()
         self.model = self.init_model_CNN()
-        #self.gaze_pipeline_L2CS = self.init_gaze_pipeline_L2CS()
         self.gaze_pipeline_CNN = GazeCNN(self.model, 
                                 self.camera_matrix, 
                                 self.dist_coefficients, 
@@ -67,15 +66,8 @@ class GazeTrackingServer:
         if (self.gaze_pipeline_CNN is not None):
             
             self.model = self.gaze_pipeline_CNN
-        else:
-            
-            self.model = Pipeline(
-                weights='./server/models_cnn/L2CSNet_gaze360.pkl',
-                arch='ResNet50',
-                device=torch.device(self.device)
-            )
+        
         print(f"inited model {self.model}")
-
 
 
     def init_model_CNN(self):
@@ -91,46 +83,17 @@ class GazeTrackingServer:
         # Используйте os.path.join для создания пути к файлам
         self.calibration_matrix_path = os.path.join(base_path, "server", "calibration", "calibration_matrix.yaml")
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(self.calibration_matrix_path)
-        # Используйте importlib.metadata для получения версии установленного пакета
-        pytorch_lightning_version = importlib.metadata.version('pytorch_lightning')
         # Загрузите чекпоинт
         model_path = os.path.join(base_path, "server", "models_cnn", "p01.ckpt")
-        #checkpoint = torch.load(model_path, map_location=lambda storage, loc: storage)
-        # Установите версию PyTorch Lightning, если отсутствует
-        #if 'pytorch-lightning_version' not in checkpoint:
-        #    checkpoint['pytorch-lightning_version'] = pytorch_lightning_version
-        #    torch.save(checkpoint, model_path)
-        # Добавьте версию PyTorch Lightning, если отсутствует
-        #if 'pytorch-lightning_version' not in checkpoint:
-        #    checkpoint['pytorch-lightning_version'] = pl.__version__
-        #torch.save(checkpoint, model_path)
-        
-        #model = ModelCNN.load_from_checkpoint(model_path).to(self.device)
         model = ModelCNN.load_checkpoint(model_path)  # Измененный метод загрузки модели
         model.to(self.device)
         model.eval()
         self.model = model
         return model
     
-    def init_gaze_pipeline_L2CS(self):
-        # Инициализация модели
-        if torch.cuda.is_available():
-            return Pipeline(
-                weights='./server/models_cnn/L2CSNet_gaze360.pkl',
-                arch='ResNet50',
-                device=torch.device('cuda')
-            )
-        else:
-            return Pipeline(
-                weights='./server/models_cnn/L2CSNet_gaze360.pkl',
-                arch='ResNet50',
-                device=torch.device('cpu')
-            )
-
+   
     def client_handler(self, conn, addr):
         print(f"Connected by {addr}")
-        #conn.settimeout(20)  # Установка таймаута в 20 секунд для данного соединения
-        #try:
         while True:
             img = self.video_stream.read_frame()
             if self.gaze_pipeline_CNN is not None:
@@ -150,15 +113,7 @@ class GazeTrackingServer:
             message_length = len(message)
             conn.sendall(message_length.to_bytes(4, 'big'))
             conn.sendall(message)
-        """except Exception as e:
-            print(f"Error with client {addr}: {e}")
-        finally:
-            conn.close()
-            self.active_clients -= 1
-            print(f"Client {addr} disconnected. Total clients: {self.active_clients}")
-            if self.active_clients == 0:
-                self.reset_inactivity_timer()  # Start inactivity timer when last client disconnects
-        """
+        
         
     def run(self):
         self.reset_inactivity_timer()  # Start the inactivity timer when server starts

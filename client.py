@@ -72,8 +72,7 @@ class VideoThread(QThread):
                     x_value = int(results['x'])
                     y_value = int(results['y'])
                     print(f"x_value {x_value} y_value {y_value}")
-                    #self.draw_laser_pointer((x_value, y_value), self.monitor_pixels, self.gaze_points)
-                    
+                   
             
             point_on_screen = (x_value, y_value)
             self.gaze_points.appendleft(point_on_screen)
