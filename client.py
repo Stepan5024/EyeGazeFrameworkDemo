@@ -7,8 +7,7 @@ import cv2
 import numpy as np
 
 import pyautogui as pag
-from l2cs.results import GazeResultContainer
-from l2cs import render
+
 
 from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QLabel, QApplication, QPushButton, QDesktopWidget, QComboBox
 from PyQt5.QtCore import QObject, QThread, Qt, pyqtSignal, pyqtSlot, QSize
@@ -125,7 +124,7 @@ class EyeSettings(QWidget):
         B_back_w = int(self.width/24)
         B_back_h = int(self.width/24)
         B_back.resize(B_back_w, B_back_h)
-        B_back.setIcon(QIcon(self.resource_path('./Arrow_left.png')))
+        B_back.setIcon(QIcon(self.resource_path('./images_client/Arrow_left.png')))
         B_back.setIconSize(QSize(B_back_w - 16, B_back_h - 16))
         B_back.move(15, 15)
         B_back.setStyleSheet('QPushButton {background-color: #d6d6d6; color: black;}')
@@ -216,7 +215,7 @@ class App(QWidget):
         B_detection_is_on_w = int(self.width*2.8/24)
         B_detection_is_on_h = int(self.width*2.8/24)
         B_detection_is_on.resize(B_detection_is_on_w, B_detection_is_on_h)
-        B_detection_is_on.setIcon(QIcon(self.resource_path('./B_cam_show.png')))
+        B_detection_is_on.setIcon(QIcon(self.resource_path('./images_client/B_cam_show.png')))
         B_detection_is_on.setIconSize(QSize(B_detection_is_on_w - 16, B_detection_is_on_h - 16))
         B_detection_is_on.move(int(self.width/2)-int(B_detection_is_on_w/2) - 100, int(self.height*21/24)-int(B_detection_is_on_h/2))
         B_detection_is_on.setStyleSheet('QPushButton {background-color: #d6d6d6; color: black;}')
@@ -229,7 +228,7 @@ class App(QWidget):
         B_eye_detection_settings_w = int(self.width*2.7/24)
         B_eye_detection_settings_h = int(self.width*2.7/24)
         B_eye_detection_settings.resize(B_eye_detection_settings_w, B_eye_detection_settings_h)
-        B_eye_detection_settings.setIcon(QIcon(self.resource_path('./settings_eye.png')))
+        B_eye_detection_settings.setIcon(QIcon(self.resource_path('./images_client/settings_eye.png')))
         B_eye_detection_settings.setIconSize(QSize(B_eye_detection_settings_w - 15*2, B_eye_detection_settings_h - 15*2))
         B_eye_detection_settings.move(int(self.width)-int(B_eye_detection_settings_w*2.5) - 15*2, int(self.height*21/24)-int(B_eye_detection_settings_h/2))
         B_eye_detection_settings.setStyleSheet('QPushButton {background-color: #d6d6d6; color: black;}')

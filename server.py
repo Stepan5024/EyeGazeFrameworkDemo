@@ -4,13 +4,10 @@ import socket
 import sys
 import os
 import json
-#from l2cs import Pipeline
 import torch
-#import pytorch_lightning as pl
 import threading
 from threading import Timer
-import time  # Импортируем модуль time
-import importlib.metadata
+import time  
 
 from server.gaze_predictors.gazeCNN import GazeCNN
 from server.models.modelCNN import ModelCNN
@@ -34,7 +31,7 @@ class GazeTrackingServer:
         self.gaze_pipeline_CNN = GazeCNN(self.model, 
                                 self.camera_matrix, 
                                 self.dist_coefficients, 
-                         self.device)
+                                self.device)
         self.model = self.init_prod_model()
     
     def initialize_server_socket(self):
@@ -72,7 +69,6 @@ class GazeTrackingServer:
 
     def init_prod_model(self):
         if (self.gaze_pipeline_CNN is not None):
-            
             self.model = self.gaze_pipeline_CNN
         
         print(f"inited model {self.model}")
@@ -88,12 +84,11 @@ class GazeTrackingServer:
             # Иначе используйте обычный путь
             base_path = os.path.abspath(".")
 
-        # Используйте os.path.join для создания пути к файлам
         self.calibration_matrix_path = os.path.join(base_path, "server", "calibration", "calibration_matrix.yaml")
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(self.calibration_matrix_path)
-        # Загрузите чекпоинт
+        # Загрузить чекпоинт
         model_path = os.path.join(base_path, "server", "models_cnn", "p00.ckpt")
-        model = ModelCNN.load_checkpoint(model_path)  # Измененный метод загрузки модели
+        model = ModelCNN.load_checkpoint(model_path) 
         model.to(self.device)
         model.eval()
         self.model = model
@@ -134,18 +129,18 @@ class GazeTrackingServer:
         except Exception as e:
             print(f"Exception in client_handler: {e}")
         finally:
-            conn.close()  # Закрыть соединение с клиентом
+            conn.close()
             self.active_clients -= 1
             print(f"Client {addr} disconnected. Total clients: {self.active_clients}")
             self.reset_inactivity_timer()
         
         
     def run(self):
-        self.reset_inactivity_timer()  # Start the inactivity timer when server starts
+        self.reset_inactivity_timer()
         while self.is_active:
             try:
                 conn, addr = self.server_socket.accept()
-                self.reset_inactivity_timer()  # Reset the timer on every new connection
+                self.reset_inactivity_timer()
                 self.active_clients += 1
                 print(f'Client {addr} connected. Total clients: {self.active_clients}')
                 thread = threading.Thread(target=self.client_handler, args=(conn, addr))
@@ -154,7 +149,7 @@ class GazeTrackingServer:
                 print(f"Critical server error: {e}, restarting server...")
                 self.close_resources()
                 time.sleep(5)  # Wait before restarting
-                #self.initialize_server_socket()  # Reinitialize socket
+                
 
 # Запуск сервера
 server = GazeTrackingServer()

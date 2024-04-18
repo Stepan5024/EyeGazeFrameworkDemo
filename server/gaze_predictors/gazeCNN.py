@@ -1,4 +1,3 @@
-
 import collections
 import cv2
 from server.processors.mpii_face_gaze_preprocessing import normalize_single_image
@@ -9,7 +8,7 @@ import mediapipe as mp
 import albumentations as A
 import torch
 from albumentations.pytorch import ToTensorV2
-import time
+
 
 class GazeCNN():
     WINDOW_NAME = 'laser pointer preview'
@@ -19,7 +18,7 @@ class GazeCNN():
         self.camera_matrix = camera_matrix
         self.dist_coefficients = dist_coefficients
         self.device = device
-        # TODO load calibrated screen position
+
         plane = plane_equation(np.eye(3), np.asarray([[0], [0], [0]]))
         self.plane_w = plane[0:3]
         self.plane_b = plane[3]
@@ -68,7 +67,7 @@ class GazeCNN():
 
 
     def calculate_gaze_point(self, frame):
-        default_return = (None, None, None, None, None) # Подстраивайте под количество возвращаемых переменных
+        default_return = (None, None, None, None, None)
         rvec, tvec = None, None
         if frame is None:
             return default_return
@@ -117,16 +116,12 @@ class GazeCNN():
             img_warped_face, _, rotation_matrix = normalize_single_image(image_rgb, 
                                                                          rvec, None, 
                                                                          face_center, self.camera_matrix, is_eye=False)
-            """if visualize_preprocessing:
-                cv2.imshow('img_warped_left_eye', cv2.cvtColor(img_warped_left_eye, cv2.COLOR_RGB2BGR))
-                cv2.imshow('img_warped_right_eye', cv2.cvtColor(img_warped_right_eye, cv2.COLOR_RGB2BGR))
-                cv2.imshow('img_warped_face', cv2.cvtColor(img_warped_face, cv2.COLOR_RGB2BGR))
-            """
+  
             transform = A.Compose([
                 A.Normalize(),
                 ToTensorV2()
             ])
-            person_idx = torch.Tensor([0]).unsqueeze(0).long().to(self.device)  # TODO adapt this depending on the loaded model
+            person_idx = torch.Tensor([0]).unsqueeze(0).long().to(self.device)
             full_face_image = transform(image=img_warped_face)["image"].unsqueeze(0).float().to(self.device)
             left_eye_image = transform(image=img_warped_left_eye)["image"].unsqueeze(0).float().to(self.device)
             right_eye_image = transform(image=img_warped_right_eye)["image"].unsqueeze(0).float().to(self.device)

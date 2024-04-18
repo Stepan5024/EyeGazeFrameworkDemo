@@ -1,6 +1,3 @@
-
-#from pytorch_lightning import LightningModule
-
 import torch
 import torch.nn as nn
 from torchvision import models
@@ -119,7 +116,7 @@ class ModelCNN(nn.Module):
     
     @staticmethod
     def load_checkpoint(checkpoint_path):
-        model = ModelCNN()  # создаем экземпляр вашей модели
+        model = ModelCNN()  # создаем экземпляр модели
         checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))  # загружаем чекпоинт
         model.load_state_dict(checkpoint['state_dict'])   # загружаем состояние словаря модели
         model.eval()  # переводим модель в режим оценки
