@@ -26,7 +26,7 @@ class GazeTrackingServer:
         self.inactivity_timer = None
         self.is_active = True
         self.initialize_server_socket()
-        self.monitor_mm = (200, 100)  # размер монитора в миллиметрах
+        self.monitor_mm = (400, 400)  # размер монитора в миллиметрах
         self.monitor_pixels = (1920, 1080)  # разрешение монитора в пикселях
         self.gaze_points = collections.deque(maxlen=64)
         self.video_stream = VideoStream()
@@ -46,17 +46,24 @@ class GazeTrackingServer:
         print(f'Server listening on {self.host}:{self.port}')
     
     def shutdown_server(self):
-        print("No active clients. Shutting down the server.")
-        self.close_resources()
-        self.is_active = False
-        threading.current_thread()._delete()
+        if self.active_clients == 0:
+            print("No active clients. Shutting down the server.")
+            self.close_resources()
+            self.is_active = False
+            threading.current_thread()._delete()
+        else:
+            self.inactivity_timer.cancel()
+
 
     def reset_inactivity_timer(self):
+        print(f"reset_inactivity_timer()")
         if self.active_clients == 0:
             if self.inactivity_timer:
                 self.inactivity_timer.cancel()
             self.inactivity_timer = Timer(20.0, self.shutdown_server)
             self.inactivity_timer.start()
+        else:
+            self.inactivity_timer.cancel()
         
     def close_resources(self):
         """Close resources before restarting or shutting down."""
@@ -85,7 +92,7 @@ class GazeTrackingServer:
         self.calibration_matrix_path = os.path.join(base_path, "server", "calibration", "calibration_matrix.yaml")
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(self.calibration_matrix_path)
         # Загрузите чекпоинт
-        model_path = os.path.join(base_path, "server", "models_cnn", "p01.ckpt")
+        model_path = os.path.join(base_path, "server", "models_cnn", "p00.ckpt")
         model = ModelCNN.load_checkpoint(model_path)  # Измененный метод загрузки модели
         model.to(self.device)
         model.eval()
@@ -104,7 +111,7 @@ class GazeTrackingServer:
                     self.gaze_pipeline_CNN.calculate_gaze_point(img)
                     x_value = self.gaze_pipeline_CNN.get_x()
                     y_value = self.gaze_pipeline_CNN.get_y()
-                    print(f"Point on screen {x_value} {y_value}")
+                    #print(f"Point on screen {x_value} {y_value}")
                     try:
                         _, img_encoded = cv2.imencode('.jpg', img)
                         img_bytes = img_encoded.tobytes()
@@ -130,6 +137,7 @@ class GazeTrackingServer:
             conn.close()  # Закрыть соединение с клиентом
             self.active_clients -= 1
             print(f"Client {addr} disconnected. Total clients: {self.active_clients}")
+            self.reset_inactivity_timer()
         
         
     def run(self):
@@ -146,7 +154,7 @@ class GazeTrackingServer:
                 print(f"Critical server error: {e}, restarting server...")
                 self.close_resources()
                 time.sleep(5)  # Wait before restarting
-                self.initialize_server_socket()  # Reinitialize socket
+                #self.initialize_server_socket()  # Reinitialize socket
 
 # Запуск сервера
 server = GazeTrackingServer()

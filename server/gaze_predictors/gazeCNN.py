@@ -23,7 +23,7 @@ class GazeCNN():
         plane = plane_equation(np.eye(3), np.asarray([[0], [0], [0]]))
         self.plane_w = plane[0:3]
         self.plane_b = plane[3]
-        self.monitor_mm = (200, 100)
+        self.monitor_mm = (400, 250)
         self.monitor_pixels = (1700, 800)
 
         self.smoothing_buffer = collections.deque(maxlen=3)
@@ -139,7 +139,7 @@ class GazeCNN():
             # gaze vector to screen
             result = ray_plane_intersection(face_center.reshape(3), gaze_vector, self.plane_w, self.plane_b)
             point_on_screen = get_point_on_screen(self.monitor_mm, self.monitor_pixels, result)
-            print(f"point_on_screen {point_on_screen}")
+            #print(f"point_on_screen {point_on_screen}")
             self.x = point_on_screen[0]
             self.y = point_on_screen[1]
             return point_on_screen, face_model_all_transformed, face_center, gaze_vector, result
