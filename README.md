@@ -103,6 +103,7 @@ docker run -p 9556:9556 gaze-tracking-server
 
 - Python 3.10 https://www.python.org/downloads/release/python-3100/
 - pip (менеджер пакетов для Python)
+- VS Code https://code.visualstudio.com/
 
 ## Установка
 
@@ -111,13 +112,27 @@ docker run -p 9556:9556 gaze-tracking-server
 ### Шаг 1: Клонирование репозитория
 
 Клонируйте репозиторий проекта с помощью git:
-Зайдите на сайт github.com в репозиторий
+Зайдите на сайт github.com в репозиторий https://github.com/Stepan5024/EyeGazeFrameworkDemo
 ![скачать исходный код](./documentation/1.download_source_code.png "скачать исходный код")
 
+Выберите папку на компьютере, где хотите хранить проект. Например, 
+C:\Users\bokar\Documents\
+
+Откройте консоль (командную строку) CMD windows, перейдите в папку:
+```bash
+cd C:\Users\bokar\Documents\
+```
+![консоль](./documentation/console.png "консоль CMD")
+
+Скачайте репозиторий командой git clone
 ```bash
 git clone https://github.com/Stepan5024/EyeGazeFrameworkDemo.git
+```
+Перейдите в консоли в папку
+```bash
 cd EyeGazeFrameworkDemo
 ```
+
 ### Шаг 2: Создание виртуального окружения
 Создайте виртуальное окружение для изоляции зависимостей проекта:
 
