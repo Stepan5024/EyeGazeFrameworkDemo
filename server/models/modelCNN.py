@@ -119,6 +119,7 @@ class ModelCNN(nn.Module):
         model = ModelCNN()  # создаем экземпляр модели
         checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))  # загружаем чекпоинт
         model.load_state_dict(checkpoint['state_dict'])   # загружаем состояние словаря модели
+        #model.load_state_dict(checkpoint['model'])
         model.eval()  # переводим модель в режим оценки
         return model
     

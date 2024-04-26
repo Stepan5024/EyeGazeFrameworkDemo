@@ -88,6 +88,7 @@ class GazeTrackingServer:
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(self.calibration_matrix_path)
         # Загрузить чекпоинт
         model_path = os.path.join(base_path, "server", "models_cnn", "p00.ckpt")
+        #model_path = os.path.join(base_path, "server", "models_cnn", "checkpoint_0020.pth")
         model = ModelCNN.load_checkpoint(model_path) 
         model.to(self.device)
         model.eval()
