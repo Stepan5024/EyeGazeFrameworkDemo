@@ -1,3 +1,6 @@
-import torch
+from server.models.modelCNN import ModelCNN
 
-print(torch.sum(torch.range(1, 5) ** 3).size())
+
+model = ModelCNN()
+for name, param in model.named_parameters():
+    print(name)

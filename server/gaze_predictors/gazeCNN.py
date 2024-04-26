@@ -127,6 +127,8 @@ class GazeCNN():
             right_eye_image = transform(image=img_warped_right_eye)["image"].unsqueeze(0).float().to(self.device)
             # prediction
             output = self.model(person_idx, full_face_image, right_eye_image, left_eye_image).squeeze(0).detach().cpu().numpy()
+            print(f"output {output}")
+            print(f"любая модель которая предсказывает pitch and yaw")
             gaze_vector_3d_normalized = gaze_2d_to_3d(output)
             gaze_vector = np.dot(np.linalg.inv(rotation_matrix), gaze_vector_3d_normalized)
             self.gaze_vector_buffer.append(gaze_vector)
