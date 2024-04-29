@@ -11,7 +11,6 @@ from albumentations.pytorch import ToTensorV2
 
 
 class GazeCNN():
-    WINDOW_NAME = 'laser pointer preview'
 
     def __init__(self, model, camera_matrix, dist_coefficients, device):
         self.model = model
