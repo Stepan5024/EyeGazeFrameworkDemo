@@ -78,7 +78,8 @@ class GazeCNN():
             # head pose estimation
             #landmarks_ids = [33, 133, 362, 263, 61, 291, 1]  # reye, leye, mouth
     
-            face_landmarks = np.asarray([[landmark.x * width, landmark.y * height] for landmark in results.multi_face_landmarks[0].landmark])
+            face_landmarks = np.asarray([[landmark.x * width, landmark.y * height] 
+                                         for landmark in results.multi_face_landmarks[0].landmark])
             face_landmarks = np.asarray([face_landmarks[i] for i in self.landmarks_ids])
             self.smoothing_buffer.append(face_landmarks)
             face_landmarks = np.asarray(self.smoothing_buffer).mean(axis=0)
@@ -93,7 +94,10 @@ class GazeCNN():
                 success, rvec, tvec = cv2.solvePnP(self.face_model, 
                                                    face_landmarks, 
                                                    self.camera_matrix, 
-                                                   self.dist_coefficients, rvec=rvec, tvec=tvec, useExtrinsicGuess=True, flags=cv2.SOLVEPNP_ITERATIVE)  # Second fit for higher accuracy
+                                                   self.dist_coefficients, 
+                                                   rvec=rvec, tvec=tvec, 
+                                                   useExtrinsicGuess=True, 
+                                                   flags=cv2.SOLVEPNP_ITERATIVE)  # Second fit for higher accuracy
             self.rvec_buffer.append(rvec)
             rvec = np.asarray(self.rvec_buffer).mean(axis=0)
             self.tvec_buffer.append(tvec)
@@ -132,6 +136,8 @@ class GazeCNN():
             gaze_vector = np.dot(np.linalg.inv(rotation_matrix), gaze_vector_3d_normalized)
             self.gaze_vector_buffer.append(gaze_vector)
             gaze_vector = np.asarray(self.gaze_vector_buffer).mean(axis=0)
+            print(f"gaze_vector {gaze_vector}\n")
+            print(f"gaze_vector_3d_normalized {gaze_vector_3d_normalized}\n")
             # gaze vector to screen
             result = ray_plane_intersection(face_center.reshape(3), gaze_vector, self.plane_w, self.plane_b)
             point_on_screen = get_point_on_screen(self.monitor_mm, self.monitor_pixels, result)

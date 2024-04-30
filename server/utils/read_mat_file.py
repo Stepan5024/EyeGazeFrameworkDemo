@@ -3,6 +3,22 @@ import numpy as np
 import h5py
 
 # Load the MAT file
+mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIFaceGaze_by_author\\p00\\Calibration\\Camera.mat")
+#mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
+# Display the keys and variables in the file
+print("Keys in the MAT file:", mat.keys())
+print("Keys in the MAT file:", mat['cameraMatrix'])
+print("Keys in the MAT file:", mat['distCoeffs'])
+
+mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIFaceGaze_by_author\\p00\\Calibration\\monitorPose.mat")
+#mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
+# Display the keys and variables in the file
+print("Keys in the MAT file:", mat.keys())
+
+mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIFaceGaze_by_author\\p00\\Calibration\\screenSize.mat")
+#mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
+# Display the keys and variables in the file
+print("Keys in the MAT file:", mat.keys())
 
 mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIGaze_original\\Data\\Normalized\\p00\\day01.mat")
 #mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
@@ -53,8 +69,9 @@ model = mat['model']
 print("Fields in 'model':", model.dtype.names)
 print(model)
 
-"""file_path = '/media/stepan/Expansion/EyeGazeDataset/MPIIFaceGaze_normalized/p00.mat'
-
+print(f"/media/stepan/Expansion/EyeGazeDataset/MPIIFaceGaze_normalized/p00.mat\n")
+file_path = r'F:\EyeGazeDataset\MPIIFaceGaze_normalized\p00.mat'
+print("Keys in the MAT file:", mat.keys())
 # Настройка форматирования вывода для numpy
 np.set_printoptions(suppress=True, precision=4)
 
@@ -81,4 +98,4 @@ with h5py.File(file_path, 'r') as file:
                     # Subitem is a nested Group
                     print(f"   - {subkey}: (Nested Group)")
 
-                    """
+                    
