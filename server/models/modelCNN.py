@@ -53,6 +53,16 @@ class ModelCNN(nn.Module):
             nn.BatchNorm2d(128),
         )
 
+        self.fc_face = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(6 * 6 * 128, 256),
+            nn.ReLU(inplace=True),
+            nn.BatchNorm1d(256),
+            nn.Linear(256, 64),
+            nn.ReLU(inplace=True),
+            nn.BatchNorm1d(64),
+        )
+
         self.cnn_eye = nn.Sequential(
             models.vgg16(pretrained=True).features[:9],  # first four convolutional layers of VGG16 pretrained on ImageNet
             nn.Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1), padding='same'),
@@ -70,16 +80,6 @@ class ModelCNN(nn.Module):
             nn.Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding='valid', dilation=(5, 11)),
             nn.ReLU(inplace=True),
             nn.BatchNorm2d(128),
-        )
-
-        self.fc_face = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(6 * 6 * 128, 256),
-            nn.ReLU(inplace=True),
-            nn.BatchNorm1d(256),
-            nn.Linear(256, 64),
-            nn.ReLU(inplace=True),
-            nn.BatchNorm1d(64),
         )
 
         self.cnn_eye2fc = nn.Sequential(

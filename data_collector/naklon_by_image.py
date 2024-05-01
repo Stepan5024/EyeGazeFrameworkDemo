@@ -17,7 +17,8 @@ face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.5, min_tracking_con
 drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 
 # Загрузка изображения из файла
-image = cv2.imread(r'F:\EyeGazeDataset\MPIIFaceGaze_by_author\p00\day01\0005.jpg')
+#image = cv2.imread(r'F:\EyeGazeDataset\MPIIFaceGaze_by_author\p00\day01\0005.jpg')
+image = cv2.imread(r'C:\\Users\\bokar\\Documents\\gaze_collection_stepa\\data\\p02\\day01\\2024_04_03-18_27_45-landmark.jpg')
 #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 if image is None:
     print("Image not found.")
@@ -257,7 +258,7 @@ if results.multi_face_landmarks:
         nose_3d_projection, jacobian = cv2.projectPoints(nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix)
         p1 = (int(nose_2d[0]), int(nose_2d[1]))
         p2 = (int(nose_2d[0] + y * 10), int(nose_2d[1] - x * 10))
-        cv2.line(image, p1, p2, (255, 0, 0), 3)
+        #cv2.line(image, p1, p2, (255, 0, 0), 3)
         cv2.putText(image, text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
         
         cv2.putText(image, "x: " + str(np.round(x,2)), (1000, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255))
