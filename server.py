@@ -23,8 +23,6 @@ class GazeTrackingServer:
         self.inactivity_timer = None
         self.is_active = True
         self.initialize_server_socket()
-        self.monitor_mm = (400, 400)  # размер монитора в миллиметрах
-        self.monitor_pixels = (1920, 1080)  # разрешение монитора в пикселях
         self.gaze_points = collections.deque(maxlen=64)
         self.video_stream = VideoStream()
         self.model = self.init_model_CNN()
@@ -57,7 +55,7 @@ class GazeTrackingServer:
         if self.active_clients == 0:
             if self.inactivity_timer:
                 self.inactivity_timer.cancel()
-            self.inactivity_timer = Timer(20.0, self.shutdown_server)
+            self.inactivity_timer = Timer(60.0, self.shutdown_server)
             self.inactivity_timer.start()
         else:
             self.inactivity_timer.cancel()
