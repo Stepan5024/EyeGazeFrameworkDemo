@@ -10,7 +10,7 @@ class EmotionNet(nn.Module):
         self.features = self._make_layers(num_of_channels, self.network_config)
         self.classifier = nn.Sequential(
             nn.Linear(6 * 6 * 128, 64),
-            nn.ELU(True),
+            nn.ReLU(True),
             nn.Dropout(p=0.5),
             nn.Linear(64, num_of_classes)
         )

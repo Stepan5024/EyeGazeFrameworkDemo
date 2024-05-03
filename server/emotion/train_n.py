@@ -25,7 +25,7 @@ print(f"use_cuda {use_cuda} {device}")
 
 model=EmotionNet(1.0)
 model.to(device)
-epochs=5
+epochs=100
 
 input_size=(3,48,48)
 train_acc = []

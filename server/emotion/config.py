@@ -11,5 +11,5 @@ VAL_SIZE = 0.10
 
 # Specify the batch size, total number of epochs, and the learning rate
 BATCH_SIZE = 16
-NUM_OF_EPOCHS = 1
+NUM_OF_EPOCHS = 60
 LR = 1e-1
