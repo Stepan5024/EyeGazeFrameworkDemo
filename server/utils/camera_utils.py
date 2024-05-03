@@ -89,8 +89,8 @@ def get_face_landmarks_in_ccs(camera_matrix, dist_coefficients, shape, results, 
 
 def gaze_2d_to_3d(gaze: np.ndarray) -> np.ndarray:
     """
-    pitch and gaze to 3d vector
-
+    pitch gaze[0] and yaw gaze[1] gaze to 3d vector 
+ 
     :param gaze: pitch and gaze vector
     :return: 3d vector
     """

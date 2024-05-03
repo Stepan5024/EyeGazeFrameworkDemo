@@ -1,39 +1,61 @@
-import argparse
-import torch
 import cv2
+import onnxruntime as ort
+import numpy as np
 
-# Initialize the argument parser and establish the arguments required
-parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--video", type=str, required=True, help="path to the video file/webcam")
-parser.add_argument("-m", "--model", type=str, required=True, help="path to the trained model")
-parser.add_argument("-p", "--prototxt", type=str, required=True, help="Path to deployed prototxt.txt model architecture file")
-parser.add_argument("-c", "--caffemodel", type=str, required=True, help="Path to Caffe model containing the weights")
-parser.add_argument("-conf", "--confidence", type=int, default=0.5, help="the minimum probability to filter out weak detection")
-args = vars(parser.parse_args())
+emotions = ["Anger", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
 
-# Load our serialized model from disk
-print("[INFO] Loading model...")
-net = cv2.dnn.readNetFromCaffe(args['prototxt'], args['caffemodel'])
+def preprocess_frame(frame, size=(48, 48)):
+    # Convert RGB to Grayscale
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-# Check if GPU is available or not
-device = "cuda" if torch.cuda.is_available() else "cpu"
+    # Resize and normalize the grayscale image
+    gray_frame = cv2.resize(gray_frame, size)
+    gray_frame = gray_frame.astype(np.float32) / 255.0
 
-# Dictionary mapping for different outputs
-emotion_dict = {0: "Angry", 1: "Fearful", 2: "Happy", 3: "Neutral", 4: "Sad", 5: "Surprised"}
+    # Expand dimensions to add channel and batch dimensions
+    gray_frame = np.expand_dims(gray_frame, axis=0)  # Add batch dimension
+    gray_frame = np.expand_dims(gray_frame, axis=0)  # Add channel dimension to make it [1, 1, height, width]
+    
+    return gray_frame
 
-# Load the EmotionNet weights
-model = EmotionNet(num_of_channels=1, num_of_classes=len(emotion_dict))
-model_weights = torch.load(args["model"])
-model.load_state_dict(model_weights)
-model.to(device)
-model.eval()
+def main():
+    # Загрузка модели ONNX
+    model_path = 'C:\\Users\\bokar\\Documents\\EyeGazeFrameworkDemo\\resources\\models\\emotion\\emotion_model_video.onnx'
+    session = ort.InferenceSession(model_path)
+    input_name = session.get_inputs()[0].name
 
-# Initialize a list of preprocessing steps to apply on each image during runtime
-data_transform = transforms.Compose([
-    transforms.ToPILImage(),
-    transforms.Grayscale(num_output_channels=1),
-    transforms.Resize((48, 48)),
-    transforms.ToTensor()
-])
+    # Захват видео с веб-камеры
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        print("Cannot open camera")
+        exit()
+    
+    try:
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                print("Can't receive frame (stream end?). Exiting ...")
+                break
+            
+            # Предобработка кадра
+            processed_frame = preprocess_frame(frame)
 
-# Initialize the video stream
+            # Выполнение модели
+            pred = session.run(None, {input_name: processed_frame})
+
+            emotion_prediction = np.argmax(pred)
+            emotion_text = f'Emotion: {emotions[emotion_prediction]}'
+            print("Predicted emotion index:", emotion_prediction)
+            print("Predicted emotion:", emotions[emotion_prediction])
+            # Отображение результата
+            cv2.putText(frame, f'Emotion: {emotion_text}', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+            cv2.imshow('frame', frame)
+
+            if cv2.waitKey(1) == ord('q'):
+                break
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    main()
