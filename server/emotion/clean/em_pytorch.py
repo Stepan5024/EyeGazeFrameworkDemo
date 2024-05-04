@@ -83,9 +83,9 @@ def train_model(num_epochs):
 
 # Train the model
 if mode == "train":
-    train_model(1)
+    train_model(num_epochs=100)
 
-# Save model
+    # Save model
     torch.save(model.state_dict(), r'C:\Users\bokar\Documents\EyeGazeFrameworkDemo\resources\emotion\model.pth')
 
 # Load model and perform emotion detection
@@ -102,6 +102,7 @@ elif mode == "display":
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         face_cascade = cv2.CascadeClassifier(r'C:\Users\bokar\Documents\EyeGazeFrameworkDemo\resources\emotion\haarcascade_frontalface_default.xml')
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+        # TODO переписать с использованием обнаружения лиц с MediaPipe
         for (x, y, w, h) in faces:
             roi_gray = gray[y:y+h, x:x+w]
             roi_gray = cv2.resize(roi_gray, (48, 48))

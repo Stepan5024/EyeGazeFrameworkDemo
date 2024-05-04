@@ -81,7 +81,7 @@ def create_image(monitor_pixels: Tuple[int, int], center=(0, 0), circle_scale=1.
     width, height = monitor_pixels
 
     if orientation == TargetOrientation.LEFT or orientation == TargetOrientation.RIGHT:
-        img = np.zeros((height, width, 3), np.float32)
+        img = np.ones((width, height, 3), np.float32) * 255
 
         if orientation == TargetOrientation.LEFT:
             center = (width - center[0], center[1])
@@ -89,9 +89,10 @@ def create_image(monitor_pixels: Tuple[int, int], center=(0, 0), circle_scale=1.
         end_animation_loop = write_text_on_image(center, circle_scale, img, target)
 
         if orientation == TargetOrientation.LEFT:
+            
             img = cv2.flip(img, 1)
     else:  # TargetOrientation.UP or TargetOrientation.DOWN
-        img = np.zeros((width, height, 3), np.float32)
+        img = np.ones((width, height, 3), np.float32) * 255
         center = (center[1], center[0])
 
         if orientation == TargetOrientation.UP:
@@ -345,7 +346,7 @@ def show_point_on_screen(window_name: str, base_path: str,
                 print("The cursor is outside the 20% area of the circle.")
             break
 
-    cv2.imshow(window_name, np.zeros((monitor_pixels[1], monitor_pixels[0], 3), np.float32))
+    cv2.imshow(window_name, np.ones((monitor_pixels[1], monitor_pixels[0], 3), np.float32))
     cv2.waitKey(500)
     #source.clear_frame_buffer()
     return (            center, 

@@ -1,3 +1,4 @@
+import base64
 import collections
 import os
 import sys
@@ -49,7 +50,7 @@ class VideoThread(QThread):
                         try:
                             packet = client_socket.recv(message_length - len(data))
                         except OSError as e:
-                            print(f"Ошибка получения данных на клиенте: {e}")
+                            print(f"Ошибка при обработке изображения. Код статуса 4  (Image capture failed)")
                         if not packet:
                             break
                         data += packet
@@ -58,9 +59,19 @@ class VideoThread(QThread):
                                     # Вывод типа переменной results
                         #print(f"Тип переменной 'results': {type(results)}")
                         # Проверка, является ли results словарем
+                                            
+                        x_value = int(results['coordinates'][0])
+                        y_value = int(results['coordinates'][1])
 
-                        x_value = int(results['x'])
-                        y_value = int(results['y'])
+                        image_data = results['image'].split(',')[1]  # Отделение части данных от MIME
+                        # Декодирование изображения из Base64
+                        img_bytes = base64.b64decode(image_data)
+                        # Преобразование байтов изображения в массив numpy для использования с OpenCV
+                        img_array = np.frombuffer(img_bytes, dtype=np.uint8)
+                        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+
+                        # Вывод эмоций
+                        emotions = results['emotions']
                         print(f"x {x_value} y {y_value}")
 
 
@@ -260,7 +271,8 @@ class App(QWidget):
 
             except socket.error as e:
                 print(f"Не удалось подключиться к серверу: {e}")
-                self.errorLabel.setText(f"Не удалось подключиться к серверу: {e}")  # Отображение ошибки
+                #self.errorLabel.setText(f"Ошибка при обработке изображения. Код статуса 4  (Image capture failed)")  # Отображение ошибки
+                self.errorLabel.setText(f"Ошибка при подключении к серверу {e}")  # Отображение ошибки
             
                 #exit(1)
             detection_is_on = True

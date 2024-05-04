@@ -63,7 +63,8 @@ class GazeCNN():
             plot_3d_scene.plot_center_point(face_center, gaze_vector)
             plot_3d_scene.plot_point_on_screen(result)
             plot_3d_scene.update_canvas()
-
+    def get_emotions(self ):
+         return "0"
 
     def calculate_gaze_point(self, frame):
         default_return = (None, None, None, None, None)

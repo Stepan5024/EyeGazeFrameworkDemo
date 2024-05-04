@@ -8,6 +8,9 @@ import torch
 import threading
 from threading import Timer
 import time  
+from datetime import datetime
+import base64
+
 
 from server.gaze_predictors.gazeCNN import GazeCNN
 from server.models.modelCNN import ModelCNN
@@ -95,7 +98,6 @@ class GazeTrackingServer:
     
    
     def client_handler(self, conn, addr):
-        print(f"Connected by {addr}")
         try:
             while True:
                 img = self.video_stream.read_frame()
@@ -109,12 +111,15 @@ class GazeTrackingServer:
                     try:
                         _, img_encoded = cv2.imencode('.jpg', img)
                         img_bytes = img_encoded.tobytes()
-                        img_hex = img_bytes.hex()
+                        img_base64 = base64.b64encode(img_bytes).decode('utf-8')
                         data = {
-                            'x': x_value,
-                            'y': y_value,
-                            'img': img_hex
+                        'status': "2",
+                        'image': f"data:image/jpeg;base64,{img_base64}",
+                        'coordinates': [x_value, y_value],
+                        'datetime': datetime.now().strftime("%d.%m.%Y %H:%M:%S.%f")[:-3],
+                        'emotions': self.gaze_pipeline_CNN.get_emotions()
                         }
+
                         message = json.dumps(data).encode('utf-8')
                         message_length = len(message)
                         conn.sendall(message_length.to_bytes(4, 'big'))
