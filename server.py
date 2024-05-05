@@ -17,8 +17,9 @@ import base64
 import yaml
 
 from logger import create_logger
-from server.gaze_predictors.gazeCNN import GazeCNN
-from server.models.modelCNN import ModelCNN
+from server.emotion.emotion_estimator import EmotionRecognizer
+from server.gaze_predictors.gazePredictor import GazePredictor
+from server.models.gazeModel import GazeModel
 from server.video_stream.video_stream import VideoStream
 from server.utils.camera_utils import get_camera_matrix
 
@@ -35,6 +36,7 @@ class GazeTrackingServer:
         self.is_active = True
         self.initialize_server_socket()
         self.initGazeModel()
+        self.initEmotionModel()
 
     def initLogger(self):
         rev_path =  os.path.join("logs", "server")
@@ -46,18 +48,20 @@ class GazeTrackingServer:
         calibration_matrix_path = os.path.join("resources", "calib", "calibration_matrix.yaml")
         abs_calib_path = self.resource_path(calibration_matrix_path)
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(abs_calib_path)
+    
+    def initEmotionModel(self):
+        self.recognizer = EmotionRecognizer()
 
     def initGazeModel(self):
         """Инициализация СНС определяющей взгляд"""
         relative_path_gaze_model = os.path.join("resources", "models", "gaze", "p00.ckpt")
         abs_path = self.resource_path(relative_path_gaze_model)
-        gaze_model = ModelCNN.load_checkpoint(abs_path) 
+        gaze_model = GazeModel.load_checkpoint(abs_path) 
         gaze_model.to(self.device)
         gaze_model.eval()
-        self.gaze_pipeline_CNN = GazeCNN(gaze_model, 
+        self.gaze_pipeline_CNN = GazePredictor(gaze_model, 
             self.camera_matrix, 
-            self.dist_coefficients
-            )
+            self.dist_coefficients)
 
     def setDevice(self):
         dev = self.configs['device']
@@ -94,10 +98,12 @@ class GazeTrackingServer:
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen()
         print(f'Server listening on {self.host}:{self.port}')
+        self.logger.info(f'Server listening on {self.host}:{self.port}')
     
     def shutdown_server(self):
         if self.active_clients == 0:
             print("No active clients. Shutting down the server.")
+            self.logger.info("No active clients. Shutting down the server.")
             self.close_resources()
             self.is_active = False
             threading.current_thread()._delete()
@@ -138,10 +144,10 @@ class GazeTrackingServer:
         self.gaze_pipeline_CNN.calculate_gaze_point(img)
         x_value = self.gaze_pipeline_CNN.get_x()
         y_value = self.gaze_pipeline_CNN.get_y()
-        emotions = [["2", "3"], ["0", "4"]]
+        top_emotions = self.recognizer.predict_emotions(img)
         try:
             img_encoded = self.encode_image(img)
-            data = self.prepare_data("2", x_value, y_value, img_encoded, emotions)
+            data = self.prepare_data("2", x_value, y_value, img_encoded, top_emotions)
             self.send_data(conn, data)
         except cv2.error as e:
             logging.error(f"Error encoding image: {e}")
@@ -190,6 +196,7 @@ class GazeTrackingServer:
                 thread.start()
             except Exception as e:
                 print(f"server error: {e}")
+                self.logger(f"server error: {e}")
                 self.close_resources()
                 time.sleep(5)
 

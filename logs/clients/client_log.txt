@@ -1,0 +1,134 @@
+[32m[2024-05-05 15:39:20] ClientGaze INFO: [0mКлиент начал работу
+
+[32m[2024-05-05 15:39:25] ClientGaze ERROR: [0mОшибка при подключении к серверу: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\gaze_client.py", line 277, in showDrawingWindow
+    client_socket.connect(('127.0.0.1', 9556))
+ConnectionRefusedError: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+
+[32m[2024-05-05 15:40:04] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:04] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:04] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:04] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:05] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:06] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:07] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:08] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:09] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:10] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:10] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:10] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-05 15:40:10] ClientGaze INFO: [0mDetected emotions: []
+

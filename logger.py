@@ -31,6 +31,7 @@ def _create_handlers(output_dir: Optional[pathlib.Path] = None,
     handlers = []
     color_formatter = _create_color_formatter()
     handlers.append(_create_stream_handler(color_formatter))
+    output_dir.mkdir(parents=True, exist_ok=True)
     if output_dir is not None:
         handlers.append(
             _create_file_handler(output_dir / filename, color_formatter))

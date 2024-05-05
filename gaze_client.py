@@ -1,9 +1,11 @@
 import base64
 import collections
 import os
+import pathlib
 import sys
 import socket
 import json
+import traceback
 import cv2
 import numpy as np
 import yaml
@@ -14,9 +16,13 @@ from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QLabel, QApplication, QPushBu
 from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot, QSize
 from PyQt5.QtGui import QImage, QPixmap, QIcon
 
+from logger import create_logger
+
 width, height = pag.size()
 detection_is_on = False
 client_socket = None
+logger = None
+
 
 class VideoThread(QThread):
     changePixmap = pyqtSignal(QImage)
@@ -36,11 +42,12 @@ class VideoThread(QThread):
 
         # Получение и вывод координат
         self.x_value, self.y_value = map(int, results['coordinates'])
-        print(f"x {self.x_value} y {self.y_value}")
+        #print(f"x {self.x_value} y {self.y_value}")
 
         # Вывод эмоций
         self.emotions = results['emotions']
         print("Detected emotions:", self.emotions)
+        logger.info(f"Detected emotions: {self.emotions}\n")
 
     def run(self):
         global detection_is_on
@@ -49,6 +56,7 @@ class VideoThread(QThread):
             if detection_is_on:
                 if not client_socket:
                     print("Соединение не установлено. Попытка переподключения...")
+                    logger.error(f"Соединение не установлено. Попытка переподключения...\n")
                 elif client_socket is not None:
                     # Получение размера сообщения
                     message_length_bytes = client_socket.recv(4)
@@ -63,6 +71,7 @@ class VideoThread(QThread):
                             packet = client_socket.recv(message_length - len(data))
                         except OSError as e:
                             print(f"Ошибка: {e}")
+                            logger.error(f"Ошибка при подключении к серверу: {e}\n")
                         if not packet:
                             break
                         data += packet
@@ -72,18 +81,23 @@ class VideoThread(QThread):
 
                         if status == '1':
                             print("System error: Произошла системная ошибка.")
+                            logger.error(f"System error: Произошла системная ошибка.\n")
                         elif status == '2':
-                            print("Image and features processing successful.")
+                            #print("Image and features processing successful.")
                             # Продолжение обработки изображения и координат
                             self.process_image_and_coordinates(results)
                         elif status == '3':
                             print("User not detected: Пользователь не обнаружен.")
+                            logger.error(f"User not detected: Пользователь не обнаружен.\n")
                         elif status == '4':
                             print("Image capture failed: Ошибка при захвате изображения.")
+                            logger.error(f"Image capture failed: Ошибка при захвате изображения.\n")
                         elif status == '5':
                             print("Image processing error: Ошибка обработки изображения.")
+                            logger.error(f"Image processing error: Ошибка обработки изображения.\n")
                         else:
                             print("Unknown status received.")
+                            logger.error(f"Unknown status received.\n")
                                             
                 point_on_screen = (self.x_value, self.y_value)
                 self.gaze_points.appendleft(point_on_screen)
@@ -113,15 +127,7 @@ class EyeSettings(QWidget):
         self.width = int(width*2/3)
         self.height = int(height*2/3)
         self.initUI()
-    def resource_path(self, relative_path):
-        """Возвращает корректный путь для доступа к ресурсам после сборки."""
-        try:
-            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
-            base_path = sys._MEIPASS
-        except Exception:
-            # Если приложение запущено из исходного кода, то используется обычный путь
-            base_path = os.path.abspath(".")
-        return os.path.join(base_path, relative_path)
+    
     
     def back_to_main_window(self):
         main_window.show()
@@ -182,6 +188,7 @@ class DrawingWindow(QWidget):
 class App(QWidget):
     def __init__(self):
         super().__init__()
+        logger.info(f"Клиент начал работу\n")
         self.readConfig(os.path.join('configs', 'gaze_client.yaml'))
         self.title:str = self.configs['main_title']
         self.left = int(width*1/6)
@@ -192,7 +199,7 @@ class App(QWidget):
         self.initUI()
     
     def readConfig(self, path: str):
-        path_to_config = self.resource_path(path)
+        path_to_config = resource_path(path)
         self.configs: dict = self.load_config(path_to_config)
 
     @pyqtSlot(QImage)
@@ -212,16 +219,6 @@ class App(QWidget):
         with open(config_path, 'r', encoding='utf-8') as file:
             return yaml.safe_load(file)
 
-    def resource_path(self, relative_path) -> str:
-        """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
-        try:
-            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
-            base_path = sys._MEIPASS
-        except Exception:
-            # Если приложение запущено из исходного кода, то используется обычный путь
-            base_path = os.path.abspath(".")
-    
-        return os.path.join(base_path, relative_path)
 
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -243,7 +240,7 @@ class App(QWidget):
         B_detection_is_on_w = int(self.width*2.8/24)
         B_detection_is_on_h = int(self.width*2.8/24)
         B_detection_is_on.resize(B_detection_is_on_w, B_detection_is_on_h)
-        path = self.resource_path(os.path.join(self.configs['images_path'], "B_cam_show.png"))
+        path = resource_path(os.path.join(self.configs['images_path'], "B_cam_show.png"))
         B_detection_is_on.setIcon(QIcon(path))
         B_detection_is_on.setIconSize(QSize(B_detection_is_on_w - 16, B_detection_is_on_h - 16))
         B_detection_is_on.move(int(self.width/2)-int(B_detection_is_on_w/2) - 100, int(self.height*21/24)-int(B_detection_is_on_h/2))
@@ -283,7 +280,10 @@ class App(QWidget):
                 self.drawing_window.show()
 
             except socket.error as e:
-                self.errorLabel.setText(f"Ошибка при подключении к серверу {e}")
+                tb = traceback.format_exc()
+                self.errorLabel.setText(f"Ошибка при подключении к серверу {e}\n{tb}")
+                logger.error(f"Ошибка при подключении к серверу: {e}\n{tb}")
+
             detection_is_on = True
         else:
             self.stopVideoThread()
@@ -294,8 +294,23 @@ class App(QWidget):
         if event.key() == Qt.Key_Escape or event.key() == Qt.Key_Q:
             self.close()
 
+def resource_path(relative_path) -> str:
+        """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
+        #if getattr(sys, 'frozen', False):
+        try:
+            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
+            base_path = sys._MEIPASS
+        except Exception:
+            # Если приложение запущено из исходного кода, то используется обычный путь
+            base_path = os.path.abspath(".")
+    
+        return os.path.join(base_path, relative_path)
+
 if __name__ == '__main__':
     width, height = pag.size()
+    rev_path =  os.path.join("logs", "clients")
+    abs_path = pathlib.Path(resource_path(rev_path))
+    logger = create_logger("ClientGaze", abs_path, 'client_log.txt')
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
