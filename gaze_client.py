@@ -6,14 +6,13 @@ import socket
 import json
 import cv2
 import numpy as np
+import yaml
 
 import pyautogui as pag
 
-
-from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QLabel, QApplication, QPushButton, QDesktopWidget, QComboBox
-from PyQt5.QtCore import QObject, QThread, Qt, pyqtSignal, pyqtSlot, QSize
+from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QLabel, QApplication, QPushButton
+from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot, QSize
 from PyQt5.QtGui import QImage, QPixmap, QIcon
-from random import randint
 
 width, height = pag.size()
 detection_is_on = False
@@ -26,18 +25,31 @@ class VideoThread(QThread):
         super().__init__()
         self.gaze_points = collections.deque(maxlen=64)
         screen_width, screen_height = pag.size()
-        self.monitor_pixels = (screen_width, screen_height)  # Оконные размеры для второго окна
+        self.monitor_pixels = (screen_width, screen_height)
+
+    def process_image_and_coordinates(self, results):
+        # Преобразование данных изображения
+        image_data = results['image'].split(',')[1]
+        img_bytes = base64.b64decode(image_data)
+        img_array = np.frombuffer(img_bytes, dtype=np.uint8)
+        self.img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+
+        # Получение и вывод координат
+        self.x_value, self.y_value = map(int, results['coordinates'])
+        print(f"x {self.x_value} y {self.y_value}")
+
+        # Вывод эмоций
+        self.emotions = results['emotions']
+        print("Detected emotions:", self.emotions)
 
     def run(self):
         global detection_is_on
         display = np.ones((self.monitor_pixels[1], self.monitor_pixels[0], 3), dtype=np.uint8)
         while True:
             if detection_is_on:
-                if not client_socket:  # Если сокет закрыт или не определен
+                if not client_socket:
                     print("Соединение не установлено. Попытка переподключения...")
-                    # Попытка переподключения...
                 elif client_socket is not None:
-                    #print('Получение данных от сервера')
                     # Получение размера сообщения
                     message_length_bytes = client_socket.recv(4)
                     if not message_length_bytes:
@@ -50,32 +62,30 @@ class VideoThread(QThread):
                         try:
                             packet = client_socket.recv(message_length - len(data))
                         except OSError as e:
-                            print(f"Ошибка при обработке изображения. Код статуса 4  (Image capture failed)")
+                            print(f"Ошибка: {e}")
                         if not packet:
                             break
                         data += packet
                     if data is not None:
                         results = json.loads(data.decode('utf-8'))
-                                    # Вывод типа переменной results
-                        #print(f"Тип переменной 'results': {type(results)}")
-                        # Проверка, является ли results словарем
+                        status = results.get('status')
+
+                        if status == '1':
+                            print("System error: Произошла системная ошибка.")
+                        elif status == '2':
+                            print("Image and features processing successful.")
+                            # Продолжение обработки изображения и координат
+                            self.process_image_and_coordinates(results)
+                        elif status == '3':
+                            print("User not detected: Пользователь не обнаружен.")
+                        elif status == '4':
+                            print("Image capture failed: Ошибка при захвате изображения.")
+                        elif status == '5':
+                            print("Image processing error: Ошибка обработки изображения.")
+                        else:
+                            print("Unknown status received.")
                                             
-                        x_value = int(results['coordinates'][0])
-                        y_value = int(results['coordinates'][1])
-
-                        image_data = results['image'].split(',')[1]  # Отделение части данных от MIME
-                        # Декодирование изображения из Base64
-                        img_bytes = base64.b64decode(image_data)
-                        # Преобразование байтов изображения в массив numpy для использования с OpenCV
-                        img_array = np.frombuffer(img_bytes, dtype=np.uint8)
-                        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-
-                        # Вывод эмоций
-                        emotions = results['emotions']
-                        print(f"x {x_value} y {y_value}")
-
-
-                point_on_screen = (x_value, y_value)
+                point_on_screen = (self.x_value, self.y_value)
                 self.gaze_points.appendleft(point_on_screen)
                 display.fill(255)
                 for idx in range(1, len(self.gaze_points)):
@@ -88,15 +98,15 @@ class VideoThread(QThread):
                 convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
                 p = convertToQtFormat.scaled(self.monitor_pixels[0], self.monitor_pixels[1], Qt.KeepAspectRatio)
                 self.changePixmap.emit(p)
-                #self.msleep(100)
             else:
                 break
 
-#Interface
+
 class EyeSettings(QWidget):
-    def __init__(self):
+    def __init__(self, config):
         super().__init__()
-        self.title = 'PyQt5 Video'
+        self.config = config
+        self.title = config['eye_title']
         self.left = int(width*1/6)
         self.top = int(height*1/6)
         self.width = int(width*2/3)
@@ -135,7 +145,7 @@ class EyeSettings(QWidget):
         B_back_w = int(self.width/24)
         B_back_h = int(self.width/24)
         B_back.resize(B_back_w, B_back_h)
-        B_back.setIcon(QIcon(self.resource_path('./images_client/Arrow_left.png')))
+        B_back.setIcon(QIcon(os.path.join(self.config['images_path'], "Arrow_left.png")))
         B_back.setIconSize(QSize(B_back_w - 16, B_back_h - 16))
         B_back.move(15, 15)
         B_back.setStyleSheet('QPushButton {background-color: #d6d6d6; color: black;}')
@@ -143,12 +153,13 @@ class EyeSettings(QWidget):
 
 class DrawingWindow(QWidget):
 
-    def __init__(self):
+    def __init__(self, config):
         super().__init__()
+        self.config = config
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Drawing Window')
+        self.setWindowTitle(self.config['gaze_title'])
         layout = QVBoxLayout()
         self.label = QLabel(self)
         layout.addWidget(self.label)
@@ -165,19 +176,27 @@ class DrawingWindow(QWidget):
     
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape or event.key() == Qt.Key_Q:
-            self.close()  # Закрывает окно при нажатии Q или Esc
+            self.close()
 
 
 class App(QWidget):
     def __init__(self):
         super().__init__()
-        self.title = 'PyQt5 Video'
+        self.readConfig(os.path.join('configs', 'gaze_client.yaml'))
+        self.title:str = self.configs['main_title']
+        print("Тип self.title:", type(self.title))
+        print("Тип self.title:", self.title)
+        print("Тип self.configs:", type(self.configs))
         self.left = int(width*1/6)
         self.top = int(height*1/6)
         self.width = int(width*2/3)
         self.height = int(height*2/3)
-        self.videoThread = None  # Инициализация переменной для потока
+        self.videoThread = None
         self.initUI()
+    
+    def readConfig(self, path: str):
+        path_to_config = self.resource_path(path)
+        self.configs: dict = self.load_config(path_to_config)
 
     @pyqtSlot(QImage)
     def setImage(self, image):
@@ -191,9 +210,13 @@ class App(QWidget):
         global main_window
         main_window = self
 
+    # Функция для загрузки конфигов из YAML файла
+    def load_config(self, config_path: str):
+        with open(config_path, 'r', encoding='utf-8') as file:
+            return yaml.safe_load(file)
 
-    def resource_path(self, relative_path):
-        """Возвращает корректный путь для доступа к ресурсам после сборки."""
+    def resource_path(self, relative_path) -> str:
+        """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
         try:
             # PyInstaller создаёт временную папку _MEIPASS для ресурсов
             base_path = sys._MEIPASS
@@ -204,7 +227,7 @@ class App(QWidget):
         return os.path.join(base_path, relative_path)
 
     def initUI(self):
-        self.setWindowTitle('Eye Tracking Display')
+        self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         
         self.resize(int(width*2/3), int(height*2/3))
@@ -214,32 +237,30 @@ class App(QWidget):
         self.label.resize(int(self.width*2/3), int(self.height*2/3))
 
         self.errorLabel = QLabel(self)
-        self.errorLabel.move(10, self.height - 400)  # Размещение в нижней части окна
+        self.errorLabel.move(10, self.height - 400)
         self.errorLabel.resize(self.width - 20, 30)
         self.errorLabel.setStyleSheet("QLabel { color: red; font-size: 14px; }")
-
-        #self.show_button = QPushButton('Show Drawing Window', self)
-        #self.show_button.clicked.connect(self.showDrawingWindow)
 
         B_detection_is_on = QPushButton('', self)
         B_detection_is_on.setToolTip('Включить|Выключить отслеживание')
         B_detection_is_on_w = int(self.width*2.8/24)
         B_detection_is_on_h = int(self.width*2.8/24)
         B_detection_is_on.resize(B_detection_is_on_w, B_detection_is_on_h)
-        B_detection_is_on.setIcon(QIcon(self.resource_path('./images_client/B_cam_show.png')))
+        path = self.resource_path(os.path.join(self.configs['images_path'], "B_cam_show.png"))
+        B_detection_is_on.setIcon(QIcon(path))
         B_detection_is_on.setIconSize(QSize(B_detection_is_on_w - 16, B_detection_is_on_h - 16))
         B_detection_is_on.move(int(self.width/2)-int(B_detection_is_on_w/2) - 100, int(self.height*21/24)-int(B_detection_is_on_h/2))
         B_detection_is_on.setStyleSheet('QPushButton {background-color: #d6d6d6; color: black;}')
 
         B_detection_is_on.clicked.connect(self.showDrawingWindow)
-        self.eye_settings_window = EyeSettings()
+        self.eye_settings_window = EyeSettings(self.configs)
 
         B_eye_detection_settings = QPushButton('', self)
         B_eye_detection_settings.setToolTip('Настройки отслеживания глаз')
         B_eye_detection_settings_w = int(self.width*2.7/24)
         B_eye_detection_settings_h = int(self.width*2.7/24)
         B_eye_detection_settings.resize(B_eye_detection_settings_w, B_eye_detection_settings_h)
-        B_eye_detection_settings.setIcon(QIcon(self.resource_path('./images_client/settings_eye.png')))
+        B_eye_detection_settings.setIcon(QIcon(os.path.join(self.configs['images_path'], "settings_eye.png")))
         B_eye_detection_settings.setIconSize(QSize(B_eye_detection_settings_w - 15*2, B_eye_detection_settings_h - 15*2))
         B_eye_detection_settings.move(int(self.width)-int(B_eye_detection_settings_w*2.5) - 15*2, int(self.height*21/24)-int(B_eye_detection_settings_h/2))
         B_eye_detection_settings.setStyleSheet('QPushButton {background-color: #d6d6d6; color: black;}')
@@ -247,15 +268,10 @@ class App(QWidget):
         
         self.show()
 
-    def startVideoThread(self):
-        if not self.videoThread:  # Запускаем поток только если он ещё не запущен
-            self.videoThread = VideoThread()
-            self.videoThread.changePixmap.connect(self.setImage)
-            self.videoThread.start()
-
+    
     def stopVideoThread(self):
-        if self.videoThread:  # Останавливаем поток, если он запущен
-            self.videoThread.terminate()  # Остановка потока
+        if self.videoThread:  
+            self.videoThread.terminate()
             self.videoThread = None
     
     def showDrawingWindow(self):
@@ -266,18 +282,14 @@ class App(QWidget):
                 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 client_socket.connect(('127.0.0.1', 9556))
                 self.errorLabel.setText("")
-                self.drawing_window = DrawingWindow()
+                self.drawing_window = DrawingWindow(self.configs) # отрисовка окна с отслеживанием взгляда
                 self.drawing_window.show()
 
             except socket.error as e:
-                print(f"Не удалось подключиться к серверу: {e}")
-                #self.errorLabel.setText(f"Ошибка при обработке изображения. Код статуса 4  (Image capture failed)")  # Отображение ошибки
-                self.errorLabel.setText(f"Ошибка при подключении к серверу {e}")  # Отображение ошибки
-            
-                #exit(1)
+                self.errorLabel.setText(f"Ошибка при подключении к серверу {e}")
             detection_is_on = True
         else:
-            self.stopVideoThread()  # Останавливаем видеопоток
+            self.stopVideoThread()
             detection_is_on = False
             
             
@@ -287,7 +299,6 @@ class App(QWidget):
 
 if __name__ == '__main__':
     width, height = pag.size()
-    print(f"width {width}, height {height}")
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())

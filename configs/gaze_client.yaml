@@ -1,0 +1,4 @@
+images_path: 'resources/images/'
+main_title: 'Главное окно клиента'
+eye_title: 'Настройки взгляда'
+gaze_title: 'Отслеживание взгляда'
