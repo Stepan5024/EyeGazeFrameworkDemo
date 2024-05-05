@@ -12,11 +12,10 @@ from albumentations.pytorch import ToTensorV2
 
 class GazeCNN():
 
-    def __init__(self, model, camera_matrix, dist_coefficients, device):
+    def __init__(self, model, camera_matrix, dist_coefficients):
         self.model = model
         self.camera_matrix = camera_matrix
         self.dist_coefficients = dist_coefficients
-        self.device = device
 
         plane = plane_equation(np.eye(3), np.asarray([[0], [0], [0]]))
         self.plane_w = plane[0:3]
@@ -125,10 +124,12 @@ class GazeCNN():
                 A.Normalize(),
                 ToTensorV2()
             ])
-            person_idx = torch.Tensor([0]).unsqueeze(0).long().to(self.device)
-            full_face_image = transform(image=img_warped_face)["image"].unsqueeze(0).float().to(self.device)
-            left_eye_image = transform(image=img_warped_left_eye)["image"].unsqueeze(0).float().to(self.device)
-            right_eye_image = transform(image=img_warped_right_eye)["image"].unsqueeze(0).float().to(self.device)
+            device = next(self.model.parameters()).device
+            print(f"Model is on device: {device}")
+            person_idx = torch.Tensor([0]).unsqueeze(0).long().to(device)
+            full_face_image = transform(image=img_warped_face)["image"].unsqueeze(0).float().to(device)
+            left_eye_image = transform(image=img_warped_left_eye)["image"].unsqueeze(0).float().to(device)
+            right_eye_image = transform(image=img_warped_right_eye)["image"].unsqueeze(0).float().to(device)
             # prediction
             output = self.model(person_idx, full_face_image, right_eye_image, left_eye_image).squeeze(0).detach().cpu().numpy()
             print(f"output {output}")

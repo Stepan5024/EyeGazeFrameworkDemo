@@ -1,0 +1,15 @@
+[2024-05-05 14:14:22] EyeGazeServer INFO: Application start
+[2024-05-05 14:14:27] EyeGazeServer INFO: Client ('127.0.0.1', 50326) connected. Total clients: 0
+[2024-05-05 14:14:33] EyeGazeServer ERROR: Socket error: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 170, in client_handler
+    if not self.process_frame(conn):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 134, in process_frame
+    self.handle_image_processing_and_sending(img, conn)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 148, in handle_image_processing_and_sending
+    self.send_data(conn, data)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 128, in send_data
+    conn.sendall(message_length.to_bytes(4, 'big'))
+ConnectionResetError: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+
+[2024-05-05 14:14:33] EyeGazeServer INFO: Client ('127.0.0.1', 50326) disconnected. Total clients: 0

@@ -99,6 +99,7 @@ class VideoThread(QThread):
                 p = convertToQtFormat.scaled(self.monitor_pixels[0], self.monitor_pixels[1], Qt.KeepAspectRatio)
                 self.changePixmap.emit(p)
             else:
+                detection_is_on = False
                 break
 
 
@@ -120,7 +121,6 @@ class EyeSettings(QWidget):
         except Exception:
             # Если приложение запущено из исходного кода, то используется обычный путь
             base_path = os.path.abspath(".")
-    
         return os.path.join(base_path, relative_path)
     
     def back_to_main_window(self):
@@ -184,9 +184,6 @@ class App(QWidget):
         super().__init__()
         self.readConfig(os.path.join('configs', 'gaze_client.yaml'))
         self.title:str = self.configs['main_title']
-        print("Тип self.title:", type(self.title))
-        print("Тип self.title:", self.title)
-        print("Тип self.configs:", type(self.configs))
         self.left = int(width*1/6)
         self.top = int(height*1/6)
         self.width = int(width*2/3)
