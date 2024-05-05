@@ -1,2 +1,3 @@
 dataset_root: 'F:\EyeGazeDataset\emotion\fer_2013_data\'
 emotion_model_path: 'resources\emotion\'
+generate_data_root: 'F:\EyeGazeDataset\emotion\custom_data\'
