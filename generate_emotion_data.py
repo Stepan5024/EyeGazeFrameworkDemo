@@ -5,7 +5,7 @@ import cv2
 import yaml
 import mediapipe as mp
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QLabel, QVBoxLayout
-
+from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTimer, Qt
 
@@ -71,7 +71,7 @@ class VideoWidget(QWidget):
         self.setWindowTitle("Сбор данных о эмоциональном состоянии")  # Заголовок окна
         self.setWindowFlags(self.windowFlags() | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)  # Установка флагов окна для кнопок управления окном
         self.showFullScreen()  # Открытие окна в полноэкранном режиме
-
+        #self.setWindowState(QtCore.Qt.WindowMaximized)
         self.layout = QHBoxLayout()  # Основной горизонтальный layout для размещения видео и текстовой информации
 
         # Левая часть: видео

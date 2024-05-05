@@ -6,24 +6,24 @@ import h5py
 mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIFaceGaze_by_author\\p00\\Calibration\\Camera.mat")
 #mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
 # Display the keys and variables in the file
-print("Keys in the MAT file:", mat.keys())
-print("Keys in the MAT file:", mat['cameraMatrix'])
-print("Keys in the MAT file:", mat['distCoeffs'])
+print("Keys in the MAT file Camera:", mat.keys())
+print("Keys in the MAT file Camera:", mat['cameraMatrix'])
+print("Keys in the MAT file Camera:", mat['distCoeffs'])
 
 mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIFaceGaze_by_author\\p00\\Calibration\\monitorPose.mat")
 #mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
 # Display the keys and variables in the file
-print("Keys in the MAT file:", mat.keys())
+print("Keys in the MAT file monitorPose:", mat.keys())
 
 mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIFaceGaze_by_author\\p00\\Calibration\\screenSize.mat")
 #mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
 # Display the keys and variables in the file
-print("Keys in the MAT file:", mat.keys())
+print("Keys in the MAT file screenSize:", mat.keys())
 
 mat = scipy.io.loadmat("F:\\EyeGazeDataset\\MPIIGaze_original\\Data\\Normalized\\p00\\day01.mat")
 #mat = scipy.io.loadmat('/media/stepan/Expansion/EyeGazeDataset/MPIIGaze_original/Data/Normalized/p00/day01.mat')
 # Display the keys and variables in the file
-print("Keys in the MAT file:", mat.keys())
+print("Keys in the MAT file day01:", mat.keys())
 
 # Access the 'data' key
 data = mat['data']

@@ -4,14 +4,14 @@ from PIL import Image
 from tqdm import tqdm
 import os
 
-# convert string to integer
+# string -> integer
 def atoi(s):
     n = 0
     for i in s:
         n = n*10 + ord(i) - ord("0")
     return n
 
-# making folders
+# Директории
 outer_names = ['test','train']
 inner_names = ['angry', 'disgusted', 'fearful', 'happy', 'sad', 'surprised', 'neutral']
 os.makedirs('data', exist_ok=True)
@@ -20,7 +20,7 @@ for outer_name in outer_names:
     for inner_name in inner_names:
         os.makedirs(os.path.join('data',outer_name,inner_name), exist_ok=True)
 
-# to keep count of each category
+# счетчики
 angry = 0
 disgusted = 0
 fearful = 0
@@ -35,7 +35,7 @@ happy_test = 0
 sad_test = 0
 surprised_test = 0
 neutral_test = 0
-
+fer2013.csv
 df = pd.read_csv('./fer2013.csv')
 mat = np.zeros((48,48),dtype=np.uint8)
 print("Saving images...")
