@@ -369,23 +369,24 @@ class MainApp(QtWidgets.QMainWindow):
             img_warped_face, _, rotation_matrix = normalize_single_image(image_rgb, 
                                                                          rvec, None, 
                                                                          face_center, self.camera_matrix, is_eye=False)
+            file_name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
             if image_rgb is not None:
-                self.create_image(image_rgb, 'origin')
+                self.create_image(image_rgb, 'origin', file_name)
                 #cv2.imwrite('face_image.png', )
                 
             if img_warped_face is not None:
                 print
-                self.create_image(img_warped_face, 'full_face')
+                self.create_image(img_warped_face, 'full_face', file_name)
                 #cv2.imwrite('face_image.png', )
             else:
                 print("Failed to extract face image.")
             if img_warped_right_eye is not None:
-                self.create_image(img_warped_right_eye, 'right_eye')
+                self.create_image(img_warped_right_eye, 'right_eye', file_name)
                 #cv2.imwrite('right_eye_image.png', right_eye_image)
             else:
                 print("Failed to extract right eye image.")
             if img_warped_left_eye is not None:
-                self.create_image(img_warped_left_eye, 'left_eye')
+                self.create_image(img_warped_left_eye, 'left_eye', file_name)
                 #cv2.imwrite('left_eye_image.png', left_eye_image)
             else:
                 print("Failed to extract left eye image.")
@@ -420,8 +421,8 @@ class MainApp(QtWidgets.QMainWindow):
             return None
 
 
-    def create_image(self, image, postfix: str):
-        file_name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    def create_image(self, image, postfix: str, file_name: str):
+        
         full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.jpg")
         file_id: str = self.add_to_paths(postfix, full_file_path)
         print(f"file_id {file_id}")

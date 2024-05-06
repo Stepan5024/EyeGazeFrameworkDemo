@@ -2,7 +2,7 @@ from typing import Type
 import torch
 import torch.nn as nn
 from torchvision import models
-from torch.nn.modules.module import Module
+#from torch.nn.modules.module import Module
 
 class SELayer(nn.Module):
     """
@@ -32,7 +32,8 @@ class GazeModel(nn.Module):
 
     def __init__(self, *args, **kwargs):
         super().__init__()
-
+        self.hparams = kwargs
+        self.save_hyperparameters()
         self.subject_biases = nn.Parameter(torch.zeros(15 * 2, 2))  # pitch and yaw offset for the original and mirrored participant
 
         self.cnn_face = nn.Sequential(
@@ -115,6 +116,11 @@ class GazeModel(nn.Module):
             nn.Linear(256, 2),
         )
     
+    def save_hyperparameters(self):
+        # Просто сохраняет гиперпараметры как атрибут объекта
+        for name, value in self.hparams.items():
+            setattr(self, name, value)
+
     @staticmethod
     def load_checkpoint(checkpoint_path) -> Type['GazeModel']:
         model = GazeModel()  # создаем экземпляр модели

@@ -12,6 +12,7 @@ from albumentations.pytorch import ToTensorV2
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 
+last_person_id = 15
 
 def filter_persons_by_idx(file_names: List[str], keep_person_idxs: List[int]) -> List[int]:
     """
@@ -21,7 +22,7 @@ def filter_persons_by_idx(file_names: List[str], keep_person_idxs: List[int]) ->
     :param keep_person_idxs: list of person ids to keep
     :return: list of valid idxs that match `keep_person_idxs`
     """
-    idx_per_person = [[] for _ in range(15)]
+    idx_per_person = [[] for _ in range(last_person_id+1)]
     if keep_person_idxs is not None:
         keep_person_idxs = [f'p{person_idx:02d}/' for person_idx in set(keep_person_idxs)]
         for idx, file_name in enumerate(file_names):
@@ -73,7 +74,7 @@ class MPIIFaceGaze(Dataset):
         
         if keep_person_idxs is not None:
             assert len(keep_person_idxs) > 0
-            assert max(keep_person_idxs) <= 14  # last person id = 14
+            assert max(keep_person_idxs) <= last_person_id  # last person id = last_person_id
             assert min(keep_person_idxs) >= 0  # first person id = 0
 
         self.data_path = data_path
@@ -221,9 +222,9 @@ def get_dataloaders(path_to_data: str, validate_on_person: int,
             ToTensorV2()
         ])
     }
-
-    #train_on_persons = list(range(0, 15))
-    train_on_persons = list(range(0, 3))
+    #TODO сделать чтобы все папки от 00 до максим
+    train_on_persons = list(range(0, last_person_id+1))
+    #train_on_persons = list(range(0, 3))
     if validate_on_person in train_on_persons:
         train_on_persons.remove(validate_on_person)
     if test_on_person in train_on_persons:

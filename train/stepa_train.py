@@ -1,12 +1,13 @@
-from pytorch_lightning import seed_everything# seed_everything(42)
-from pytorch_lightning import Trainer
-from pytorch_lightning.loggers import TensorBoardLogger
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.callbacks import Callback
+#from pytorch_lightning import seed_everything# seed_everything(42)
+#from pytorch_lightning import Trainer
+#from pytorch_lightning.loggers import TensorBoardLogger
+#from pytorch_lightning.callbacks import ModelCheckpoint
+#from pytorch_lightning.callbacks import Callback
 import pickle
-import pytorch_lightning
-from mpii_face_gaze_dataset import get_dataloaders
-from server.models import ModelCNN 
+#import pytorch_lightning
+import torch.nn as nn
+import torch.optim as optim
+from server.models import GazeModel 
 import torch
 import torch.nn.functional as F
 import pytorch_lightning as pl
@@ -14,36 +15,18 @@ import numpy as np
 import os
 from torchviz import make_dot
 
+from train.mpii_face_gaze_dataset import get_dataloaders
 from train.utils import calc_angle_error, PitchYaw, plot_prediction_vs_ground_truth, log_figure, get_random_idx, get_each_of_one_grid_idx
 
-class VersioningCallback(Callback):
+"""class VersioningCallback(Callback):
     def on_save_checkpoint(self, trainer, pl_module, checkpoint):
         # Добавляем версию PyTorch Lightning, если отсутствует
         if 'pytorch-lightning_version' not in checkpoint:
-            checkpoint['pytorch-lightning_version'] = pl.__version__
+            checkpoint['pytorch-lightning_version'] = pl.__version__"""
 
-class SaveModelCallback(Callback):
-    def on_train_epoch_end(self, trainer, pl_module):
-        epoch = trainer.current_epoch
-        pl_version = pl.__version__
-        #valid_loss = trainer.callback_metrics['valid/offset(k=0)/loss'].item()
-        valid_loss = trainer.callback_metrics.get('valid/offset(k=0)/loss', 0.0).item()
-        # Формируем имя файла, включающее версию PyTorch Lightning, номер эпохи и валидационные потери
-        filename = f"best-checkpoint-PL_{pl_version}_epoch_{epoch}_valid_loss{valid_loss:.2f}"
-        # Сохраняем веса модели
-        torch.save(pl_module.state_dict(), f"./checkpoints/{filename}.pth")
-        # Сохраняем модель целиком
-        with open(f"./checkpoints/{filename}.pkl", 'wb') as f:
-            pickle.dump(pl_module, f)
 
-    def on_test_end(self, trainer, pl_module):
-        epoch = trainer.current_epoch
-        # Используем те же имена файлов, но добавляем '_test' для указания на тестирование
-        torch.save(pl_module.state_dict(), f'./model_weights_{epoch}_test.pth')
-        with open(f'model_{epoch}_test.pkl', 'wb') as f:
-            pickle.dump(pl_module, f)
 
-class Model(ModelCNN):
+class Model(GazeModel):
     def __init__(self, learning_rate: float = 0.1, weight_decay: float = 0., 
                  k=None, adjust_slope: bool = False, grid_calibration_samples: bool = False, 
                  *args, **kwargs):
@@ -259,17 +242,17 @@ screen_sizes) из всех переданных выходных данных (
 def main(path_to_data: str, validate_on_person: int, test_on_person: int, 
          learning_rate: float, weight_decay: float, batch_size: int, k: int,
            adjust_slope: bool, grid_calibration_samples: bool):
-    seed_everything(42)
+    #seed_everything(42)
 
     model = Model(learning_rate, weight_decay, 
                   k, adjust_slope, grid_calibration_samples)
     # Получаем версию PyTorch Lightning
-    pl_version = pytorch_lightning.__version__
+    #pl_version = pytorch_lightning.__version__
     # Создаем экземпляр нашего кастомного колбэка
-    save_model_callback = SaveModelCallback()
+    
     # Пути к директориям
-    dirpath = "./checkpoints/"
-    default_root_dir = './saved_models/'
+    dirpath = "F:\\EyeGazeDataset\\gaze_user\\checkpoints\\"
+    default_root_dir = 'F:\\EyeGazeDataset\\gaze_user\\saved_models\\'
     # Проверка на существование директории dirpath 
     # и её создание при необходимости
     if not os.path.exists(dirpath):
@@ -282,38 +265,24 @@ def main(path_to_data: str, validate_on_person: int, test_on_person: int,
         os.makedirs(default_root_dir)
         print(f"Директория '{default_root_dir}' была создана")
 
-    # Создаем объект ModelCheckpoint .ckpt
-    checkpoint_callback = ModelCheckpoint(
-    dirpath="./checkpoints/",
-    filename=f"best-checkpoint-PL_{pl_version}"+'_{epoch}-{valid_loss:.2f}',
-    save_top_k=14,
-    verbose=True,
-    monitor='valid/offset(k=0)/loss',
-    mode='min'
-    )
-    
+
     # Создаем экземпляры наших кастомных колбэков
-    versioning_callback = VersioningCallback()
 
-    trainer = Trainer(
-        devices=1,
-        max_epochs=3,
-        default_root_dir='./saved_models/',
-        logger=[
-            TensorBoardLogger(save_dir="tb_logs"),
-        ],
-        # .ckpt .pth .pkl
-        #callbacks=[checkpoint_callback, save_model_callback],
-        callbacks=[checkpoint_callback, versioning_callback, save_model_callback],
-        benchmark=True,
-    )
-
+    
     (train_dataloader, valid_dataloader, test_dataloader) = get_dataloaders(path_to_data, 
                                                                             validate_on_person, 
                                                                             test_on_person, 
                                                                             batch_size)
-    trainer.fit(model, train_dataloader, valid_dataloader)
-    trainer.test(model, test_dataloader)
+    epochs = 2
+    criterion = nn.MSELoss()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    optimizer = optim.Adam(model.parameters(), lr=model.learning_rate, weight_decay=model.weight_decay)
+
+    for epoch in range(epochs):
+        train_loss = train(model, train_dataloader, optimizer, criterion, device)
+        valid_loss = validate(model, valid_dataloader, criterion, device)
+        print(f'Epoch {epoch+1}, Train Loss: {train_loss:.4f}, Valid Loss: {valid_loss:.4f}')
+
     y = model(model)
     make_dot(y.mean(), params=dict(model.named_parameters()))
     """torch.save(model.state_dict(), 'model_weights.pth')
@@ -324,13 +293,38 @@ def main(path_to_data: str, validate_on_person: int, test_on_person: int,
     print(f"Complete!")
 
 
+    
+def train(model, train_loader, optimizer, criterion, device):
+    model.train()
+    total_loss = 0
+    for batch in train_loader:
+        optimizer.zero_grad()
+        inputs, targets = batch['input'].to(device), batch['target'].to(device)
+        outputs = model(inputs)
+        loss = criterion(outputs, targets)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    return total_loss / len(train_loader)
+
+def validate(model, valid_loader, criterion, device):
+    model.eval()
+    total_loss = 0
+    with torch.no_grad():
+        for batch in valid_loader:
+            inputs, targets = batch['input'].to(device), batch['target'].to(device)
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+            total_loss += loss.item()
+    return total_loss / len(valid_loader)
+
 if __name__ == '__main__':
 
     # path_to_data = "C:\\Users\\bokar\\Documents\\train_gaze_stepa\\mpiifacegaze_preprocessed"
-    path_to_data = "C:\\Users\\bokar\\Documents\\gaze_collection_stepa\\data"
-    validate_on_person = 0
+    path_to_data = r"F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_stepa_pperle"
+    validate_on_person = 14
     test_on_person = 0
-    learning_rate = 0.1 # скорость обучения
+    learning_rate = 0.01 # скорость обучения
     weight_decay = 0.0 # уменьшение веса
     batch_size = 64 # размер блока полезных данных
     k = [9, 128]
