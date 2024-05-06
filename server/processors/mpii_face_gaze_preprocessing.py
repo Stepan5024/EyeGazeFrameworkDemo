@@ -2,6 +2,7 @@ from typing import Tuple
 
 import cv2
 import numpy as np
+import skimage
 
 
 def get_matrices(camera_matrix: np.ndarray, distance_norm: int, center_point: np.ndarray, focal_norm: int, head_rotation_matrix: np.ndarray, image_output_size: Tuple[int, int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -92,5 +93,5 @@ def normalize_single_image(image: np.ndarray, head_rotation, gaze_target: np.nda
         gaze_normalized = gaze_normalized / np.linalg.norm(gaze_normalized)
     else:
         gaze_normalized = np.zeros(3)
-
+    skimage.io.imsave("test_image.png", img_warped, check_contrast=False)
     return img_warped, gaze_normalized.reshape(3), rotation_matrix

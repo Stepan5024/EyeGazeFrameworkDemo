@@ -1,3 +1,4 @@
+import collections
 from datetime import datetime
 import os
 import sys
@@ -8,10 +9,20 @@ from PyQt5.QtCore import QPoint, QTimer, Qt
 import cv2
 import numpy as np
 import pyautogui as pag
+import skimage
+import torch
 import yaml
 from scipy.io import savemat
 import mediapipe as mp
-
+import pandas as pd
+import h5py
+from scipy.linalg import orthogonal_procrustes
+from server.models.face_model import face_model_all
+from server.processors.mpii_face_gaze_preprocessing import normalize_single_image
+from server.utils.camera_utils import get_face_landmarks_in_ccs
+from server.gaze_predictors.gazePredictor import GazePredictor
+from server.models.gazeModel import GazeModel
+from server.utils.camera_utils import get_camera_matrix
 from server.video_stream.video_stream import VideoStream
 
 class MainApp(QtWidgets.QMainWindow):
@@ -21,10 +32,50 @@ class MainApp(QtWidgets.QMainWindow):
         self.readConfig(os.path.join('configs', 'gaze.yaml'))
         self.initUI()
         self.createMATFiles()
+        # F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_author_pperle
+        file = 'data.h5'
+        self.path_to_h5 = os.path.join('F:', 'EyeGazeDataset', 'MPIIFaceGaze_post_proccessed_author_pperle', file)
+        self.df = self.open_or_create_h5(self.path_to_h5)
+        print(self.df)
         self.video_stream = VideoStream(capture_width=1280, capture_height=720)
         self.last_circle_zero = None
-        self.paths_list = []
-        
+        #self.paths_list = []
+        self.used_file_ids = []
+        self.landmarks_ids = [33, 133, 362, 263, 61, 291, 1]  # reye, leye, mouth
+        self.face_model = np.asarray([face_model_all[i] for i in self.landmarks_ids])
+        self.rvec_buffer = collections.deque(maxlen=3)
+        self.tvec_buffer = collections.deque(maxlen=3)
+        self.smoothing_buffer = collections.deque(maxlen=3)
+
+        self.setDevice()
+        self.initCamera()
+        self.initGazeModel()
+
+    def initCamera(self):
+        self.video_stream = VideoStream()
+        calibration_matrix_path = os.path.join("resources", "calib", "calibration_matrix.yaml")
+        abs_calib_path = self.resource_path(calibration_matrix_path)
+        self.camera_matrix, self.dist_coefficients = get_camera_matrix(abs_calib_path)
+        print(f"self.camera_matrix {self.camera_matrix}, self.dist_coefficients  {self.dist_coefficients}")
+
+    def initGazeModel(self):
+        """Инициализация СНС определяющей взгляд"""
+        relative_path_gaze_model = os.path.join("resources", "models", "gaze", "p00.ckpt")
+        abs_path = self.resource_path(relative_path_gaze_model)
+        gaze_model = GazeModel.load_checkpoint(abs_path) 
+        gaze_model.to(self.device)
+        gaze_model.eval()
+        self.gaze_pipeline_CNN = GazePredictor(gaze_model, 
+            self.camera_matrix, 
+            self.dist_coefficients)
+
+    def setDevice(self):
+        dev = self.configs['device']
+        if dev == 'cuda':
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            self.device = torch.device('cpu')
+
 
 
     def initUI(self):
@@ -53,6 +104,57 @@ class MainApp(QtWidgets.QMainWindow):
 
         self.circle = QtWidgets.QLabel(self)
     
+    def equalize_hist_rgb(self, rgb_img: np.ndarray) -> np.ndarray:
+        """
+        Equalize the histogram of a RGB image.
+
+        :param rgb_img: RGB image
+        :return: equalized RGB image
+        """
+        ycrcb_img = cv2.cvtColor(rgb_img, cv2.COLOR_RGB2YCrCb)  # convert from RGB color-space to YCrCb
+        ycrcb_img[:, :, 0] = cv2.equalizeHist(ycrcb_img[:, :, 0])  # equalize the histogram of the Y channel
+        equalized_img = cv2.cvtColor(ycrcb_img, cv2.COLOR_YCrCb2RGB)  # convert back to RGB color-space from YCrCb
+        return equalized_img
+    
+    def get_matrices(self, camera_matrix: np.ndarray, distance_norm: int, center_point: np.ndarray, focal_norm: int, head_rotation_matrix: np.ndarray, image_output_size: Tuple[int, int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """
+        Calculate rotation, scaling and transformation matrix.
+
+        :param camera_matrix: intrinsic camera matrix
+        :param distance_norm: normalized distance of the camera
+        :param center_point: position of the center in the image
+        :param focal_norm: normalized focal length
+        :param head_rotation_matrix: rotation of the head
+        :param image_output_size: output size of the output image
+        :return: rotation, scaling and transformation matrix
+        """
+        # normalize image
+        distance = np.linalg.norm(center_point)  # actual distance between center point and original camera
+        z_scale = distance_norm / distance
+
+        cam_norm = np.array([
+            [focal_norm, 0, image_output_size[0] / 2],
+            [0, focal_norm, image_output_size[1] / 2],
+            [0, 0, 1.0],
+        ])
+
+        scaling_matrix = np.array([
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, z_scale],
+        ])
+
+        forward = (center_point / distance).reshape(3)
+        down = np.cross(forward, head_rotation_matrix[:, 0])
+        down /= np.linalg.norm(down)
+        right = np.cross(down, forward)
+        right /= np.linalg.norm(right)
+
+        rotation_matrix = np.asarray([right, down, forward])
+        transformation_matrix = np.dot(np.dot(cam_norm, scaling_matrix), np.dot(rotation_matrix, np.linalg.inv(camera_matrix)))
+
+        return rotation_matrix, scaling_matrix, transformation_matrix
+
     def createDir(self, path):
         
         # path = data_root / person_id / day_id / Calibration
@@ -62,7 +164,50 @@ class MainApp(QtWidgets.QMainWindow):
             print(f"Directory '{path}' was created.")
         else:
             print(f"Directory '{path}' already exists.")
-      
+    
+    def open_or_create_h5(self, path):
+        # Check if the file exists
+        if os.path.exists(path):
+            # Read data from the HDF5 file
+            with h5py.File(path, 'r') as h5file:
+                # Preprocess multi-dimensional data before DataFrame creation
+                file_name_base = list(h5file['file_name_base'])
+                gaze_location = h5file['gaze_location'][:]
+                gaze_pitch = h5file['gaze_pitch'][:]
+                gaze_yaw = h5file['gaze_yaw'][:]
+                screen_size = h5file['screen_size'][:]
+
+                # Convert multi-dimensional arrays to list of tuples
+                gaze_location_list = gaze_location.tolist()
+                screen_size_list = screen_size.tolist()
+
+            # Create DataFrame from 1D lists
+            df = pd.DataFrame({
+                'file_name_base': file_name_base,
+                'gaze_pitch': gaze_pitch,
+                'gaze_yaw': gaze_yaw,
+            })
+
+            # Split tuples into separate columns
+            df[['gaze_location_0', 'gaze_location_1']] = pd.DataFrame(gaze_location_list, index=df.index)
+            df[['screen_size_0', 'screen_size_1']] = pd.DataFrame(screen_size_list, index=df.index)
+
+            return df
+
+        else:
+            # Create a new HDF5 file with empty datasets
+            with h5py.File(path, 'w') as h5file:
+                dt_str = h5py.special_dtype(vlen=str)  # for strings
+                h5file.create_dataset('file_name_base', (0,), maxshape=(None,), dtype=dt_str)
+                h5file.create_dataset('gaze_location', (0, 2), maxshape=(None, 2), dtype=np.int32)
+                h5file.create_dataset('gaze_pitch', (0,), maxshape=(None,), dtype=np.float32)
+                h5file.create_dataset('gaze_yaw', (0,), maxshape=(None,), dtype=np.float32)
+                h5file.create_dataset('screen_size', (0, 2), maxshape=(None, 2), dtype=np.int32)
+            # Create an empty DataFrame with necessary columns
+            columns = ['file_name_base', 'gaze_location_0', 'gaze_location_1', 'gaze_pitch', 'gaze_yaw', 'screen_size_0', 'screen_size_1']
+            df = pd.DataFrame(columns=columns)
+            return df
+
     def createMATFiles(self):
         person_id: str = self.configs['person_id']
         day_id: str = self.configs['day']
@@ -107,9 +252,9 @@ class MainApp(QtWidgets.QMainWindow):
 
     def writeCameraParam(self):
         camera_matrix = self.configs['camera_matrix']
-        camera_matrix_np = np.array(camera_matrix)
+        self.camera_matrix_np = np.array(camera_matrix)
         file = os.path.join(self.path_calib, 'Camera.mat')
-        savemat(file, {'camera_matrix': camera_matrix_np})
+        savemat(file, {'camera_matrix': self.camera_matrix_np})
         print(f"Camera parameters saved to {file}")
 
     def is_cursor_in_circle(self, center: Tuple[int, int]) -> bool:
@@ -171,22 +316,173 @@ class MainApp(QtWidgets.QMainWindow):
     
     def save_images(self):
         image = self.video_stream.read_frame()
-        img_rgb = self.video_stream.convert_color(image, to_rgb=True)
+        image_rgb = self.video_stream.convert_color(image, to_rgb=True)
         # обрезать лицо и получить изображение где оно находится в кадре 96 на 96
         # обрезать правый глаз и получить изображение где оно находится в кадре 96 на 64
         # обрезать левый глаз и получить изображение где оно находится в кадре 96 на 64
+        # Индексы для ключевых точек
+        height, width, _ = image_rgb.shape
+        rvec, tvec = None, None
+        results = self.face_mesh.process(image_rgb)
+        if results.multi_face_landmarks:
+            # head pose estimation
+            #landmarks_ids = [33, 133, 362, 263, 61, 291, 1]  # reye, leye, mouth
+    
+            face_landmarks = np.asarray([[landmark.x * width, landmark.y * height] 
+                                         for landmark in results.multi_face_landmarks[0].landmark])
+            face_landmarks = np.asarray([face_landmarks[i] for i in self.landmarks_ids])
+            self.smoothing_buffer.append(face_landmarks)
+            face_landmarks = np.asarray(self.smoothing_buffer).mean(axis=0)
+            success, rvec, tvec, inliers = cv2.solvePnPRansac(self.face_model, 
+                                                              face_landmarks,
+                                                               self.camera_matrix, 
+                                                               self.dist_coefficients, 
+                                                               rvec=rvec, tvec=tvec, 
+                                                               useExtrinsicGuess=True, 
+                                                               flags=cv2.SOLVEPNP_EPNP)  # Initial fit
+            for _ in range(10):
+                success, rvec, tvec = cv2.solvePnP(self.face_model, 
+                                                   face_landmarks, 
+                                                   self.camera_matrix, 
+                                                   self.dist_coefficients, 
+                                                   rvec=rvec, tvec=tvec, 
+                                                   useExtrinsicGuess=True, 
+                                                   flags=cv2.SOLVEPNP_ITERATIVE)  # Second fit for higher accuracy
+            self.rvec_buffer.append(rvec)
+            rvec = np.asarray(self.rvec_buffer).mean(axis=0)
+            self.tvec_buffer.append(tvec)
+            tvec = np.asarray(self.tvec_buffer).mean(axis=0)
+            # data preprocessing
+            (face_model_transformed, 
+             face_model_all_transformed) = get_face_landmarks_in_ccs(self.camera_matrix,
+                self.dist_coefficients, image_rgb.shape, results, self.face_model, 
+                face_model_all, self.landmarks_ids)
+            left_eye_center = 0.5 * (face_model_transformed[:, 2] + face_model_transformed[:, 3]).reshape((3, 1))  # center eye
+            right_eye_center = 0.5 * (face_model_transformed[:, 0] + face_model_transformed[:, 1]).reshape((3, 1))  # center eye
+            face_center = face_model_transformed.mean(axis=1).reshape((3, 1))
+            img_warped_left_eye, _, _ = normalize_single_image(image_rgb, 
+                                                               rvec, None, 
+                                                               left_eye_center, self.camera_matrix)
+            img_warped_right_eye, _, _ = normalize_single_image(image_rgb,
+                                                                 rvec, None, 
+                                                                 right_eye_center, self.camera_matrix)
+            img_warped_face, _, rotation_matrix = normalize_single_image(image_rgb, 
+                                                                         rvec, None, 
+                                                                         face_center, self.camera_matrix, is_eye=False)
+            if image_rgb is not None:
+                self.create_image(image_rgb, 'origin')
+                #cv2.imwrite('face_image.png', )
+                
+            if img_warped_face is not None:
+                print
+                self.create_image(img_warped_face, 'full_face')
+                #cv2.imwrite('face_image.png', )
+            else:
+                print("Failed to extract face image.")
+            if img_warped_right_eye is not None:
+                self.create_image(img_warped_right_eye, 'right_eye')
+                #cv2.imwrite('right_eye_image.png', right_eye_image)
+            else:
+                print("Failed to extract right eye image.")
+            if img_warped_left_eye is not None:
+                self.create_image(img_warped_left_eye, 'left_eye')
+                #cv2.imwrite('left_eye_image.png', left_eye_image)
+            else:
+                print("Failed to extract left eye image.")
+            
+        """indices = {
+            'left_eye_outer': 33,
+            'left_eye_inner': 133,
+            'right_eye_outer': 362,
+            'right_eye_inner': 263,
+            'nose_tip': 1,
+            'left_cheek': 234,
+            'right_cheek': 454
+        }
+        
+        # Идеальные (модельные) координаты ключевых точек
+        # Значения должны быть предварительно определены или измерены в условиях калибровки
+        model_points = np.array([
+            [-1, 1, 0],  # left_eye_outer
+            [-1, -1, 0],  # left_eye_inner
+            [1, 1, 0],   # right_eye_outer
+            [1, -1, 0],  # right_eye_inner
+            [0, 0, 1],   # nose_tip
+            [-1, 0, 0],  # left_cheek
+            [1, 0, 0]    # right_cheek
+        ])"""
 
-        results = self.face_mesh.process(img_rgb)
+        """results = self.face_mesh.process(img_rgb)
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
-                # Assuming facial landmarks for eyes and face are available
-                # For simplicity, taking bounding box around all landmarks for the face
-                # Adjust indexes for specific landmarks (e.g., eyes)
-                face_image = self.extract_area(image, face_landmarks, scale=1.5)
-                right_eye_image = self.extract_area(image, face_landmarks, specific_landmarks=[33, 133, 160, 158], scale=1.5, desired_size=(96, 64))  # Right eye indices
-                left_eye_image = self.extract_area(image, face_landmarks, specific_landmarks=[362, 263, 387, 385], scale=1.5, desired_size=(96, 64))  # Left eye indices
+                # Получаем список всех точек лица
+                landmarks = np.array([(lm.x, lm.y, lm.z) for lm in face_landmarks.landmark])
+                # Выбор индексов точек для левого и правого глаз (примерные индексы точек глаз в MediaPipe)
+                left_eye_indices = [33, 133, 159, 144, 145, 153]  # Примерные точки левого глаза
+                right_eye_indices = [362, 263, 386, 385, 387, 380]  # Примерные точки правого глаза
 
+                # Рассчитываем центр глаз по выбранным точкам
+                left_eye_center = landmarks[left_eye_indices].mean(axis=0).reshape((3, 1))
+                right_eye_center = landmarks[right_eye_indices].mean(axis=0).reshape((3, 1))
+                # Рассчитываем центр лица как среднее всех точек
+                face_center = landmarks.mean(axis=0).reshape((3, 1))
+                
+                ###key_points = np.array([landmarks[indices[key]] for key in indices])
+                # Вычисление матрицы поворота и масштаба методом Procrustes
+                R, scale = orthogonal_procrustes(key_points, model_points)
+
+                print("Rotation Matrix:\n", R)
+                print("Scale:", scale)
+
+                head_rotation = R.astype(float) #  # 3D head rotation based on 6 points-based 3D face model
+                ###
+                height, width, _ = img_rgb.shape
+                face_landmarks_point = np.asarray([[landmark.x * width, landmark.y * height] 
+                                         for landmark in results.multi_face_landmarks[0].landmark])
+                face_landmarks_point = np.asarray([face_landmarks_point[i] for i in self.landmarks_ids])
+
+                rvec, tvec = None, None
+                success, rvec, tvec, inliers = cv2.solvePnPRansac(self.face_model, 
+                                                                    face_landmarks_point,
+                                                                   self.camera_matrix_np, 
+                                                                   self.dist_coefficients, 
+                                                                   rvec=rvec, tvec=tvec, 
+                                                                   useExtrinsicGuess=True, 
+                                                                   flags=cv2.SOLVEPNP_EPNP)  # Initial fit
+                for _ in range(10):
+                    success, rvec, tvec = cv2.solvePnP(self.face_model, 
+                                                       face_landmarks_point, 
+                                                       self.camera_matrix_np, 
+                                                       self.dist_coefficients, 
+                                                       rvec=rvec, tvec=tvec, 
+                                                       useExtrinsicGuess=True, 
+                                                       flags=cv2.SOLVEPNP_ITERATIVE)  # Second fit for higher accuracy
+
+
+                img_warped_left_eye, _, _ = normalize_single_image(img_rgb, 
+                                                               rvec, None, 
+                                                               left_eye_center, self.camera_matrix_np)
+                
+                img_warped_right_eye, _, _  = normalize_single_image(img_rgb,
+                                                                 rvec, None, 
+                                                                 right_eye_center, self.camera_matrix_np)
+                
+                img_warped_face, _, rotation_matrix  = normalize_single_image(img_rgb, 
+                                                                         rvec, None, 
+                                                                         face_center, self.camera_matrix, is_eye=False)
+                
+                face_image = self.extract_area(img_rgb, face_landmarks, scale=1.5)
+                right_eye_image = self.extract_area(img_rgb, face_landmarks, specific_landmarks=[33, 133, 160, 158], scale=1.5, desired_size=(96, 64))  # Right eye indices
+                left_eye_image = self.extract_area(img_rgb, face_landmarks, specific_landmarks=[362, 263, 387, 385], scale=1.5, desired_size=(96, 64))  # Left eye indices
+                
+                
+###
+                if image is not None:
+                    self.create_image(image, 'origin')
+                    #cv2.imwrite('face_image.png', )
+                    
                 if face_image is not None:
+                    print
                     self.create_image(face_image, 'full_face')
                     #cv2.imwrite('face_image.png', )
                 else:
@@ -206,7 +502,7 @@ class MainApp(QtWidgets.QMainWindow):
                 print("Images saved.")
         else:
             print("No faces detected.")
-
+"""
 
     def extract_area(self, image, face_landmarks, specific_landmarks=None, scale=1, desired_size=(96, 96)):
         if specific_landmarks:
@@ -238,32 +534,63 @@ class MainApp(QtWidgets.QMainWindow):
 
 
     def create_image(self, image, postfix: str):
-        file_name = datetime.now().strftime("%Y_%m_%d-%H_%M_%S")
+        file_name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.jpg")
-        self.add_to_paths(postfix, full_file_path)
-        cv2.imwrite(full_file_path, image)
+        file_id: str = self.add_to_paths(postfix, full_file_path)
+        print(f"file_id {file_id}")
+        # нормализовать изображение и сохранить в папку датасета
+        #cv2.imwrite(full_file_path, image)
+        skimage.io.imsave(full_file_path, image.astype(np.uint8), check_contrast=False)
+
+        if file_id is None:
+            return
+        self.gaze_pipeline_CNN.calculate_gaze_point(image)
+        new_row = pd.DataFrame({
+            'file_name_base': [file_id.encode('utf-8')],
+            'gaze_location_0': [self.x_point],
+            'gaze_location_1': [self.y_point],
+            'gaze_pitch': self.gaze_pipeline_CNN.get_pitch(),
+            'gaze_yaw': self.gaze_pipeline_CNN.get_yaw(),
+            'screen_size_0': [self.monitor_pixels[0]],
+            'screen_size_1': [self.monitor_pixels[1]]
+        })
+
+        # Add row to DataFrame using concat
+        self.df = pd.concat([self.df, new_row], ignore_index=True)
+        print(self.df)
 
 
     
-    def add_to_paths(self, postfix: str, path:str):
+    def add_to_paths(self, postfix: str, path:str) -> str:
          # Список значений postfix, при которых функция не будет выполнять сохранение
-        skip_postfixes = ['left_eye', 'right_eye', 'landmark']
+        skip_postfixes = ['left_eye', 'right_eye', 'original']
         #
         # pxx, dayxx, filename-postfix
-        
-        parts = path.split(os.sep)
-        # Выбрать необходимые части пути (pxx, dayxx, filename без расширения)
-        relevant_parts = parts[-3:-1]  # pxx и dayxx
-        
-        print(f"relevant_parts {relevant_parts}")
-
-        # Проверяем, содержится ли postfix в списке skip_postfixes
         if postfix in skip_postfixes:
             print(f"Skipping saving for postfix '{postfix}'.")
             return
-        #
-        self.paths_list.append(relevant_parts)
+        parts = path.split(os.sep)
+        # Выбрать необходимые части пути (pxx, dayxx, filename без расширения)
+        relevant_parts = parts[-3:-1]  # pxx и dayxx
+        # Concatenate relevant parts into a string
+        file_id = '/'.join(relevant_parts) + '/' + os.path.splitext(parts[-1])[0]
+        print(f"relevant_parts {file_id}")
+        #a = file_id.split('-')[0]
+        # Проверяем, содержится ли postfix в списке skip_postfixes
+        if file_id.split('-')[0] in self.used_file_ids:
+            print(f"File ID '{file_id.split('-')[0]}' has already been used. Skipping.")
+            return None
+        else:
+            # Если file_id новый, добавляем его в список использованных
+            self.used_file_ids.append(file_id.split('-')[0])
+            return file_id.split('-')[0]
+    
 
+    def closeEvent(self, event):
+        # This method is called automatically when the window is about to close.
+        self.save_data(self.path_to_h5)  # Save the data
+        #print("Data saved on window close.")
+        event.accept()  # Accept the close event to close the window
 
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
@@ -275,9 +602,28 @@ class MainApp(QtWidgets.QMainWindow):
         # Catch key press events
         self.keyPressEvent = self.handleKeyPressEvents
 
+    def save_data(self, path='data.h5'):
+        # Open the HDF5 file for writing
+        with h5py.File(path, 'w') as h5file:
+            # Prepare data to be saved by converting DataFrame columns back to arrays or lists as needed
+            file_name_base = self.df['file_name_base'].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x).tolist()
+            gaze_location = self.df[['gaze_location_0', 'gaze_location_1']].values
+            gaze_pitch = self.df['gaze_pitch'].values
+            gaze_yaw = self.df['gaze_yaw'].values
+            screen_size = self.df[['screen_size_0', 'screen_size_1']].values
+
+            # Save datasets
+            h5file.create_dataset('file_name_base', data=np.array(file_name_base, dtype=h5py.special_dtype(vlen=str)), maxshape=(None,))
+            h5file.create_dataset('gaze_location', data=gaze_location, maxshape=(None, 2), dtype=np.int32)
+            h5file.create_dataset('gaze_pitch', data=gaze_pitch, maxshape=(None,), dtype=np.float32)
+            h5file.create_dataset('gaze_yaw', data=gaze_yaw, maxshape=(None,), dtype=np.float32)
+            h5file.create_dataset('screen_size', data=screen_size, maxshape=(None, 2), dtype=np.int32)
+
+            print("Data successfully saved to", path)
 
     def handleKeyPressEvents(self, event):
         if event.key() in [QtCore.Qt.Key_Q, QtCore.Qt.Key_Escape]:
+            self.save_data(self.path_to_h5)
             self.close()
             self.stat_window = StatApp()
             self.stat_window.show()

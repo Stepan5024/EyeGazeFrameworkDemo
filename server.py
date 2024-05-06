@@ -48,6 +48,7 @@ class GazeTrackingServer:
         calibration_matrix_path = os.path.join("resources", "calib", "calibration_matrix.yaml")
         abs_calib_path = self.resource_path(calibration_matrix_path)
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(abs_calib_path)
+        print(f"self.camera_matrix {self.camera_matrix}, self.dist_coefficients  {self.dist_coefficients}")
     
     def initEmotionModel(self):
         self.recognizer = EmotionRecognizer()
@@ -196,7 +197,7 @@ class GazeTrackingServer:
                 thread.start()
             except Exception as e:
                 print(f"server error: {e}")
-                self.logger(f"server error: {e}")
+                #self.logger(f"server error: {e}")
                 self.close_resources()
                 time.sleep(5)
 

@@ -45,6 +45,14 @@ class GazePredictor():
         """Метод для получения значения y."""
         return int(self.y)
     
+    def get_pitch(self):
+        """Метод для получения значения pitch."""
+        return self.gaze_pitch
+    
+    def get_yaw(self):
+        """Метод для получения значения yaw."""
+        return self.gaze_yaw
+
     def draw_laser_pointer(self, point_on_screen, monitor_pixels, 
                            face_model_all_transformed, gaze_points, frame_idx, plot_3d_scene,
                             face_center, gaze_vector, result, 
@@ -133,6 +141,8 @@ class GazePredictor():
             # prediction
             output = self.model(person_idx, full_face_image, right_eye_image, left_eye_image).squeeze(0).detach().cpu().numpy()
             print(f"output {output}")
+            self.gaze_pitch = output[0]
+            self.gaze_yaw = output[1]
             print(f"любая модель которая предсказывает pitch and yaw")
             gaze_vector_3d_normalized = gaze_2d_to_3d(output)
             gaze_vector = np.dot(np.linalg.inv(rotation_matrix), gaze_vector_3d_normalized)
