@@ -34,7 +34,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.createMATFiles()
         # F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_author_pperle
         file = 'data.h5'
-        self.path_to_h5 = os.path.join('F:', 'EyeGazeDataset', 'MPIIFaceGaze_post_proccessed_author_pperle', file)
+        self.path_to_h5 = os.path.join(self.configs['data_root'], file)
         self.df = self.open_or_create_h5(self.path_to_h5)
         print(self.df)
         self.video_stream = VideoStream(capture_width=1280, capture_height=720)
@@ -90,7 +90,7 @@ class MainApp(QtWidgets.QMainWindow):
          # Таймер для анимации круга
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_circle)
-        self.timer.start(80)  # обновление каждые 50 мс
+        self.timer.start(60)  # обновление каждые 50 мс
         self.x_point, self.y_point = 0, 0
         self.face_mesh = mp.solutions.face_mesh.FaceMesh(
             static_image_mode=False,
@@ -389,120 +389,7 @@ class MainApp(QtWidgets.QMainWindow):
                 #cv2.imwrite('left_eye_image.png', left_eye_image)
             else:
                 print("Failed to extract left eye image.")
-            
-        """indices = {
-            'left_eye_outer': 33,
-            'left_eye_inner': 133,
-            'right_eye_outer': 362,
-            'right_eye_inner': 263,
-            'nose_tip': 1,
-            'left_cheek': 234,
-            'right_cheek': 454
-        }
-        
-        # Идеальные (модельные) координаты ключевых точек
-        # Значения должны быть предварительно определены или измерены в условиях калибровки
-        model_points = np.array([
-            [-1, 1, 0],  # left_eye_outer
-            [-1, -1, 0],  # left_eye_inner
-            [1, 1, 0],   # right_eye_outer
-            [1, -1, 0],  # right_eye_inner
-            [0, 0, 1],   # nose_tip
-            [-1, 0, 0],  # left_cheek
-            [1, 0, 0]    # right_cheek
-        ])"""
-
-        """results = self.face_mesh.process(img_rgb)
-        if results.multi_face_landmarks:
-            for face_landmarks in results.multi_face_landmarks:
-                # Получаем список всех точек лица
-                landmarks = np.array([(lm.x, lm.y, lm.z) for lm in face_landmarks.landmark])
-                # Выбор индексов точек для левого и правого глаз (примерные индексы точек глаз в MediaPipe)
-                left_eye_indices = [33, 133, 159, 144, 145, 153]  # Примерные точки левого глаза
-                right_eye_indices = [362, 263, 386, 385, 387, 380]  # Примерные точки правого глаза
-
-                # Рассчитываем центр глаз по выбранным точкам
-                left_eye_center = landmarks[left_eye_indices].mean(axis=0).reshape((3, 1))
-                right_eye_center = landmarks[right_eye_indices].mean(axis=0).reshape((3, 1))
-                # Рассчитываем центр лица как среднее всех точек
-                face_center = landmarks.mean(axis=0).reshape((3, 1))
-                
-                ###key_points = np.array([landmarks[indices[key]] for key in indices])
-                # Вычисление матрицы поворота и масштаба методом Procrustes
-                R, scale = orthogonal_procrustes(key_points, model_points)
-
-                print("Rotation Matrix:\n", R)
-                print("Scale:", scale)
-
-                head_rotation = R.astype(float) #  # 3D head rotation based on 6 points-based 3D face model
-                ###
-                height, width, _ = img_rgb.shape
-                face_landmarks_point = np.asarray([[landmark.x * width, landmark.y * height] 
-                                         for landmark in results.multi_face_landmarks[0].landmark])
-                face_landmarks_point = np.asarray([face_landmarks_point[i] for i in self.landmarks_ids])
-
-                rvec, tvec = None, None
-                success, rvec, tvec, inliers = cv2.solvePnPRansac(self.face_model, 
-                                                                    face_landmarks_point,
-                                                                   self.camera_matrix_np, 
-                                                                   self.dist_coefficients, 
-                                                                   rvec=rvec, tvec=tvec, 
-                                                                   useExtrinsicGuess=True, 
-                                                                   flags=cv2.SOLVEPNP_EPNP)  # Initial fit
-                for _ in range(10):
-                    success, rvec, tvec = cv2.solvePnP(self.face_model, 
-                                                       face_landmarks_point, 
-                                                       self.camera_matrix_np, 
-                                                       self.dist_coefficients, 
-                                                       rvec=rvec, tvec=tvec, 
-                                                       useExtrinsicGuess=True, 
-                                                       flags=cv2.SOLVEPNP_ITERATIVE)  # Second fit for higher accuracy
-
-
-                img_warped_left_eye, _, _ = normalize_single_image(img_rgb, 
-                                                               rvec, None, 
-                                                               left_eye_center, self.camera_matrix_np)
-                
-                img_warped_right_eye, _, _  = normalize_single_image(img_rgb,
-                                                                 rvec, None, 
-                                                                 right_eye_center, self.camera_matrix_np)
-                
-                img_warped_face, _, rotation_matrix  = normalize_single_image(img_rgb, 
-                                                                         rvec, None, 
-                                                                         face_center, self.camera_matrix, is_eye=False)
-                
-                face_image = self.extract_area(img_rgb, face_landmarks, scale=1.5)
-                right_eye_image = self.extract_area(img_rgb, face_landmarks, specific_landmarks=[33, 133, 160, 158], scale=1.5, desired_size=(96, 64))  # Right eye indices
-                left_eye_image = self.extract_area(img_rgb, face_landmarks, specific_landmarks=[362, 263, 387, 385], scale=1.5, desired_size=(96, 64))  # Left eye indices
-                
-                
-###
-                if image is not None:
-                    self.create_image(image, 'origin')
-                    #cv2.imwrite('face_image.png', )
-                    
-                if face_image is not None:
-                    print
-                    self.create_image(face_image, 'full_face')
-                    #cv2.imwrite('face_image.png', )
-                else:
-                    print("Failed to extract face image.")
-
-                if right_eye_image is not None:
-                    self.create_image(right_eye_image, 'right_eye')
-                    #cv2.imwrite('right_eye_image.png', right_eye_image)
-                else:
-                    print("Failed to extract right eye image.")
-
-                if left_eye_image is not None:
-                    self.create_image(left_eye_image, 'left_eye')
-                    #cv2.imwrite('left_eye_image.png', left_eye_image)
-                else:
-                    print("Failed to extract left eye image.")
-                print("Images saved.")
-        else:
-            print("No faces detected.")
-"""
+         
 
     def extract_area(self, image, face_landmarks, specific_landmarks=None, scale=1, desired_size=(96, 96)):
         if specific_landmarks:
@@ -603,23 +490,23 @@ class MainApp(QtWidgets.QMainWindow):
         self.keyPressEvent = self.handleKeyPressEvents
 
     def save_data(self, path='data.h5'):
-        # Open the HDF5 file for writing
         with h5py.File(path, 'w') as h5file:
-            # Prepare data to be saved by converting DataFrame columns back to arrays or lists as needed
+            # Convert DataFrame columns to lists or numpy arrays as needed
             file_name_base = self.df['file_name_base'].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x).tolist()
-            gaze_location = self.df[['gaze_location_0', 'gaze_location_1']].values
-            gaze_pitch = self.df['gaze_pitch'].values
-            gaze_yaw = self.df['gaze_yaw'].values
-            screen_size = self.df[['screen_size_0', 'screen_size_1']].values
+            gaze_location = self.df[['gaze_location_0', 'gaze_location_1']].to_numpy(dtype=np.int32)  # Ensure float32 for better compatibility
+            gaze_pitch = self.df['gaze_pitch'].to_numpy(dtype=np.float32)
+            gaze_yaw = self.df['gaze_yaw'].to_numpy(dtype=np.float32)
+            screen_size = self.df[['screen_size_0', 'screen_size_1']].to_numpy(dtype=np.int32)
 
-            # Save datasets
-            h5file.create_dataset('file_name_base', data=np.array(file_name_base, dtype=h5py.special_dtype(vlen=str)), maxshape=(None,))
+            # Create datasets
+            h5file.create_dataset('file_name_base', data=np.array(file_name_base, dtype='S'), maxshape=(None,)) 
             h5file.create_dataset('gaze_location', data=gaze_location, maxshape=(None, 2), dtype=np.int32)
             h5file.create_dataset('gaze_pitch', data=gaze_pitch, maxshape=(None,), dtype=np.float32)
             h5file.create_dataset('gaze_yaw', data=gaze_yaw, maxshape=(None,), dtype=np.float32)
             h5file.create_dataset('screen_size', data=screen_size, maxshape=(None, 2), dtype=np.int32)
 
             print("Data successfully saved to", path)
+            print(self.df)
 
     def handleKeyPressEvents(self, event):
         if event.key() in [QtCore.Qt.Key_Q, QtCore.Qt.Key_Escape]:
