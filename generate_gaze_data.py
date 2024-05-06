@@ -471,7 +471,10 @@ class MainApp(QtWidgets.QMainWindow):
         else:
             # Если file_id новый, добавляем его в список использованных
             self.used_file_ids.append(file_id.split('-')[0])
-            return file_id.split('-')[0]
+            input_string = file_id.split('-')[0]
+            output_string = input_string.replace("/", "\\")
+            print(f"file_id {output_string}")
+            return output_string
     
 
     def closeEvent(self, event):
