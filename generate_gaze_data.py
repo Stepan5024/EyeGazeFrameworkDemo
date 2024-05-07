@@ -446,7 +446,7 @@ class MainApp(QtWidgets.QMainWindow):
 
             if file_id is None:
                 return
-            self.gaze_pipeline_CNN.calculate_gaze_point(image)
+        self.gaze_pipeline_CNN.calculate_gaze_point(image)
         new_row = pd.DataFrame({
                 'file_name_base': [file_id.encode('utf-8')],
                 'gaze_location_0': [self.x_point],
