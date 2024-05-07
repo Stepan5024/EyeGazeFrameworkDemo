@@ -29,7 +29,7 @@ class MainApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.good_points = 0  # счётчик хороших точек
-        self.readConfig(os.path.join('configs', 'gaze_mac.yaml'))
+        self.readConfig(os.path.join('configs', 'gaze_win10.yaml'))
         self.initUI()
         self.createMATFiles()
         # F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_author_pperle
@@ -376,8 +376,8 @@ class MainApp(QtWidgets.QMainWindow):
                                                                          face_center, self.camera_matrix, is_eye=False)
             file_name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
             if image_rgb is not None:
-                name = file_name + f"=x={self.x_point}=y={self.y_point}=w={self.monitor_pixels[0]}=h={self.monitor_pixels[1]}"
-                self.create_image(image_rgb, 'origin', name)
+                #name = file_name + f"=x={self.x_point}=y={self.y_point}=w={self.monitor_pixels[0]}=h={self.monitor_pixels[1]}"
+                self.create_image(image_rgb, 'origin', file_name)
                 #cv2.imwrite('face_image.png', )
                 
             if img_warped_face is not None:
@@ -428,26 +428,34 @@ class MainApp(QtWidgets.QMainWindow):
 
 
     def create_image(self, image, postfix: str, file_name: str):
-        
-        full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.png")
-        file_id: str = self.add_to_paths(postfix, full_file_path)
-        print(f"file_id {file_id}")
-        # нормализовать изображение и сохранить в папку датасета
-        #cv2.imwrite(full_file_path, image)
-        skimage.io.imsave(full_file_path, image.astype(np.uint8), check_contrast=False)
+        if postfix=='origin':
+            
+            name = file_name + f"=x={self.x_point}=y={self.y_point}=w={self.monitor_pixels[0]}=h={self.monitor_pixels[1]}"
+            temp_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.png")
+            file_id: str = self.add_to_paths(postfix, temp_file_path)
+            full_file_path = os.path.join(self.path_days, f"{name}-{postfix}.png")
+            skimage.io.imsave(full_file_path, image.astype(np.uint8), check_contrast=False)
+        else:
 
-        if file_id is None:
-            return
-        self.gaze_pipeline_CNN.calculate_gaze_point(image)
+            full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.png")
+            file_id: str = self.add_to_paths(postfix, full_file_path)
+            print(f"file_id {file_id}")
+            # нормализовать изображение и сохранить в папку датасета
+            #cv2.imwrite(full_file_path, image)
+            skimage.io.imsave(full_file_path, image.astype(np.uint8), check_contrast=False)
+
+            if file_id is None:
+                return
+            self.gaze_pipeline_CNN.calculate_gaze_point(image)
         new_row = pd.DataFrame({
-            'file_name_base': [file_id.encode('utf-8')],
-            'gaze_location_0': [self.x_point],
-            'gaze_location_1': [self.y_point],
-            'gaze_pitch': self.gaze_pipeline_CNN.get_pitch(),
-            'gaze_yaw': self.gaze_pipeline_CNN.get_yaw(),
-            'screen_size_0': [self.monitor_pixels[0]],
-            'screen_size_1': [self.monitor_pixels[1]]
-        })
+                'file_name_base': [file_id.encode('utf-8')],
+                'gaze_location_0': [self.x_point],
+                'gaze_location_1': [self.y_point],
+                'gaze_pitch': self.gaze_pipeline_CNN.get_pitch(),
+                'gaze_yaw': self.gaze_pipeline_CNN.get_yaw(),
+                'screen_size_0': [self.monitor_pixels[0]],
+                'screen_size_1': [self.monitor_pixels[1]]
+            })
 
         # Add row to DataFrame using concat
         self.df = pd.concat([self.df, new_row], ignore_index=True)
