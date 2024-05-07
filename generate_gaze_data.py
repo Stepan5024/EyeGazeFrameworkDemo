@@ -429,7 +429,7 @@ class MainApp(QtWidgets.QMainWindow):
 
     def create_image(self, image, postfix: str, file_name: str):
         
-        full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.jpg")
+        full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.png")
         file_id: str = self.add_to_paths(postfix, full_file_path)
         print(f"file_id {file_id}")
         # нормализовать изображение и сохранить в папку датасета
