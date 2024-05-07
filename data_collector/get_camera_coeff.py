@@ -7,7 +7,7 @@ import yaml
 
 def calibrate(showPics=True):
     # Read Images
-    imgPathList = glob.glob('F:\\EyeGazeDataset\\calibration\\*.jpg')#= glob.glob(os.path.join(calibrationDir, '*.jpg'))
+    imgPathList = glob.glob('/Users/stepanbokarev/Pictures/calibration/*.jpg')#= glob.glob(os.path.join(calibrationDir, '*.jpg'))
 
     # Initialize
     nRows = 9
@@ -30,6 +30,8 @@ def calibrate(showPics=True):
             if showPics:
                 cv.drawChessboardCorners(imgBGR, (nRows, nCols), cornersRefined, cornersFound)
                 cv.imshow('Chessboard', imgBGR)
+                filename = os.path.join(os.getcwd(), f'Chessboard_{len(imgPtsList)}.png')  # Generates a filename with a sequence number
+                cv.imwrite(filename, imgBGR)  # Saves the image to the current working directory
                 cv.waitKey(500)
 
     cv.destroyAllWindows()
@@ -46,12 +48,12 @@ def calibrate(showPics=True):
     }
     # Запись данных в файл YAML
     curFolder = os.path.dirname(os.path.abspath(__file__))
-    paramPath = os.path.join(curFolder, 'calibration.yaml')
+    paramPath = os.path.join(curFolder, 'calibration_macOS.yaml')
     with open(paramPath, 'w') as file:
         yaml.dump(calibration_data, file, default_flow_style=False)
     # Save Calibration Parameters (later video)
     
-    paramPath = os.path.join(curFolder, 'calibration.npz')
+    paramPath = os.path.join(curFolder, 'calibration_macOS.npz')
     np.savez(paramPath,
              repError=repError,
              camMatrix=camMatrix,

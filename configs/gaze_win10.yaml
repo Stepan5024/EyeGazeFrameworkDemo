@@ -1,9 +1,9 @@
-data_root: 'F:\EyeGazeDataset\gaze_user'
-person_id: 'p15'
-day: 'day02'
-monitor_pixels: 1920,1080
-width_mm: 400
-height_mm: 250
+data_root: '/Users/stepanbokarev/Pictures/gaze_data'
+person_id: 'p16'
+day: 'day01'
+monitor_pixels: 1512,982
+width_mm: 310
+height_mm: 210
 device: 'cpu'
 
 

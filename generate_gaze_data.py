@@ -16,7 +16,7 @@ from scipy.io import savemat
 import mediapipe as mp
 import pandas as pd
 import h5py
-from scipy.linalg import orthogonal_procrustes
+
 from server.models.face_model import face_model_all
 from server.processors.mpii_face_gaze_preprocessing import normalize_single_image
 from server.utils.camera_utils import get_face_landmarks_in_ccs
@@ -29,7 +29,7 @@ class MainApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.good_points = 0  # счётчик хороших точек
-        self.readConfig(os.path.join('configs', 'gaze.yaml'))
+        self.readConfig(os.path.join('configs', 'gaze_mac.yaml'))
         self.initUI()
         self.createMATFiles()
         # F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_author_pperle
@@ -188,10 +188,15 @@ class MainApp(QtWidgets.QMainWindow):
                 'gaze_yaw': gaze_yaw,
             })
 
+            if len(gaze_location_list) == len(df):
             # Split tuples into separate columns
-            df[['gaze_location_0', 'gaze_location_1']] = pd.DataFrame(gaze_location_list, index=df.index)
-            df[['screen_size_0', 'screen_size_1']] = pd.DataFrame(screen_size_list, index=df.index)
-
+                df[['gaze_location_0', 'gaze_location_1']] = pd.DataFrame(gaze_location_list, index=df.index)
+            else:
+                print("Error: Length of gaze_location_list does not match DataFrame index length.")
+            if len(screen_size_list) == len(df):
+                df[['screen_size_0', 'screen_size_1']] = pd.DataFrame(screen_size_list, index=df.index)
+            else:
+                print("Error: Length of screen_size_list does not match DataFrame index length.")
             return df
 
         else:
@@ -371,7 +376,8 @@ class MainApp(QtWidgets.QMainWindow):
                                                                          face_center, self.camera_matrix, is_eye=False)
             file_name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
             if image_rgb is not None:
-                self.create_image(image_rgb, 'origin', file_name)
+                name = file_name + f"=x={self.x_point}=y={self.y_point}=w={self.monitor_pixels[0]}=h={self.monitor_pixels[1]}"
+                self.create_image(image_rgb, 'origin', name)
                 #cv2.imwrite('face_image.png', )
                 
             if img_warped_face is not None:
