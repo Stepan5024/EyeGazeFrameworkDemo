@@ -1,6 +1,6 @@
 data_root: '/Users/stepanbokarev/Pictures/gaze_data'
-person_id: 'p22'
-day: 'day01'
+person_id: 'p21'
+day: 'day06'
 monitor_pixels: 1512,982
 width_mm: 310
 height_mm: 210
