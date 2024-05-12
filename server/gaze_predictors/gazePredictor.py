@@ -170,10 +170,6 @@ class GazePredictor():
             left_eye_image = self.prepare_images_for_model(img_warped_left_eye, transform, device)
             right_eye_image = self.prepare_images_for_model(img_warped_right_eye, transform, device)
 
-            #full_face_image = transform(image=img_warped_face)["image"].unsqueeze(0).float().to(device)
-            #left_eye_image = transform(image=img_warped_left_eye)["image"].unsqueeze(0).float().to(device)
-            #right_eye_image = transform(image=img_warped_right_eye)["image"].unsqueeze(0).float().to(device)
-
             output = self.model(person_idx, full_face_image, right_eye_image, left_eye_image).squeeze(0).detach().cpu().numpy()
             self.gaze_pitch, self.gaze_yaw = output[:2]
 
