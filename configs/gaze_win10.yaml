@@ -1,6 +1,6 @@
 data_root: 'F:\EyeGazeDataset\gaze_user'
-person_id: 'p15'
-day: 'day03'
+person_id: 'p23'
+day: 'day02'
 monitor_pixels: 1920,1080
 width_mm: 310
 height_mm: 210

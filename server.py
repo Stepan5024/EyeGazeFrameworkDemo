@@ -116,7 +116,7 @@ class GazeTrackingServer:
         if self.active_clients == 0:
             if self.inactivity_timer:
                 self.inactivity_timer.cancel()
-            self.inactivity_timer = Timer(10.0, self.shutdown_server)
+            self.inactivity_timer = Timer(60.0, self.shutdown_server)
             self.inactivity_timer.start()
         else:
             self.inactivity_timer.cancel()
