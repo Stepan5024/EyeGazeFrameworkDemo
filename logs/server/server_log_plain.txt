@@ -222,3 +222,32 @@ BrokenPipeError: [Errno 32] Broken pipe
  [  0.           0.           1.        ]] dist_coefficients [[ 0.08513225 -0.15749243  0.00029989  0.00021374  0.08085583]]
 [2024-05-12 22:45:51] EyeGazeServer INFO: Application start
 [2024-05-12 22:45:51] EyeGazeServer INFO: Server listening on 127.0.0.1:9556
+[2024-05-12 21:49:03] EyeGazeServer INFO: Camera parametrs camera_matrix [[660.75545879   0.         656.47655856]
+ [  0.         653.42695334 375.70416762]
+ [  0.           0.           1.        ]] dist_coefficients [[ 0.08513225 -0.15749243  0.00029989  0.00021374  0.08085583]]
+[2024-05-12 21:49:03] EyeGazeServer INFO: Application start
+[2024-05-12 21:49:03] EyeGazeServer INFO: Server listening on 127.0.0.1:9556
+[2024-05-12 21:49:09] EyeGazeServer INFO: Client ('127.0.0.1', 63941) connected. Total clients: 1
+[2024-05-12 21:49:09] EyeGazeServer INFO: Client ('127.0.0.1', 63941) connected. Total clients: 1
+[2024-05-12 21:50:00] EyeGazeServer ERROR: Socket send error: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 207, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 99, in send_data
+    conn.sendall(message_length.to_bytes(4, 'big'))
+ConnectionResetError: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+
+[2024-05-12 21:50:00] EyeGazeServer ERROR: Socket send error: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 207, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 99, in send_data
+    conn.sendall(message_length.to_bytes(4, 'big'))
+ConnectionResetError: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+
+[2024-05-12 21:50:00] EyeGazeServer INFO: Client ('127.0.0.1', 63941) disconnected. Total clients: 0
+[2024-05-12 21:50:00] EyeGazeServer INFO: Client ('127.0.0.1', 63941) disconnected. Total clients: 0
+[2024-05-12 21:50:35] EyeGazeServer INFO: No active clients. Shutting down the server.
+[2024-05-12 21:50:35] EyeGazeServer INFO: No active clients. Shutting down the server.
+[2024-05-12 21:50:35] EyeGazeServer ERROR: server error: [WinError 10038] Сделана попытка выполнить операцию на объекте, не являющемся сокетом
+[2024-05-12 21:50:35] EyeGazeServer ERROR: server error: [WinError 10038] Сделана попытка выполнить операцию на объекте, не являющемся сокетом

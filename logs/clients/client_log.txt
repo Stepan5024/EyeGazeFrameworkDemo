@@ -628,3 +628,1597 @@
 
 [32m[2024-05-12 22:26:23] ClientGaze INFO: [0mКлиент начал работу
 
+[32m[2024-05-12 21:48:57] ClientGaze INFO: [0mКлиент начал работу
+
+[32m[2024-05-12 21:49:01] ClientGaze ERROR: [0mОшибка при подключении к серверу: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\gaze_client.py", line 292, in showDrawingWindow
+    client_socket.connect(('127.0.0.1', 9556))
+ConnectionRefusedError: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:09] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:10] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:11] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:12] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:13] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:14] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:15] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:16] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:17] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:18] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:19] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:20] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:21] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:22] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:23] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:24] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:25] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:26] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:27] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:28] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:29] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:30] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:31] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:32] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:33] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:34] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:35] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:36] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:37] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:38] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:39] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:40] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:41] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:42] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:43] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:44] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:45] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:46] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:47] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:48] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Fearful']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:49] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:50] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:51] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:52] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:53] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: []
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Surprised', 'Neutral']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Surprised']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:54] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Sad']]
+
+[32m[2024-05-12 21:49:55] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:56] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:57] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Happy', 'Neutral']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Angry']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
+[32m[2024-05-12 21:49:58] ClientGaze INFO: [0mDetected emotions: [['Neutral', 'Happy']]
+
