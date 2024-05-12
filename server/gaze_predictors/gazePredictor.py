@@ -133,23 +133,23 @@ class GazePredictor():
                 ToTensorV2()
             ])
             device = next(self.model.parameters()).device
-            print(f"Model is on device: {device}")
+            #print(f"Model is on device: {device}")
             person_idx = torch.Tensor([0]).unsqueeze(0).long().to(device)
             full_face_image = transform(image=img_warped_face)["image"].unsqueeze(0).float().to(device)
             left_eye_image = transform(image=img_warped_left_eye)["image"].unsqueeze(0).float().to(device)
             right_eye_image = transform(image=img_warped_right_eye)["image"].unsqueeze(0).float().to(device)
             # prediction
             output = self.model(person_idx, full_face_image, right_eye_image, left_eye_image).squeeze(0).detach().cpu().numpy()
-            print(f"output {output}")
+            #print(f"output {output}")
             self.gaze_pitch = output[0]
             self.gaze_yaw = output[1]
-            print(f"любая модель которая предсказывает pitch and yaw")
+            #print(f"любая модель которая предсказывает pitch and yaw")
             gaze_vector_3d_normalized = gaze_2d_to_3d(output)
             gaze_vector = np.dot(np.linalg.inv(rotation_matrix), gaze_vector_3d_normalized)
             self.gaze_vector_buffer.append(gaze_vector)
             gaze_vector = np.asarray(self.gaze_vector_buffer).mean(axis=0)
-            print(f"gaze_vector {gaze_vector}\n")
-            print(f"gaze_vector_3d_normalized {gaze_vector_3d_normalized}\n")
+            #print(f"gaze_vector {gaze_vector}\n")
+            #print(f"gaze_vector_3d_normalized {gaze_vector_3d_normalized}\n")
             # gaze vector to screen
             result = ray_plane_intersection(face_center.reshape(3), gaze_vector, self.plane_w, self.plane_b)
             point_on_screen = get_point_on_screen(self.monitor_mm, self.monitor_pixels, result)

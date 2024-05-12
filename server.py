@@ -34,9 +34,52 @@ class GazeTrackingServer:
         self.active_clients = 0
         self.inactivity_timer = None
         self.is_active = True
+        self.img = None
+        self.shared_data = None # общий буфер и поток обработки
+        self.data_lock = threading.Lock()
         self.initialize_server_socket()
         self.initGazeModel()
         self.initEmotionModel()
+
+
+    def start_frame_processing_thread(self):
+        frame_thread = threading.Thread(target=self.frame_processor)
+        frame_thread.daemon = True
+        frame_thread.start()
+
+    def frame_processor(self):
+        while self.is_active:
+            self.img = self.video_stream.read_frame()
+            if self.img is not None and self.img.size != 0:
+                self.process_and_store_frame(self.img)
+
+    def process_and_store_frame(self, img):
+        #print(f"calck process_and_store_frame")
+        self.gaze_pipeline_CNN.calculate_gaze_point(img)
+        x_value = self.gaze_pipeline_CNN.get_x()
+        y_value = self.gaze_pipeline_CNN.get_y()
+        top_emotions = self.recognizer.predict_emotions(img)
+        img_encoded = self.encode_image(img)
+        data = self.prepare_data("2", x_value, y_value, img_encoded, top_emotions)
+        with self.data_lock:
+            self.shared_data = data
+        
+
+    def prepare_data(self, status: str, x_value: int, y_value: int, img_base64: str, emotion: List[List[str]]):
+        return {
+            'status': status,
+            'image': f"data:image/jpeg;base64,{img_base64}",
+            'coordinates': [x_value, y_value],
+            'datetime': datetime.now().strftime("%d.%m.%Y %H:%M:%S.%f")[:-3],
+            'emotions': emotion
+        }
+    
+    def send_data(self, conn, data):
+        message = json.dumps(data).encode('utf-8')
+        message_length = len(message)
+        conn.sendall(message_length.to_bytes(4, 'big'))
+        conn.sendall(message)
+        #print(f"send {message[:10]}")
 
     def initLogger(self):
         rev_path =  os.path.join("logs", "server")
@@ -116,7 +159,7 @@ class GazeTrackingServer:
         if self.active_clients == 0:
             if self.inactivity_timer:
                 self.inactivity_timer.cancel()
-            self.inactivity_timer = Timer(60.0, self.shutdown_server)
+            self.inactivity_timer = Timer(35.0, self.shutdown_server)
             self.inactivity_timer.start()
         else:
             self.inactivity_timer.cancel()
@@ -126,11 +169,7 @@ class GazeTrackingServer:
         self.server_socket.close()
         self.video_stream.release()
     
-    def send_data(self, conn, data):
-        message = json.dumps(data).encode('utf-8')
-        message_length = len(message)
-        conn.sendall(message_length.to_bytes(4, 'big'))
-        conn.sendall(message)
+
     
     def process_frame(self, conn):
         img = self.video_stream.read_frame()
@@ -153,14 +192,7 @@ class GazeTrackingServer:
         except cv2.error as e:
             logging.error(f"Error encoding image: {e}")
 
-    def prepare_data(self, status: str, x_value: int, y_value: int, img_base64: str, emotion: List[List[str]]):
-        return {
-            'status': status,
-            'image': f"data:image/jpeg;base64,{img_base64}",
-            'coordinates': [x_value, y_value],
-            'datetime': datetime.now().strftime("%d.%m.%Y %H:%M:%S.%f")[:-3],
-            'emotions': emotion
-        }
+
     
     def encode_image(self, img):
         _, img_encoded = cv2.imencode('.jpg', img)
@@ -169,10 +201,25 @@ class GazeTrackingServer:
     
     def client_handler(self, conn, addr):
         self.active_clients += 1
+        #self.logger.debug(f"active_clients {self.active_clients}\n")
+        self.logger.info(f"Client {addr} connected. Total clients: {self.active_clients}")
         try:
             while True:
-                if not self.process_frame(conn):
-                    break
+                with self.data_lock:
+                    data_to_send = self.shared_data
+                if data_to_send:
+                    #self.logger.debug(f"Socket data_to_send: {data_to_send}\n")
+                    try:
+                        self.send_data(conn, data_to_send)
+                        #self.logger.debug(f"send_data\n")
+                    except socket.error as e:
+                        tb = traceback.format_exc()
+                        self.logger.error(f"Socket send error: {e}\n{tb}")
+                        break  # Выход из цикла при ошибке отправки данных
+                time.sleep(0.1)           
+                """Какой должен быть здесь написан код чтобы отправлять данные"""
+                #if not self.process_frame(conn):
+                #    break
         except socket.error as e:
             tb = traceback.format_exc()
             self.logger.error(f"Socket error: {e}\n{tb}")
@@ -188,11 +235,12 @@ class GazeTrackingServer:
         
     def run(self):
         self.reset_inactivity_timer()
+        self.start_frame_processing_thread()
         while self.is_active:
             try:
                 conn, addr = self.server_socket.accept()
                 self.reset_inactivity_timer()
-                self.logger.info(f"Client {addr} connected. Total clients: {self.active_clients}")
+                
                 thread = threading.Thread(target=self.client_handler, args=(conn, addr))
                 thread.start()
             except Exception as e:

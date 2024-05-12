@@ -50,70 +50,85 @@ class VideoThread(QThread):
         logger.info(f"Detected emotions: {self.emotions}\n")
 
     def run(self):
+        print(f"run")
         global detection_is_on
         display = np.ones((self.monitor_pixels[1], self.monitor_pixels[0], 3), dtype=np.uint8)
         while True:
-            if detection_is_on:
-                if not client_socket:
-                    print("Соединение не установлено. Попытка переподключения...")
-                    logger.error(f"Соединение не установлено. Попытка переподключения...\n")
-                elif client_socket is not None:
-                    # Получение размера сообщения
-                    message_length_bytes = client_socket.recv(4)
-                    if not message_length_bytes:
-                        break
-                    message_length = int.from_bytes(message_length_bytes, 'big')
-                    # Получение данных от сервера
-                    data = b''
-                    while len(data) < message_length:
-                        packet = None
-                        try:
-                            packet = client_socket.recv(message_length - len(data))
-                        except OSError as e:
-                            print(f"Ошибка: {e}")
-                            logger.error(f"Ошибка при подключении к серверу: {e}\n")
-                        if not packet:
+            try:
+                if detection_is_on:
+                    if not client_socket:
+                        print("Соединение не установлено. Попытка переподключения...")
+                        logger.error(f"Соединение не установлено. Попытка переподключения...\n")
+                    elif client_socket is not None:
+                        # Получение размера сообщения
+                        message_length_bytes = client_socket.recv(4)
+                        if not message_length_bytes:
+                            print("if not message_length_bytes")
                             break
-                        data += packet
-                    if data is not None:
-                        results = json.loads(data.decode('utf-8'))
-                        status = results.get('status')
+                        message_length = int.from_bytes(message_length_bytes, 'big')
+                        # Получение данных от сервера
+                        data = b''
+                        while len(data) < message_length:
+                            packet = None
+                            try:
+                                packet = client_socket.recv(message_length - len(data))
+                            except OSError as e:
+                                print(f"Ошибка: {e}")
+                                logger.error(f"Ошибка при подключении к серверу: {e}\n")
+                            if not packet:
+                                print(f"Connection closed prematurely.")
+                                break
+                            data += packet
+                        if data is not None:
+                            try:
+                                results = json.loads(data.decode('utf-8'))
+                                status = results.get('status')
 
-                        if status == '1':
-                            print("System error: Произошла системная ошибка.")
-                            logger.error(f"System error: Произошла системная ошибка.\n")
-                        elif status == '2':
-                            #print("Image and features processing successful.")
-                            # Продолжение обработки изображения и координат
-                            self.process_image_and_coordinates(results)
-                        elif status == '3':
-                            print("User not detected: Пользователь не обнаружен.")
-                            logger.error(f"User not detected: Пользователь не обнаружен.\n")
-                        elif status == '4':
-                            print("Image capture failed: Ошибка при захвате изображения.")
-                            logger.error(f"Image capture failed: Ошибка при захвате изображения.\n")
-                        elif status == '5':
-                            print("Image processing error: Ошибка обработки изображения.")
-                            logger.error(f"Image processing error: Ошибка обработки изображения.\n")
+                                if status == '1':
+                                    print("System error: Произошла системная ошибка.")
+                                    logger.error(f"System error: Произошла системная ошибка.\n")
+                                elif status == '2':
+                                    #print("Image and features processing successful.")
+                                    # Продолжение обработки изображения и координат
+                                    self.process_image_and_coordinates(results)
+                                elif status == '3':
+                                    print("User not detected: Пользователь не обнаружен.")
+                                    logger.error(f"User not detected: Пользователь не обнаружен.\n")
+                                elif status == '4':
+                                    print("Image capture failed: Ошибка при захвате изображения.")
+                                    logger.error(f"Image capture failed: Ошибка при захвате изображения.\n")
+                                elif status == '5':
+                                    print("Image processing error: Ошибка обработки изображения.")
+                                    logger.error(f"Image processing error: Ошибка обработки изображения.\n")
+                                else:
+                                    print("Unknown status received.")
+                                    logger.error(f"Unknown status received.\n")
+                            except json.JSONDecodeError as e:
+                                print("Failed to decode JSON data:", e)
+                                logger.error(f"Failed to decode JSON data: {e}\n")
                         else:
-                            print("Unknown status received.")
-                            logger.error(f"Unknown status received.\n")
-                                            
-                point_on_screen = (self.x_value, self.y_value)
-                self.gaze_points.appendleft(point_on_screen)
-                display.fill(255)
-                for idx in range(1, len(self.gaze_points)):
-                    thickness = round((len(self.gaze_points) - idx) / len(self.gaze_points) * 5) + 1
-                    cv2.line(display, self.gaze_points[idx - 1], self.gaze_points[idx], (0, 0, 255), thickness)
+                            print("data is not None")
 
-                rgbImage = cv2.cvtColor(display, cv2.COLOR_BGR2RGB)
-                h, w, ch = rgbImage.shape
-                bytesPerLine = ch * w
-                convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(self.monitor_pixels[0], self.monitor_pixels[1], Qt.KeepAspectRatio)
-                self.changePixmap.emit(p)
-            else:
-                detection_is_on = False
+                    point_on_screen = (self.x_value, self.y_value)
+                    self.gaze_points.appendleft(point_on_screen)
+                    display.fill(255)
+                    for idx in range(1, len(self.gaze_points)):
+                        thickness = round((len(self.gaze_points) - idx) / len(self.gaze_points) * 5) + 1
+                        cv2.line(display, self.gaze_points[idx - 1], self.gaze_points[idx], (0, 0, 255), thickness)
+
+                    rgbImage = cv2.cvtColor(display, cv2.COLOR_BGR2RGB)
+                    h, w, ch = rgbImage.shape
+                    bytesPerLine = ch * w
+                    convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
+                    p = convertToQtFormat.scaled(self.monitor_pixels[0], self.monitor_pixels[1], Qt.KeepAspectRatio)
+                    self.changePixmap.emit(p)
+                else:
+                    detection_is_on = False
+                    print("detection_is_on = False")
+                    break
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                logger.error(f"An error occurred: {e}\n")
                 break
 
 

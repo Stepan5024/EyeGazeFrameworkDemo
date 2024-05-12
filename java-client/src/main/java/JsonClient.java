@@ -43,32 +43,37 @@ public class JsonClient {
 
 
     }
-
+    private void closeSocket() {
+        try {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+                System.out.println("Сокет закрыт успешно");
+            }
+        } catch (IOException ex) {
+            System.out.println("Ошибка при закрытии сокета: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
     public void runClient() {
         ImageFrame frame = new ImageFrame();
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                try {
-                    if (socket != null && !socket.isClosed()) {
-                        socket.close();
-                        System.out.println("Сокет закрыт успешно");
-                    }
-                } catch (IOException ex) {
-                    System.out.println("Ошибка при закрытии сокета: " + ex.getMessage());
-                    ex.printStackTrace();
-                }
+                closeSocket();
             }
         });
 
         while (true) { // Бесконечный цикл для попыток подключения
             try {
-                socket = new Socket(SERVER_IP, SERVER_PORT);
+                if (socket == null || socket.isClosed()) {
+                    socket = new Socket(SERVER_IP, SERVER_PORT);
+                }
+
                 InputStream inputStream = socket.getInputStream();
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
 
                 byte[] lengthBytes = new byte[4];
-                while (bufferedInputStream.read(lengthBytes, 0, 4) != -1) {
+                while (bufferedInputStream. read(lengthBytes, 0, 4) != -1) {
                     int length = byteArrayToInt(lengthBytes);
                     if (length > 0) {
                         byte[] messageBytes = new byte[length];
@@ -87,6 +92,8 @@ public class JsonClient {
             } catch (IOException e) {
                 System.out.println("Ошибка при подключении к серверу: " + e.getMessage());
                 e.printStackTrace();
+
+                closeSocket();
 
                 // Переподключение после 5 секунд
                 try {
