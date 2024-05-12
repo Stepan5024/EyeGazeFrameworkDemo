@@ -56,7 +56,7 @@ class VideoWidget(QWidget):
         self.face_detector = mp.solutions.face_detection.FaceDetection(model_selection=0, min_detection_confidence=0.5)
         self.emotion_count = {emotion: 0 for emotion in EMOTIONS.values()}
         self.initUI()
-        self.readConfig(os.path.join('configs', 'emotion.yaml'))
+        self.readConfig(os.path.join('configs', 'emotion_ubuntu.yaml'))
         self.DIR = self.configs['generate_data_root']
             # Create directories for all emotions
         for emotion_key, emotion_name in EMOTIONS.items():

@@ -29,7 +29,7 @@ class MainApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.good_points = 0  # счётчик хороших точек
-        self.readConfig(os.path.join('configs', 'gaze_win10.yaml'))
+        self.readConfig(os.path.join('configs', 'gaze_ubuntu.yaml'))
         self.initUI()
         self.createMATFiles()
         # F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_author_pperle

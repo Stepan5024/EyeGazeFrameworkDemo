@@ -84,6 +84,8 @@ public class JsonClient {
                         if (jsonElement.isJsonObject()) {
                             JsonObject jsonObject = jsonElement.getAsJsonObject();
                             String imageData = jsonObject.get("image").getAsString().split(",")[1];
+                            String coordinates = String.valueOf(jsonObject.get("coordinates"));
+                            System.out.println(coordinates);
                             BufferedImage image = decodeToImage(imageData);
                             frame.updateImage(image);
                         }

@@ -1,3 +1,6 @@
+import logging
+import os
+import pathlib
 import sys
 import cv2
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -6,8 +9,10 @@ from PyQt5.QtGui import QImage, QPixmap, QFont
 from PyQt5.QtGui import QPainter, QColor
 import torch
 from torchvision import transforms
+import yaml
 
-from server.emotion.clean.em_pytorch import SimpleCNN
+from logger import create_logger
+from server.models.emotionModel import EmotionModel
 
 class VideoWindow(QMainWindow):
     def __init__(self, model, emotion_dict, cascade_path):
@@ -62,14 +67,29 @@ class VideoWindow(QMainWindow):
     def closeEvent(self, event):
         self.cap.release()
 
+
+def resource_path(relative_path) -> str:
+    """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
+    try:
+        # временная папку _MEIPASS для ресурсов
+        base_path = sys._MEIPASS
+    except Exception:
+        # Если приложение запущено из исходного кода, то используется обычный путь
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     print(f"Connected to server")
-    model = SimpleCNN()  # Make sure you load your model correctly before this line
-    model.load_state_dict(torch.load(r'C:\Users\bokar\Documents\EyeGazeFrameworkDemo\resources\emotion\model.pth'))
+    
+    model = EmotionModel()
+    relative_path_emotion_model: str = os.path.join("resources",  "emotion", "model.pth")
+    abs_path: str = resource_path(relative_path_emotion_model)
+    model.load_state_dict(torch.load(abs_path))
     model.eval()
     emotion_dict = {0: "Злой", 1: "Чувствующий отвращение", 2: "Напуганный", 3: "Счастливый", 4: "Нейтральное состояние", 5: "Огорченный", 6: "Удивленный"}
-    cascade_path = r'C:\Users\bokar\Documents\EyeGazeFrameworkDemo\resources\emotion\haarcascade_frontalface_default.xml'
-    main_window = VideoWindow(model, emotion_dict, cascade_path)
+    relative_path_haar_model: str = os.path.join("resources", "emotion", "haarcascade_frontalface_default.xml")
+    abs_path: str = resource_path(relative_path_haar_model)
+    main_window = VideoWindow(model, emotion_dict, abs_path)
     main_window.show()
     sys.exit(app.exec_())

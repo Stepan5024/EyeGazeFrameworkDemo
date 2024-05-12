@@ -1,0 +1,4 @@
+dataset_root: '/media/stepan/Expansion/EyeGazeDataset/emotion/fer_2013_data/'
+emotion_model_path: 'resources/emotion/'
+generate_data_root: '/media/stepan/Expansion/EyeGazeDataset/emotion/custom_data/'
+path_to_csv_dataset: '/media/stepan/Expansion/EyeGazeDataset/emotion/'

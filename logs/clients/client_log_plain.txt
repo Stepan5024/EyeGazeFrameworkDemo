@@ -622,3 +622,9 @@
 
 [2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
 
+[2024-05-12 22:25:13] ClientGaze INFO: Клиент начал работу
+
+[2024-05-12 22:25:53] ClientGaze INFO: Клиент начал работу
+
+[2024-05-12 22:26:23] ClientGaze INFO: Клиент начал работу
+
