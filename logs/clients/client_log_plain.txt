@@ -1,0 +1,624 @@
+[2024-05-12 17:21:33] ClientGaze INFO: Клиент начал работу
+
+[2024-05-12 17:21:33] ClientGaze INFO: Detected emotions: [['Angry', 'Fearful']]
+
+[2024-05-12 17:21:33] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Angry', 'Neutral']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Angry', 'Fearful']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Angry', 'Fearful']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Neutral']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Neutral']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Neutral']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:34] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: [['Fearful', 'Angry']]
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:35] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:36] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:37] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Neutral', 'Sad'], ['Surprised', 'Neutral']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral'], ['Surprised', 'Neutral']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral']]
+
+[2024-05-12 17:21:38] ClientGaze INFO: Detected emotions: [['Happy', 'Sad'], ['Neutral', 'Surprised']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Neutral']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: [['Happy', 'Sad']]
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 17:21:39] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:07] ClientGaze INFO: Клиент начал работу
+
+[2024-05-12 19:10:11] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:11] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:11] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:11] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:11] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:11] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:12] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:13] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Happy']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Happy']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Happy']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Happy']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+
+[2024-05-12 19:10:14] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:15] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:16] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:17] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:18] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:19] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:20] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:21] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:22] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: [['Neutral', 'Angry']]
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:23] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: []
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Neutral', 'Happy']]
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+
+[2024-05-12 19:10:24] ClientGaze INFO: Detected emotions: [['Surprised', 'Neutral']]
+

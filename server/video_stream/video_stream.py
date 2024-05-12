@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 class VideoStream:
-    def __init__(self, source=1, fps=None, capture_width=None, capture_height=None):
+    def __init__(self, source=0, fps=None, capture_width=None, capture_height=None):
         # Инициализируем захват видео с указанного источника
         self.cap = cv2.VideoCapture(source)
         if not self.cap.isOpened():
@@ -36,7 +36,7 @@ class VideoStream:
     def read_frame(self):
         ret, frame = self.cap.read()
         if not ret:
-            print("Не удается прочитать видеокадр") 
+            #print("Не удается прочитать видеокадр") 
             return None  # Возврат None в случае ошибки
         return frame
 

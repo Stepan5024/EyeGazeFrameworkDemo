@@ -1,12 +1,13 @@
 import logging
 import pathlib
 import traceback
-from typing import List
+from typing import Any, Dict, List, Optional
 import cv2
 import socket
 import sys
 import os
 import json
+import numpy as np
 import torch
 import threading
 from threading import Timer
@@ -26,46 +27,63 @@ from server.utils.camera_utils import get_camera_matrix
 class GazeTrackingServer:
     def __init__(self):
         self.readConfig(os.path.join('configs', 'server.yaml'))
+        self.initLogger()
         self.setDevice()
         self.initCamera()
-        self.initLogger()
-        self.host = self.configs['host']
-        self.port = self.configs['port']
-        self.active_clients = 0
-        self.inactivity_timer = None
-        self.is_active = True
-        self.img = None
-        self.shared_data = None # общий буфер и поток обработки
-        self.data_lock = threading.Lock()
+        
+        self.host: str = self.configs['host']
+        self.port: int  = self.configs['port']
+        self.active_clients: int  = 0
+        self.inactivity_timer: Optional[threading.Timer] = None
+        self.is_active: bool = True
+        self.img: Optional[Any]  = None
+        self.shared_data: Optional[Any] = None # общий буфер
+        self.data_lock: threading.Lock = threading.Lock() # поток обработки
         self.initialize_server_socket()
         self.initGazeModel()
         self.initEmotionModel()
 
 
-    def start_frame_processing_thread(self):
+    def start_frame_processing_thread(self) -> None:
+        """
+        Запускает поток обработки кадров. 
+        """
         frame_thread = threading.Thread(target=self.frame_processor)
         frame_thread.daemon = True
         frame_thread.start()
 
-    def frame_processor(self):
+    def frame_processor(self) -> None:
+        """
+        Метод, который выполняется в потоке и обрабатывает видеокадры до тех пор, пока сервер активен.
+        img: Optional[np.array]  # Изображение, полученное от видеопотока, может быть None
+        """
         while self.is_active:
             self.img = self.video_stream.read_frame()
             if self.img is not None and self.img.size != 0:
                 self.process_and_store_frame(self.img)
 
-    def process_and_store_frame(self, img):
-        #print(f"calck process_and_store_frame")
+    def process_and_store_frame(self, img: np.array) -> None:
+        """
+        Обрабатывает и сохраняет кадр, используя нейросеть для расчёта точки взгляда и распознавания эмоций.
+        img: np.array                  # Изображение для обработки
+        x_value: float                 # Рассчитанное значение X точки взгляда
+        y_value: float                 # Рассчитанное значение Y точки взгляда
+        top_emotions: List[str]        # Список распознанных эмоций
+        img_encoded: bytes             # Кодированное изображение
+        data: Any                      # Подготовленные данные для общего доступа
+        """
         self.gaze_pipeline_CNN.calculate_gaze_point(img)
-        x_value = self.gaze_pipeline_CNN.get_x()
-        y_value = self.gaze_pipeline_CNN.get_y()
-        top_emotions = self.recognizer.predict_emotions(img)
-        img_encoded = self.encode_image(img)
+        x_value: int = self.gaze_pipeline_CNN.get_x()
+        y_value: int = self.gaze_pipeline_CNN.get_y()
+        top_emotions: List[str] = self.recognizer.predict_emotions(img)
+        img_encoded: bytes = self.encode_image(img)
         data = self.prepare_data("2", x_value, y_value, img_encoded, top_emotions)
         with self.data_lock:
             self.shared_data = data
         
 
-    def prepare_data(self, status: str, x_value: int, y_value: int, img_base64: str, emotion: List[List[str]]):
+    def prepare_data(self, status: str, x_value: int, y_value: int, img_base64: str, emotion: List[List[str]]) -> Dict[str, Any]:
+        """Формирование JSON"""
         return {
             'status': status,
             'image': f"data:image/jpeg;base64,{img_base64}",
@@ -74,48 +92,54 @@ class GazeTrackingServer:
             'emotions': emotion
         }
     
-    def send_data(self, conn, data):
-        message = json.dumps(data).encode('utf-8')
-        message_length = len(message)
+    def send_data(self, conn: socket.socket, data: Dict[str, Any]):
+        """Отправляет переданные данные на переданный сокет"""
+        message: bytes = json.dumps(data).encode('utf-8')
+        message_length: int = len(message)
         conn.sendall(message_length.to_bytes(4, 'big'))
         conn.sendall(message)
-        #print(f"send {message[:10]}")
 
-    def initLogger(self):
-        rev_path =  os.path.join("logs", "server")
-        abs_path = pathlib.Path(self.resource_path(rev_path))
-        self.logger = create_logger("EyeGazeServer", abs_path, 'server_log.txt')
+
+    def initLogger(self) -> None:
+        """Инициализация логера"""
+        rev_path: str = os.path.join("logs", "server")
+        abs_path: pathlib.Path = pathlib.Path(self.resource_path(rev_path))
+        self.logger: logging.Logger = create_logger("EyeGazeServer", abs_path, 'server_log.txt')
     
-    def initCamera(self):
-        self.video_stream = VideoStream()
-        calibration_matrix_path = os.path.join("resources", "calib", "calibration_matrix.yaml")
-        abs_calib_path = self.resource_path(calibration_matrix_path)
+    def initCamera(self) -> None:
+        """Инициализация видеопотока и загрузка калибровочных данных камеры."""
+        self.video_stream: VideoStream = VideoStream()
+        calibration_matrix_path: str = os.path.join("resources", "calib", "calibration_matrix.yaml")
+        abs_calib_path: str = self.resource_path(calibration_matrix_path)
+        self.camera_matrix: np.ndarray = None
+        self.dist_coefficients: np.ndarray = None
         self.camera_matrix, self.dist_coefficients = get_camera_matrix(abs_calib_path)
-        print(f"self.camera_matrix {self.camera_matrix}, self.dist_coefficients  {self.dist_coefficients}")
+        self.logger.info(f"Camera parametrs camera_matrix {self.camera_matrix} dist_coefficients {self.dist_coefficients}")
     
     def initEmotionModel(self):
-        self.recognizer = EmotionRecognizer()
+        self.recognizer: EmotionRecognizer = EmotionRecognizer()
 
-    def initGazeModel(self):
+    def initGazeModel(self) -> None:
         """Инициализация СНС определяющей взгляд"""
-        relative_path_gaze_model = os.path.join("resources", "models", "gaze", "p00.ckpt")
-        abs_path = self.resource_path(relative_path_gaze_model)
-        gaze_model = GazeModel.load_checkpoint(abs_path) 
+        relative_path_gaze_model: str = os.path.join("resources", "models", "gaze", "p00.ckpt")
+        abs_path: str = self.resource_path(relative_path_gaze_model)
+        gaze_model: GazeModel = GazeModel.load_checkpoint(abs_path) 
         gaze_model.to(self.device)
         gaze_model.eval()
-        self.gaze_pipeline_CNN = GazePredictor(gaze_model, 
+        self.gaze_pipeline_CNN: GazePredictor = GazePredictor(gaze_model, 
             self.camera_matrix, 
             self.dist_coefficients)
 
-    def setDevice(self):
-        dev = self.configs['device']
+    def setDevice(self) -> None:
+        dev: str = self.configs['device']
+        self.device: torch.device = None
         if dev == 'cuda':
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         else:
             self.device = torch.device('cpu')
 
-    def readConfig(self, path: str):
-        path_to_config = self.resource_path(path)
+    def readConfig(self, path: str) -> None:
+        path_to_config: str = self.resource_path(path)
         self.configs: dict = self.load_config(path_to_config)
 
     def load_config(self, config_path: str):
@@ -124,17 +148,15 @@ class GazeTrackingServer:
 
     def resource_path(self, relative_path) -> str:
         """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
-        #if getattr(sys, 'frozen', False):
         try:
-            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
+            # временная папку _MEIPASS для ресурсов
             base_path = sys._MEIPASS
         except Exception:
             # Если приложение запущено из исходного кода, то используется обычный путь
             base_path = os.path.abspath(".")
-    
         return os.path.join(base_path, relative_path)
     
-    def initialize_server_socket(self):
+    def initialize_server_socket(self) -> None:
         """Инициализация сокета сервера."""
         self.logger.info("Application start")
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -144,9 +166,9 @@ class GazeTrackingServer:
         print(f'Server listening on {self.host}:{self.port}')
         self.logger.info(f'Server listening on {self.host}:{self.port}')
     
-    def shutdown_server(self):
+    def shutdown_server(self) -> None:
         if self.active_clients == 0:
-            print("No active clients. Shutting down the server.")
+            #print("No active clients. Shutting down the server.")
             self.logger.info("No active clients. Shutting down the server.")
             self.close_resources()
             self.is_active = False
@@ -154,8 +176,7 @@ class GazeTrackingServer:
         else:
             self.inactivity_timer.cancel()
 
-
-    def reset_inactivity_timer(self):
+    def reset_inactivity_timer(self) -> None:
         if self.active_clients == 0:
             if self.inactivity_timer:
                 self.inactivity_timer.cancel()
@@ -164,62 +185,31 @@ class GazeTrackingServer:
         else:
             self.inactivity_timer.cancel()
         
-    def close_resources(self):
-        """Close resources before restarting or shutting down."""
+    def close_resources(self) -> None:
+        """Освобождение ресурсов после закрытия сокета"""
         self.server_socket.close()
         self.video_stream.release()
-    
 
-    
-    def process_frame(self, conn):
-        img = self.video_stream.read_frame()
-        if self.is_active and img is not None and img.size != 0 and self.gaze_pipeline_CNN is not None:
-            self.handle_image_processing_and_sending(img, conn)
-            return True
-        else:
-            logging.warning("Received an empty frame.")
-            return False
-    
-    def handle_image_processing_and_sending(self, img, conn):
-        self.gaze_pipeline_CNN.calculate_gaze_point(img)
-        x_value = self.gaze_pipeline_CNN.get_x()
-        y_value = self.gaze_pipeline_CNN.get_y()
-        top_emotions = self.recognizer.predict_emotions(img)
-        try:
-            img_encoded = self.encode_image(img)
-            data = self.prepare_data("2", x_value, y_value, img_encoded, top_emotions)
-            self.send_data(conn, data)
-        except cv2.error as e:
-            logging.error(f"Error encoding image: {e}")
-
-
-    
-    def encode_image(self, img):
+    def encode_image(self, img: np.ndarray) -> bytes:
         _, img_encoded = cv2.imencode('.jpg', img)
         img_bytes = img_encoded.tobytes()
         return base64.b64encode(img_bytes).decode('utf-8')
     
-    def client_handler(self, conn, addr):
+    def client_handler(self, conn: socket.socket, addr: tuple):
         self.active_clients += 1
-        #self.logger.debug(f"active_clients {self.active_clients}\n")
         self.logger.info(f"Client {addr} connected. Total clients: {self.active_clients}")
         try:
             while True:
                 with self.data_lock:
                     data_to_send = self.shared_data
                 if data_to_send:
-                    #self.logger.debug(f"Socket data_to_send: {data_to_send}\n")
                     try:
                         self.send_data(conn, data_to_send)
-                        #self.logger.debug(f"send_data\n")
                     except socket.error as e:
                         tb = traceback.format_exc()
                         self.logger.error(f"Socket send error: {e}\n{tb}")
-                        break  # Выход из цикла при ошибке отправки данных
-                time.sleep(0.1)           
-                """Какой должен быть здесь написан код чтобы отправлять данные"""
-                #if not self.process_frame(conn):
-                #    break
+                        break
+                time.sleep(0.05)           
         except socket.error as e:
             tb = traceback.format_exc()
             self.logger.error(f"Socket error: {e}\n{tb}")
@@ -232,7 +222,6 @@ class GazeTrackingServer:
             self.logger.info(f"Client {addr} disconnected. Total clients: {self.active_clients}")
             self.reset_inactivity_timer()
         
-        
     def run(self):
         self.reset_inactivity_timer()
         self.start_frame_processing_thread()
@@ -244,13 +233,12 @@ class GazeTrackingServer:
                 thread = threading.Thread(target=self.client_handler, args=(conn, addr))
                 thread.start()
             except Exception as e:
-                print(f"server error: {e}")
-                #self.logger(f"server error: {e}")
+                self.logger.error(f"server error: {e}")
                 self.close_resources()
                 time.sleep(5)
 
 def main():
-    server = GazeTrackingServer()
+    server: GazeTrackingServer = GazeTrackingServer()
     server.run()
 
 if __name__ == '__main__':

@@ -1,0 +1,114 @@
+[32m[2024-05-12 16:58:12] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 16:58:12] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 16:58:16] EyeGazeServer INFO: [0mClient ('127.0.0.1', 60721) connected. Total clients: 1
+[32m[2024-05-12 16:58:25] EyeGazeServer ERROR: [0mSocket send error: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 213, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 81, in send_data
+    conn.sendall(message)
+ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+
+[32m[2024-05-12 16:58:25] EyeGazeServer INFO: [0mClient ('127.0.0.1', 60721) disconnected. Total clients: 0
+[32m[2024-05-12 16:59:00] EyeGazeServer INFO: [0mNo active clients. Shutting down the server.
+[32m[2024-05-12 17:03:23] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 17:03:23] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 17:03:31] EyeGazeServer INFO: [0mClient ('127.0.0.1', 60792) connected. Total clients: 1
+[32m[2024-05-12 17:03:38] EyeGazeServer ERROR: [0mSocket send error: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 230, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 98, in send_data
+    conn.sendall(message)
+ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+
+[32m[2024-05-12 17:03:38] EyeGazeServer INFO: [0mClient ('127.0.0.1', 60792) disconnected. Total clients: 0
+[32m[2024-05-12 17:04:13] EyeGazeServer INFO: [0mNo active clients. Shutting down the server.
+[32m[2024-05-12 17:07:44] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 17:07:44] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 17:07:50] EyeGazeServer INFO: [0mClient ('127.0.0.1', 60848) connected. Total clients: 1
+[32m[2024-05-12 17:08:00] EyeGazeServer ERROR: [0mSocket send error: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 230, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 98, in send_data
+    conn.sendall(message)
+ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+
+[32m[2024-05-12 17:08:00] EyeGazeServer INFO: [0mClient ('127.0.0.1', 60848) disconnected. Total clients: 0
+[32m[2024-05-12 17:08:35] EyeGazeServer INFO: [0mNo active clients. Shutting down the server.
+[32m[2024-05-12 17:21:21] EyeGazeServer INFO: [0mCamera parametrs camera_matrix [[660.75545879   0.         656.47655856]
+ [  0.         653.42695334 375.70416762]
+ [  0.           0.           1.        ]] dist_coefficients [[ 0.08513225 -0.15749243  0.00029989  0.00021374  0.08085583]]
+[32m[2024-05-12 17:21:21] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 17:21:21] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 17:21:25] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61096) connected. Total clients: 1
+[32m[2024-05-12 17:21:33] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61098) connected. Total clients: 2
+[32m[2024-05-12 17:21:40] EyeGazeServer ERROR: [0mSocket send error: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 231, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 99, in send_data
+    conn.sendall(message_length.to_bytes(4, 'big'))
+ConnectionResetError: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+
+[32m[2024-05-12 17:21:40] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61098) disconnected. Total clients: 1
+[32m[2024-05-12 17:21:43] EyeGazeServer ERROR: [0mSocket send error: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 231, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 100, in send_data
+    conn.sendall(message)
+ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+
+[32m[2024-05-12 17:21:43] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61096) disconnected. Total clients: 0
+[32m[2024-05-12 17:22:18] EyeGazeServer INFO: [0mNo active clients. Shutting down the server.
+[32m[2024-05-12 17:22:30] EyeGazeServer INFO: [0mCamera parametrs camera_matrix [[660.75545879   0.         656.47655856]
+ [  0.         653.42695334 375.70416762]
+ [  0.           0.           1.        ]] dist_coefficients [[ 0.08513225 -0.15749243  0.00029989  0.00021374  0.08085583]]
+[32m[2024-05-12 17:22:30] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 17:22:30] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 17:22:33] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61116) connected. Total clients: 1
+[32m[2024-05-12 17:24:15] EyeGazeServer ERROR: [0mSocket send error: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 230, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 100, in send_data
+    conn.sendall(message)
+ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+
+[32m[2024-05-12 17:24:15] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61116) disconnected. Total clients: 0
+[32m[2024-05-12 17:24:50] EyeGazeServer INFO: [0mNo active clients. Shutting down the server.
+[32m[2024-05-12 19:09:29] EyeGazeServer INFO: [0mCamera parametrs camera_matrix [[660.75545879   0.         656.47655856]
+ [  0.         653.42695334 375.70416762]
+ [  0.           0.           1.        ]] dist_coefficients [[ 0.08513225 -0.15749243  0.00029989  0.00021374  0.08085583]]
+[32m[2024-05-12 19:09:29] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 19:09:29] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 19:09:32] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61934) connected. Total clients: 1
+[32m[2024-05-12 19:10:03] EyeGazeServer INFO: [0mCamera parametrs camera_matrix [[660.75545879   0.         656.47655856]
+ [  0.         653.42695334 375.70416762]
+ [  0.           0.           1.        ]] dist_coefficients [[ 0.08513225 -0.15749243  0.00029989  0.00021374  0.08085583]]
+[32m[2024-05-12 19:10:03] EyeGazeServer INFO: [0mApplication start
+[32m[2024-05-12 19:10:03] EyeGazeServer INFO: [0mServer listening on 127.0.0.1:9556
+[32m[2024-05-12 19:10:06] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61948) connected. Total clients: 1
+[32m[2024-05-12 19:10:11] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61950) connected. Total clients: 2
+[32m[2024-05-12 19:10:24] EyeGazeServer ERROR: [0mSocket send error: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 207, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 99, in send_data
+    conn.sendall(message_length.to_bytes(4, 'big'))
+ConnectionResetError: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+
+[32m[2024-05-12 19:10:24] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61950) disconnected. Total clients: 1
+[32m[2024-05-12 19:10:36] EyeGazeServer ERROR: [0mSocket send error: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+Traceback (most recent call last):
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 207, in client_handler
+    self.send_data(conn, data_to_send)
+  File "c:\Users\bokar\Documents\EyeGazeFrameworkDemo\server.py", line 100, in send_data
+    conn.sendall(message)
+ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
+
+[32m[2024-05-12 19:10:36] EyeGazeServer INFO: [0mClient ('127.0.0.1', 61948) disconnected. Total clients: 0
+[32m[2024-05-12 19:11:11] EyeGazeServer INFO: [0mNo active clients. Shutting down the server.
+[32m[2024-05-12 19:11:11] EyeGazeServer ERROR: [0mserver error: [WinError 10038] Сделана попытка выполнить операцию на объекте, не являющемся сокетом

@@ -434,6 +434,7 @@ class MainApp(QtWidgets.QMainWindow):
             temp_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.png")
             file_id: str = self.add_to_paths(postfix, temp_file_path)
             full_file_path = os.path.join(self.path_days, f"{name}-{postfix}.png")
+            print(f"full_file_path {full_file_path}")
             skimage.io.imsave(full_file_path, image.astype(np.uint8), check_contrast=False)
         else:
 
@@ -530,8 +531,8 @@ class MainApp(QtWidgets.QMainWindow):
         if event.key() in [QtCore.Qt.Key_Q, QtCore.Qt.Key_Escape]:
             self.save_data(self.path_to_h5)
             self.close()
-            self.stat_window = StatApp()
-            self.stat_window.show()
+            #self.stat_window = StatApp()
+            #self.stat_window.show()
 
 class StatApp(QtWidgets.QWidget):
     def __init__(self):
