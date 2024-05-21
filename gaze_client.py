@@ -9,13 +9,11 @@ import traceback
 import cv2
 import numpy as np
 import yaml
-
 import pyautogui as pag
 
 from PyQt5.QtWidgets import  QVBoxLayout, QWidget, QLabel, QApplication, QPushButton
 from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot, QSize
 from PyQt5.QtGui import QImage, QPixmap, QIcon
-
 from logger import create_logger
 
 width, height = pag.size()
@@ -23,10 +21,8 @@ detection_is_on = False
 client_socket = None
 logger = None
 
-
 class VideoThread(QThread):
     changePixmap = pyqtSignal(QImage)
-
     def __init__(self):
         super().__init__()
         self.gaze_points = collections.deque(maxlen=64)
@@ -34,49 +30,35 @@ class VideoThread(QThread):
         self.monitor_pixels = (screen_width, screen_height)
 
     def process_image_and_coordinates(self, results):
-        # Преобразование данных изображения
         image_data = results['image'].split(',')[1]
         img_bytes = base64.b64decode(image_data)
         img_array = np.frombuffer(img_bytes, dtype=np.uint8)
         self.img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-
-        # Получение и вывод координат
         self.x_value, self.y_value = map(int, results['coordinates'])
-        #print(f"x {self.x_value} y {self.y_value}")
-
-        # Вывод эмоций
         self.emotions = results['emotions']
-        print("Detected emotions:", self.emotions)
         logger.info(f"Detected emotions: {self.emotions}\n")
 
     def run(self):
-        print(f"run")
         global detection_is_on
         display = np.ones((self.monitor_pixels[1], self.monitor_pixels[0], 3), dtype=np.uint8)
         while True:
             try:
                 if detection_is_on:
                     if not client_socket:
-                        print("Соединение не установлено. Попытка переподключения...")
                         logger.error(f"Соединение не установлено. Попытка переподключения...\n")
                     elif client_socket is not None:
-                        # Получение размера сообщения
                         message_length_bytes = client_socket.recv(4)
                         if not message_length_bytes:
-                            print("if not message_length_bytes")
                             break
                         message_length = int.from_bytes(message_length_bytes, 'big')
-                        # Получение данных от сервера
                         data = b''
                         while len(data) < message_length:
                             packet = None
                             try:
                                 packet = client_socket.recv(message_length - len(data))
                             except OSError as e:
-                                print(f"Ошибка: {e}")
                                 logger.error(f"Ошибка при подключении к серверу: {e}\n")
                             if not packet:
-                                print(f"Connection closed prematurely.")
                                 break
                             data += packet
                         if data is not None:
@@ -85,26 +67,18 @@ class VideoThread(QThread):
                                 status = results.get('status')
 
                                 if status == '1':
-                                    print("System error: Произошла системная ошибка.")
                                     logger.error(f"System error: Произошла системная ошибка.\n")
                                 elif status == '2':
-                                    #print("Image and features processing successful.")
-                                    # Продолжение обработки изображения и координат
                                     self.process_image_and_coordinates(results)
                                 elif status == '3':
-                                    print("User not detected: Пользователь не обнаружен.")
                                     logger.error(f"User not detected: Пользователь не обнаружен.\n")
                                 elif status == '4':
-                                    print("Image capture failed: Ошибка при захвате изображения.")
                                     logger.error(f"Image capture failed: Ошибка при захвате изображения.\n")
                                 elif status == '5':
-                                    print("Image processing error: Ошибка обработки изображения.")
                                     logger.error(f"Image processing error: Ошибка обработки изображения.\n")
                                 else:
-                                    print("Unknown status received.")
                                     logger.error(f"Unknown status received.\n")
                             except json.JSONDecodeError as e:
-                                print("Failed to decode JSON data:", e)
                                 logger.error(f"Failed to decode JSON data: {e}\n")
                         else:
                             print("data is not None")
@@ -124,10 +98,8 @@ class VideoThread(QThread):
                     self.changePixmap.emit(p)
                 else:
                     detection_is_on = False
-                    print("detection_is_on = False")
                     break
             except Exception as e:
-                print(f"An error occurred: {e}")
                 logger.error(f"An error occurred: {e}\n")
                 break
 
@@ -142,7 +114,6 @@ class EyeSettings(QWidget):
         self.width = int(width*2/3)
         self.height = int(height*2/3)
         self.initUI()
-    
     
     def back_to_main_window(self):
         main_window.show()
@@ -199,7 +170,6 @@ class DrawingWindow(QWidget):
         if event.key() == Qt.Key_Escape or event.key() == Qt.Key_Q:
             self.close()
 
-
 class App(QWidget):
     def __init__(self):
         super().__init__()
@@ -221,7 +191,6 @@ class App(QWidget):
     def setImage(self, image):
         self.label.setPixmap(QPixmap.fromImage(image))
     
-    
     def show_eye_settings(self):
         self.eye_settings_window.show()
         self.eye_settings_window.move(self.geometry().x() - 1, self.geometry().y() - 45)
@@ -229,11 +198,9 @@ class App(QWidget):
         global main_window
         main_window = self
 
-    # Функция для загрузки конфигов из YAML файла
     def load_config(self, config_path: str):
         with open(config_path, 'r', encoding='utf-8') as file:
             return yaml.safe_load(file)
-
 
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -277,7 +244,6 @@ class App(QWidget):
         
         self.show()
 
-    
     def stopVideoThread(self):
         if self.videoThread:  
             self.videoThread.terminate()
@@ -304,19 +270,15 @@ class App(QWidget):
             self.stopVideoThread()
             detection_is_on = False
             
-            
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape or event.key() == Qt.Key_Q:
             self.close()
 
 def resource_path(relative_path) -> str:
         """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
-        #if getattr(sys, 'frozen', False):
         try:
-            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
             base_path = sys._MEIPASS
         except Exception:
-            # Если приложение запущено из исходного кода, то используется обычный путь
             base_path = os.path.abspath(".")
     
         return os.path.join(base_path, relative_path)

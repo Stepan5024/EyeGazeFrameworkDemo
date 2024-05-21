@@ -52,8 +52,6 @@ class Pupil(object):
         contours = sorted(contours, key=cv2.contourArea)
 
         try:
-             # Вычисляет центр тяжести для второго по размеру контура (радужки).
-        
             moments = cv2.moments(contours[-2])
             self.x = int(moments['m10'] / moments['m00'])
             self.y = int(moments['m01'] / moments['m00'])

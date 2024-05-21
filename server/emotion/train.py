@@ -9,7 +9,6 @@ import yaml
 
 from server.models.emotionModel import EmotionModel
 
-
 def readConfig(path: str):
     path_to_config = resource_path(path)
     configs = load_config(path_to_config)
@@ -21,18 +20,15 @@ def load_config(config_path: str):
     
 def resource_path(relative_path) -> str:
     """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
-    #if getattr(sys, 'frozen', False):
     try:
-        # PyInstaller создаёт временную папку _MEIPASS для ресурсов
         base_path = sys._MEIPASS
     except Exception:
-        # Если приложение запущено из исходного кода, то используется обычный путь
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
 
 def main():
-    configs = readConfig(os.path.join('configs', 'emotion.yaml'))
+    configs = readConfig(os.path.join('configs', 'emotion_win.yaml'))
 
     # Предобработка данных
     transform = transforms.Compose([
@@ -41,7 +37,6 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.5], std=[0.5])
     ])
-    # Загрузчики данных
     train_dataset = datasets.ImageFolder(os.path.join(configs['dataset_root'], 'train'), transform=transform)
     train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
     
@@ -54,12 +49,11 @@ def main():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-6)
 
-    train_model(model, train_loader, criterion, optimizer, num_epochs=1)
+    train_model(model, train_loader, criterion, optimizer, num_epochs=50)
     rel_path = configs['emotion_model_path']
     abs_path = resource_path(rel_path)
 
-    torch.save(model.state_dict(), os.path.join(abs_path, 'emotion_model.pth') )
-
+    torch.save(model.state_dict(), os.path.join(abs_path, 'emotion_model_19_05_2024.pth') )
 
 def train_model(model, train_loader, criterion, optimizer, num_epochs):
     for epoch in range(num_epochs):

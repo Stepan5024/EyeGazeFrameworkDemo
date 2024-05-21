@@ -284,7 +284,7 @@ def main(path_to_data: str, validate_on_person: int, test_on_person: int,
         print(f'Epoch {epoch+1}, Train Loss: {train_loss:.4f}, Valid Loss: {valid_loss:.4f}')
 
     y = model(model)
-    make_dot(y.mean(), params=dict(model.named_parameters()))
+    #make_dot(y.mean(), params=dict(model.named_parameters()))
     """torch.save(model.state_dict(), 'model_weights.pth')
     # Сохраняем модель после тренировки
     model_path = "model.pkl"

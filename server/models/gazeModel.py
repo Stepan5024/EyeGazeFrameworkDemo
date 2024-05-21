@@ -2,7 +2,6 @@ from typing import Type
 import torch
 import torch.nn as nn
 from torchvision import models
-#from torch.nn.modules.module import Module
 
 class SELayer(nn.Module):
     """

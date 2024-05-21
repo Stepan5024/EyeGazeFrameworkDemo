@@ -8,7 +8,6 @@ class VideoStream:
         self.cap = cv2.VideoCapture(source)
         if not self.cap.isOpened():
             raise IOError("Не удается открыть видеопоток")
-        
                 # Устанавливаем разрешение видео, если задано
         if capture_width and capture_height:
             self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, capture_width)

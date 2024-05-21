@@ -17,25 +17,17 @@ class MediaPipeProcessor:
     
 
     def __init__(self):
-        # Determine if the application is frozen (packaged by PyInstaller)
+ 
         if getattr(sys, 'frozen', False):
-            # The application is frozen
-            # Use the temporary folder PyInstaller unpacks to
-            bundle_dir = sys._MEIPASS  # Use the correct attribute here
+            # The application is exe
+            bundle_dir = sys._MEIPASS 
             models_dir = os.path.join(bundle_dir, 'mediapipe', 'models')
-            #bundle_dir = sys._MEIPASS
         else:
-            # The application is not frozen
-            # Directly use the development path relative to this file
             models_dir = os.path.join(os.path.dirname(__file__), 'mediapipe', 'models')
-        
-        print(f"models_dir {models_dir}")
-        
-        # Initialize paths to the model files
+
         face_mesh_model_path = os.path.join(models_dir, 'face_landmark.tflite')
         face_detection_model_path = os.path.join(models_dir, 'face_detection_short_range.tflite')
 
-        # Initialize FaceMesh
         self.mp_face_mesh = mp.solutions.face_mesh
         self.face_mesh = self.mp_face_mesh.FaceMesh(
             static_image_mode=False,
@@ -43,33 +35,13 @@ class MediaPipeProcessor:
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
         )
-        
-        # Initialize FaceDetection
+
         self.mp_face_detection = mp.solutions.face_detection
         self.face_detection = self.mp_face_detection.FaceDetection(
             model_selection=1,
             min_detection_confidence=0.5
         )
 
-        """self.mp_face_mesh = mp.solutions.face_mesh
-        self.face_mesh = self.mp_face_mesh.FaceMesh(
-            static_image_mode=False,
-            max_num_faces=1,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5,
-            #model_path="./models/face_landmark.tflite"
-        )
-        self.mp_face_detection = mp.solutions.face_detection
-        #Create an FaceDetector object.
-        model_path="./models/face_detection_short_range.tflite"
-        base_options = python.BaseOptions(model_asset_path=model_path)
-        options = vision.FaceDetectorOptions(base_options=base_options, min_detection_confidence=0.5)
-        detector = vision.FaceDetector.create_from_options(options)
-
-        self.face_detection = detector#self.mp_face_detection.FaceDetection(model_selection=1, 
-                               #                                    min_detection_confidence=0.5,
-                               #                                    model_path="./models/face_detection_short_range.tflite")
-        """
         self.mp_drawing = mp.solutions.drawing_utils
         self.drawing_spec = self.mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
         self.eye_left = None # Объект, представляющий левый глаз.
@@ -78,11 +50,9 @@ class MediaPipeProcessor:
 
 
     def process_head_pose(self, frame):
-        # Convert BGR to RGB
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = self.face_mesh.process(rgb_frame)
         
-        # Get the shape of the frame for future calculations
         img_h, img_w, img_c = frame.shape
         face_3d = []
         face_2d = []
@@ -90,11 +60,9 @@ class MediaPipeProcessor:
         text = None
         if results.multi_face_landmarks:
             for face_landmarks in results.multi_face_landmarks:
-                # Specific landmark indices
-                
                 for idx, lm in enumerate(face_landmarks.landmark):
                     if idx == 33 or idx == 263 or idx == 1 or idx == 61 or idx == 291 or idx == 199:
-                        if idx == 1: # Nose tip
+                        if idx == 1: # Точка носа (середина лица)
                         
                             nose_2d = (lm.x * img_w, lm.y * img_h)
                             nose_3d = (lm.x * img_w, lm.y * img_h, lm.z * 3000)
@@ -103,47 +71,25 @@ class MediaPipeProcessor:
                         face_2d.append([x, y])
                         face_3d.append([x, y, lm.z])
 
-            # Convert to numpy arrays
+
             face_2d = np.array(face_2d, dtype=np.float64)
             face_3d = np.array(face_3d, dtype=np.float64)
 
-            # Camera matrix and distance matrix for solvePnP
             focal_length = 1 * img_w
             cam_matrix = np.array([[focal_length, 0, img_h / 2],
                                    [0, focal_length, img_w / 2],
                                    [0, 0 , 1]])
             dist_matrix = np.zeros((4, 1), dtype=np.float64)
 
-            # SolvePnP to find rotation vector and translation vector
             success, rot_vec, trans_vec = cv2.solvePnP(face_3d, face_2d, cam_matrix, dist_matrix)
             rmat, jac = cv2.Rodrigues(rot_vec)
             angles, mtxR, mtxQ, Qx, Qy, Qz = cv2.RQDecomp3x3(rmat)
 
-            # Convert the angles to degrees
+            # Перевод углов в градусы
             x = angles[0] * 360
             y = angles[1] * 360
             z = angles[2] * 360
 
-            # Determine the direction the person is looking
-            if y < -10:
-                text = "Looking Left"
-            elif y > 10:
-                text = "Looking Right"
-            elif x < -10:
-                text = "Looking Down"
-            elif x > 10:
-                text = "Looking Up"
-            else:
-                text = "Forward"
-
-            # Project the 3D nose point to 2D
-            """nose_3d_projection, jacobian = cv2.projectPoints(nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix)
-            p1 = (int(nose_2d[0]), int(nose_2d[1]))
-            p2 = (int(nose_3d_projection[0][0][0]), int(nose_3d_projection[0][0][1]))
-
-            # Draw line from nose to projected point
-            cv2.line(frame, p1, p2, (255, 0, 0), 3)
-            """
             nose_3d_projection, jacobian = cv2.projectPoints(nose_3d, rot_vec, trans_vec, cam_matrix, dist_matrix)
 
             p1 = (int(nose_2d[0]), int(nose_2d[1]))
@@ -151,7 +97,6 @@ class MediaPipeProcessor:
 
             cv2.line(frame, p1, p2, (255, 0, 0), 3)
 
-            # Put the direction text and angles on the frame
             cv2.putText(frame, text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
             cv2.putText(frame, "x: " + str(np.round(x,2)), (500, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             cv2.putText(frame, "y: " + str(np.round(y,2)), (500, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -161,15 +106,11 @@ class MediaPipeProcessor:
     
     def _analyze(self, frame):
        
-         # Преобразует кадр в оттенки серого для использования в детекции лиц.
-        #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-       
-        # Инициализация MediaPipe Face Detection
         mp_face_detection = mp.solutions.face_detection
         face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.5)
 
         results = face_detection.process(frame)
-        # Проверка наличия лиц в результате
+
         if results.detections:
             faces_mp = []  # Список для хранения координат лиц
             for detection in results.detections:
@@ -179,15 +120,9 @@ class MediaPipeProcessor:
                 bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
                        int(bboxC.width * iw), int(bboxC.height * ih)
                 faces_mp.append(bbox)
-
-            # Теперь в переменной faces_mp хранится список кортежей с координатами ограничивающих прямоугольников лиц
-            # Каждый кортеж представляет собой (x, y, width, height)
             else:
                 faces_mp = None  # Лица не обнаружены
         try:
-            # Использует предиктор для получения точек landmarks для первого обнаруженного лица.
-            # Обработка изображения с помощью Face Mesh
-            #face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.5)
             mp_face_mesh = mp.solutions.face_mesh
             face_mesh = mp_face_mesh.FaceMesh(static_image_mode=True, max_num_faces=1, refine_landmarks=True,
                                   min_detection_confidence=0.5)
@@ -202,17 +137,11 @@ class MediaPipeProcessor:
                         x = int(landmark.x * frame.shape[1])
                         y = int(landmark.y * frame.shape[0])
                         landmarks_mp.append(Point(x, y))
-            # Итерация по всем точкам и вывод их координат
-            #for i in range(landmarks.num_parts):
-            #    point = landmarks.part(i)
-            #    print(f"Точка {i}: (x={point.x}, y={point.y})")
-             # Инициализирует объекты Eye для левого и правого глаза с использованием landmarks.
+           
+            # Инициализирует объекты Eye для левого и правого глаза с использованием landmarks.
             self.eye_left = Eye(frame, landmarks_mp, 0, self.calibration)
             self.eye_right = Eye(frame, landmarks_mp, 1, self.calibration)
-            #print(f"eye_left {self.eye_left.pupil.x} eye_right {self.eye_right.pupil.x}")
         except IndexError:
-             # В случае отсутствия обнаруженных лиц, устанавливает значения eye_left и eye_right в None.
-            print(f"Лица не обнаружены eye_left eye_right {None}")
             self.eye_left = None
             self.eye_right = None
 

@@ -14,17 +14,15 @@ class EmotionRecognizer:
     def __init__(self):
         self.readConfig(os.path.join('configs', 'server.yaml'))
         self.initLogger()
-        # Load the model and set it to evaluation mode
+
         self.model = EmotionModel()
         relative_path_emotion_model: str = os.path.join("resources",  "emotion", "model.pth")
         abs_path: str = self.resource_path(relative_path_emotion_model)
         self.model.load_state_dict(torch.load(abs_path))
         self.model.eval()
         
-        # Emotion dictionary
         self.emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
         
-        # Haar Cascade for face detection
         relative_path_haar_model: str = os.path.join("resources", "emotion", "haarcascade_frontalface_default.xml")
         abs_path: str = self.resource_path(relative_path_haar_model)
         self.face_cascade = cv2.CascadeClassifier(abs_path)
@@ -63,7 +61,6 @@ class EmotionRecognizer:
             roi_gray = cv2.resize(roi_gray, (48, 48))
             tensor = transforms.ToTensor()(roi_gray).unsqueeze(0)
 
-            # Get predictions
             predictions = self.model(tensor)
             probabilities = torch.nn.functional.softmax(predictions, dim=1)
             top2_prob, top2_idx = torch.topk(probabilities, 2)

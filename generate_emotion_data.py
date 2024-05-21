@@ -5,12 +5,10 @@ import cv2
 import yaml
 import mediapipe as mp
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QLabel, QVBoxLayout
-from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import QTimer, Qt
 
 from server.video_stream.video_stream import VideoStream
-
 
 EMOTIONS = {
     'a': 'Злой',
@@ -34,12 +32,9 @@ class VideoWidget(QWidget):
 
     def resource_path(self, relative_path) -> str:
         """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
-        #if getattr(sys, 'frozen', False):
         try:
-            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
             base_path = sys._MEIPASS
         except Exception:
-            # Если приложение запущено из исходного кода, то используется обычный путь
             base_path = os.path.abspath(".")
     
         return os.path.join(base_path, relative_path)
@@ -58,7 +53,7 @@ class VideoWidget(QWidget):
         self.initUI()
         self.readConfig(os.path.join('configs', 'emotion_ubuntu.yaml'))
         self.DIR = self.configs['generate_data_root']
-            # Create directories for all emotions
+        
         for emotion_key, emotion_name in EMOTIONS.items():
             emotion_path = os.path.join(self.DIR, emotion_name)
             self.createDir(emotion_path)
@@ -68,43 +63,40 @@ class VideoWidget(QWidget):
         self.timer.start(20)
 
     def initUI(self):
-        self.setWindowTitle("Сбор данных о эмоциональном состоянии")  # Заголовок окна
-        self.setWindowFlags(self.windowFlags() | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)  # Установка флагов окна для кнопок управления окном
-        self.showFullScreen()  # Открытие окна в полноэкранном режиме
-        #self.setWindowState(QtCore.Qt.WindowMaximized)
-        self.layout = QHBoxLayout()  # Основной горизонтальный layout для размещения видео и текстовой информации
+        self.setWindowTitle("Сбор данных о эмоциональном состоянии")  
+        self.setWindowFlags(self.windowFlags() | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)
+        self.showFullScreen() 
+        self.layout = QHBoxLayout()
 
         # Левая часть: видео
-        self.image_label = QLabel(self)  # Метка для отображения видео
-        self.image_label.setFixedSize(self.width() // 2, self.height())  # Размер метки подстраивается под половину ширины окна
+        self.image_label = QLabel(self)
+        self.image_label.setFixedSize(self.width() // 2, self.height())
 
         # Правая часть: текст и счетчик
-        self.text_layout = QVBoxLayout()  # Вертикальный layout для текста и счетчика
+        self.text_layout = QVBoxLayout()
 
         # Метка с инструкциями
         self.instruction_label = QLabel(self)
         instructions = ("<h1>Инструкция:</h1><br><p>Изобразите одну из эмоций, затем нажмите соответствующую клавишу</p>" +
                         "<br>".join(f"{k} - {v}" for k, v in EMOTIONS.items()) + "<br>esc, q - Выход")
         self.instruction_label.setText(instructions)
-        self.instruction_label.setFixedSize(self.width() // 2, self.height() // 2)  # Размер метки
-        self.instruction_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)  # Выравнивание текста вверх и влево
+        self.instruction_label.setFixedSize(self.width() // 2, self.height() // 2)
+        self.instruction_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
         # Метка для отображения счетчика сохраненных изображений
         self.count_label = QLabel(self)
-        self.count_label.setText(self.format_emotion_count())  # Текст метки генерируется методом format_emotion_count
-        self.count_label.setAlignment(Qt.AlignTop)  # Выравнивание текста вверх
-        self.count_label.setWordWrap(True)  # Перенос слов в метке, если текст не помещается
+        self.count_label.setText(self.format_emotion_count()) 
+        self.count_label.setAlignment(Qt.AlignTop) 
+        self.count_label.setWordWrap(True) 
 
-        # Добавление меток в вертикальный layout
         self.text_layout.addWidget(self.instruction_label)
         self.text_layout.addWidget(self.count_label)
-        self.text_layout.setSpacing(10)  # Расстояние между элементами в layout
+        self.text_layout.setSpacing(10)
 
-        # Добавление виджетов в основной горизонтальный layout
         self.layout.addWidget(self.image_label)
         self.layout.addLayout(self.text_layout)
 
-        self.setLayout(self.layout)  # Установка основного layout виджета
+        self.setLayout(self.layout)
 
     
     def format_emotion_count(self):

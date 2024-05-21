@@ -7,7 +7,7 @@ from .pupil import Pupil
 class Eye(object):
     """
    Этот класс создает новую рамку для выделения глаза и
-инициирует обнаружение зрачка.
+    инициирует обнаружение зрачка.
     """
     # Индексы ключевых точек для левого и правого глаз по документации Mediapipe
     LEFT_EYE_INDICES = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]
@@ -15,7 +15,6 @@ class Eye(object):
 
     def __init__(self, original_frame, landmarks_mp, side, calibration):
         """Инициализирует объект Eye
-
         Аргументы:
             original_frame (numpy.ndarray): Исходный кадр с изображением лица
             landmarks (list): Список точек landmarks, определяющих особенности лица
@@ -36,16 +35,7 @@ class Eye(object):
         x = (point1.x + point2.x) / 2
         y = (point1.y + point2.y) / 2
         return (x, y)
-    """def _middle_point(p1, p2):
-        Возвращает среднюю точку (x,y) между двумя точками
-
-        Аргументы:
-            p1 (dlib.point): Первая точка
-            p2 (dlib.point): Вторая точка
     
-        x = int((p1.x + p2.x) / 2)
-        y = int((p1.y + p2.y) / 2)
-        return (x, y)"""
 
     def _isolate(self, frame, landmarks_mp, points):
         """Выделите глаз, чтобы получилась рамка без другой части лица.
@@ -55,13 +45,11 @@ class Eye(object):
         landmarks (dlib.full_object_detection): Ориентиры лица для области лица
         points (list): Точки зрения (из 68 различных ориентиров)
         """
-         # Создание массива точек для области лица на основе переданных ориентиров.
-    
+        # Создание массива точек для области лица на основе переданных ориентиров.
         region = np.array([(landmarks_mp[point].x, landmarks_mp[point].y) for point in points])
         region = region.astype(np.int32)
         self.landmark_points = region
-
-       # Применение маски для выделения только глаза.
+        # Применение маски для выделения только глаза.
         height, width = frame.shape[:2]
         black_frame = np.zeros((height, width), np.uint8)
         mask = np.full((height, width), 255, np.uint8)
@@ -85,7 +73,7 @@ class Eye(object):
         """Вычисляет соотношение, которое может указывать, закрыт глаз или нет.
         Это деление ширины глаза на его высоту.
 
-         Аргументы:
+        Аргументы:
         landmarks (dlib.full_object_detection): Ориентиры лица для области лица
         points (list): Точки зрения (из 68 различных ориентиров)
 
@@ -93,16 +81,13 @@ class Eye(object):
         float or None: Вычисленное соотношение. Возвращает None, если произошло деление на ноль.
         """
         # Получение координат углов глаза и средних точек верхней и нижней части глаза.
-    
         left = (landmarks_mp[points[0]].x, landmarks_mp[points[0]].y)
         right = (landmarks_mp[points[3]].x, landmarks_mp[points[3]].y)
         top = self._middle_point(landmarks_mp[points[1]], landmarks_mp[points[2]])
         bottom = self._middle_point(landmarks_mp[points[5]], landmarks_mp[points[4]])
         # Вычисление ширины и высоты глаза с использованием теоремы Пифагора.
-    
         eye_width = math.hypot((left[0] - right[0]), (left[1] - right[1]))
         eye_height = math.hypot((top[0] - bottom[0]), (top[1] - bottom[1]))
-
         try:
             # Вычисление соотношения ширины к высоте.
             ratio = eye_width / eye_height
@@ -122,7 +107,7 @@ class Eye(object):
         side (int): Указывает, является ли это левым глазом (0) или правым глазом (1)
         calibration (calibration.Calibration): Объект, управляющий пороговым значением бинаризации
         """
-         # Определение точек зрения в зависимости от стороны глаза.
+        # Определение точек зрения в зависимости от стороны глаза.
         if side == 0:
             points = self.LEFT_EYE_INDICES
         elif side == 1:

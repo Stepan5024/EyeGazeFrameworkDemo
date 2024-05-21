@@ -1,7 +1,5 @@
-import torch
 import torch.nn as nn
 
-# Define a simple CNN
 class EmotionModel(nn.Module):
     def __init__(self):
         super(EmotionModel, self).__init__()

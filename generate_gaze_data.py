@@ -5,7 +5,6 @@ import sys
 import random
 from typing import Tuple
 from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtCore import QPoint, QTimer, Qt
 import cv2
 import numpy as np
 import pyautogui as pag
@@ -32,14 +31,12 @@ class MainApp(QtWidgets.QMainWindow):
         self.readConfig(os.path.join('configs', 'gaze_win10.yaml'))
         self.initUI()
         self.createMATFiles()
-        # F:\EyeGazeDataset\MPIIFaceGaze_post_proccessed_author_pperle
         file = 'data.h5'
         self.path_to_h5 = os.path.join(self.configs['data_root'], file)
         self.df = self.open_or_create_h5(self.path_to_h5)
         print(self.df)
         self.video_stream = VideoStream(capture_width=1280, capture_height=720)
         self.last_circle_zero = None
-        #self.paths_list = []
         self.used_file_ids = []
         self.landmarks_ids = [33, 133, 362, 263, 61, 291, 1]  # reye, leye, mouth
         self.face_model = np.asarray([face_model_all[i] for i in self.landmarks_ids])
@@ -76,18 +73,15 @@ class MainApp(QtWidgets.QMainWindow):
         else:
             self.device = torch.device('cpu')
 
-
-
     def initUI(self):
         self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setWindowTitle("Main Window")
         self.setStyleSheet("background-color: white;")
         self.radius = 30
-        self.circle_radius = self.radius  # радиус круга
-        self.target_radius = 0  # целевой радиус (для анимации уменьшения)
-        self.circle_pos = QtCore.QPoint(0, 0)  # позиция центра круга
-
-         # Таймер для анимации круга
+        self.circle_radius = self.radius
+        self.target_radius = 0 
+        self.circle_pos = QtCore.QPoint(0, 0)
+        # Таймер
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_circle)
         self.timer.start(60)  # обновление каждые 50 мс
@@ -99,7 +93,7 @@ class MainApp(QtWidgets.QMainWindow):
         width, height = pag.size()
         # Счётчик хороших точек
         self.score_label = QtWidgets.QLabel(f"Было записано хороших точек: {self.good_points}", self)
-        self.score_label.move(width // 2, 10)  # Позиционирование надписи в верхнем левом углу
+        self.score_label.move(width // 2, 10) 
         self.score_label.resize(400, 30)
 
         self.circle = QtWidgets.QLabel(self)
@@ -111,9 +105,9 @@ class MainApp(QtWidgets.QMainWindow):
         :param rgb_img: RGB image
         :return: equalized RGB image
         """
-        ycrcb_img = cv2.cvtColor(rgb_img, cv2.COLOR_RGB2YCrCb)  # convert from RGB color-space to YCrCb
-        ycrcb_img[:, :, 0] = cv2.equalizeHist(ycrcb_img[:, :, 0])  # equalize the histogram of the Y channel
-        equalized_img = cv2.cvtColor(ycrcb_img, cv2.COLOR_YCrCb2RGB)  # convert back to RGB color-space from YCrCb
+        ycrcb_img = cv2.cvtColor(rgb_img, cv2.COLOR_RGB2YCrCb)  
+        ycrcb_img[:, :, 0] = cv2.equalizeHist(ycrcb_img[:, :, 0]) 
+        equalized_img = cv2.cvtColor(ycrcb_img, cv2.COLOR_YCrCb2RGB)
         return equalized_img
     
     def get_matrices(self, camera_matrix: np.ndarray, distance_norm: int, center_point: np.ndarray, focal_norm: int, head_rotation_matrix: np.ndarray, image_output_size: Tuple[int, int]) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -129,7 +123,7 @@ class MainApp(QtWidgets.QMainWindow):
         :return: rotation, scaling and transformation matrix
         """
         # normalize image
-        distance = np.linalg.norm(center_point)  # actual distance between center point and original camera
+        distance = np.linalg.norm(center_point)
         z_scale = distance_norm / distance
 
         cam_norm = np.array([
@@ -156,9 +150,7 @@ class MainApp(QtWidgets.QMainWindow):
         return rotation_matrix, scaling_matrix, transformation_matrix
 
     def createDir(self, path):
-        
         # path = data_root / person_id / day_id / Calibration
-
         if not os.path.exists(path):
             os.makedirs(path)
             print(f"Directory '{path}' was created.")
@@ -166,22 +158,17 @@ class MainApp(QtWidgets.QMainWindow):
             print(f"Directory '{path}' already exists.")
     
     def open_or_create_h5(self, path):
-        # Check if the file exists
         if os.path.exists(path):
-            # Read data from the HDF5 file
             with h5py.File(path, 'r') as h5file:
-                # Preprocess multi-dimensional data before DataFrame creation
                 file_name_base = list(h5file['file_name_base'])
                 gaze_location = h5file['gaze_location'][:]
                 gaze_pitch = h5file['gaze_pitch'][:]
                 gaze_yaw = h5file['gaze_yaw'][:]
                 screen_size = h5file['screen_size'][:]
 
-                # Convert multi-dimensional arrays to list of tuples
                 gaze_location_list = gaze_location.tolist()
                 screen_size_list = screen_size.tolist()
 
-            # Create DataFrame from 1D lists
             df = pd.DataFrame({
                 'file_name_base': file_name_base,
                 'gaze_pitch': gaze_pitch,
@@ -189,7 +176,6 @@ class MainApp(QtWidgets.QMainWindow):
             })
 
             if len(gaze_location_list) == len(df):
-            # Split tuples into separate columns
                 df[['gaze_location_0', 'gaze_location_1']] = pd.DataFrame(gaze_location_list, index=df.index)
             else:
                 print("Error: Length of gaze_location_list does not match DataFrame index length.")
@@ -200,15 +186,13 @@ class MainApp(QtWidgets.QMainWindow):
             return df
 
         else:
-            # Create a new HDF5 file with empty datasets
             with h5py.File(path, 'w') as h5file:
-                dt_str = h5py.special_dtype(vlen=str)  # for strings
+                dt_str = h5py.special_dtype(vlen=str)
                 h5file.create_dataset('file_name_base', (0,), maxshape=(None,), dtype=dt_str)
                 h5file.create_dataset('gaze_location', (0, 2), maxshape=(None, 2), dtype=np.int32)
                 h5file.create_dataset('gaze_pitch', (0,), maxshape=(None,), dtype=np.float32)
                 h5file.create_dataset('gaze_yaw', (0,), maxshape=(None,), dtype=np.float32)
                 h5file.create_dataset('screen_size', (0, 2), maxshape=(None, 2), dtype=np.int32)
-            # Create an empty DataFrame with necessary columns
             columns = ['file_name_base', 'gaze_location_0', 'gaze_location_1', 'gaze_pitch', 'gaze_yaw', 'screen_size_0', 'screen_size_1']
             df = pd.DataFrame(columns=columns)
             return df
@@ -227,10 +211,6 @@ class MainApp(QtWidgets.QMainWindow):
         self.writeMonitorPose()
         self.writeCameraParam()
 
-        # screenSize dict_keys(['height_mm', 'height_pixel', 'width_mm', 'width_pixel'])
-        #  monitorPose: dict_keys(['__header__', '__version__', '__globals__', 'rvects', 'tvecs'])
-        # Camera: [[-0.16321888  0.66783406 -0.00121854 -0.00303158 -1.02159927]]
-    
     def writeScreenSize(self):
         self.monitor_pixels = tuple(map(int, self.configs.get('monitor_pixels', '1920,1080').split(',')))
         width_mm = self.configs.get('width_mm', 400) 
@@ -244,8 +224,7 @@ class MainApp(QtWidgets.QMainWindow):
         file = os.path.join(self.path_calib, 'screenSize.mat')
         savemat(file, screenSize)
         print(f"Data saved to {file}.mat")
-
-        
+  
     def writeMonitorPose(self):
         rvecs = self.configs['rvecs']
         tvecs = self.configs['tvecs']
@@ -271,15 +250,12 @@ class MainApp(QtWidgets.QMainWindow):
         :param monitor_pixels: monitor dimensions in pixels (width, height)
         :return: True if cursor is within the area, False otherwise
         """
-        # Calculate 20% of the shortest monitor dimension as the "radius"
+        
         percent = 0.2
         cursor_pos = pag.position()
         radius = percent * min(self.monitor_pixels) / 2
     
-        # Calculate the distance between the cursor and the center of the circle
         distance = ((cursor_pos.x - center[0]) ** 2 + (cursor_pos.y - center[1]) ** 2) ** 0.5
-    
-        # Check if the cursor is within 20% of the radius from the center
         return distance <= radius
     
 
@@ -293,12 +269,9 @@ class MainApp(QtWidgets.QMainWindow):
 
     def resource_path(self, relative_path) -> str:
         """Возвращает корректный путь для доступа к ресурсам после сборки .exe"""
-        #if getattr(sys, 'frozen', False):
         try:
-            # PyInstaller создаёт временную папку _MEIPASS для ресурсов
             base_path = sys._MEIPASS
         except Exception:
-            # Если приложение запущено из исходного кода, то используется обычный путь
             base_path = os.path.abspath(".")
     
         return os.path.join(base_path, relative_path)
@@ -307,17 +280,16 @@ class MainApp(QtWidgets.QMainWindow):
         if self.circle_radius > self.target_radius:
             self.circle_radius -= 1
         else:
-            if self.circle_radius == 0:  # Увеличиваем счётчик, когда круг полностью исчез
-
+            if self.circle_radius == 0:
                 if(self.is_cursor_in_circle((self.x_point, self.y_point))):
                     self.good_points += 1
                     self.score_label.setText(f"Было записано хороших точек: {self.good_points}")
                     self.save_images()
-            self.circle_radius = self.radius  # восстанавливаем исходный размер круга
+            self.circle_radius = self.radius
             self.x_point = random.randint(0, self.width() - 40)
             self.y_point = random.randint(0, self.height() - 40)
             self.circle_pos = QtCore.QPoint(self.x_point + 20, self.y_point + 20)
-        self.update()  # перерисовка виджета
+        self.update() 
     
     def save_images(self):
         image = self.video_stream.read_frame()
@@ -325,14 +297,10 @@ class MainApp(QtWidgets.QMainWindow):
         # обрезать лицо и получить изображение где оно находится в кадре 96 на 96
         # обрезать правый глаз и получить изображение где оно находится в кадре 96 на 64
         # обрезать левый глаз и получить изображение где оно находится в кадре 96 на 64
-        # Индексы для ключевых точек
         height, width, _ = image_rgb.shape
         rvec, tvec = None, None
         results = self.face_mesh.process(image_rgb)
         if results.multi_face_landmarks:
-            # head pose estimation
-            #landmarks_ids = [33, 133, 362, 263, 61, 291, 1]  # reye, leye, mouth
-    
             face_landmarks = np.asarray([[landmark.x * width, landmark.y * height] 
                                          for landmark in results.multi_face_landmarks[0].landmark])
             face_landmarks = np.asarray([face_landmarks[i] for i in self.landmarks_ids])
@@ -376,28 +344,22 @@ class MainApp(QtWidgets.QMainWindow):
                                                                          face_center, self.camera_matrix, is_eye=False)
             file_name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
             if image_rgb is not None:
-                #name = file_name + f"=x={self.x_point}=y={self.y_point}=w={self.monitor_pixels[0]}=h={self.monitor_pixels[1]}"
                 self.create_image(image_rgb, 'origin', file_name)
-                #cv2.imwrite('face_image.png', )
-                
+
             if img_warped_face is not None:
                 print
                 self.create_image(img_warped_face, 'full_face', file_name)
-                #cv2.imwrite('face_image.png', )
             else:
                 print("Failed to extract face image.")
             if img_warped_right_eye is not None:
                 self.create_image(img_warped_right_eye, 'right_eye', file_name)
-                #cv2.imwrite('right_eye_image.png', right_eye_image)
             else:
                 print("Failed to extract right eye image.")
             if img_warped_left_eye is not None:
                 self.create_image(img_warped_left_eye, 'left_eye', file_name)
-                #cv2.imwrite('left_eye_image.png', left_eye_image)
             else:
                 print("Failed to extract left eye image.")
          
-
     def extract_area(self, image, face_landmarks, specific_landmarks=None, scale=1, desired_size=(96, 96)):
         if specific_landmarks:
             landmarks = [face_landmarks.landmark[i] for i in specific_landmarks]
@@ -418,10 +380,9 @@ class MainApp(QtWidgets.QMainWindow):
         x_max = min(image.shape[1], int(x_center + width / 2))
         y_min = max(0, int(y_center - height / 2))
         y_max = min(image.shape[0], int(y_center + height / 2))
-            # Extract the region
+
         cropped_image = image[y_min:y_max, x_min:x_max] if y_max > y_min and x_max > x_min else None
         if cropped_image is not None:
-            # Resize the extracted region to the desired size
             return cv2.resize(cropped_image, desired_size)
         else:
             return None
@@ -441,8 +402,6 @@ class MainApp(QtWidgets.QMainWindow):
             full_file_path = os.path.join(self.path_days, f"{file_name}-{postfix}.png")
             file_id: str = self.add_to_paths(postfix, full_file_path)
             print(f"file_id {file_id}")
-            # нормализовать изображение и сохранить в папку датасета
-            #cv2.imwrite(full_file_path, image)
             skimage.io.imsave(full_file_path, image.astype(np.uint8), check_contrast=False)
 
             if file_id is None:
@@ -458,66 +417,53 @@ class MainApp(QtWidgets.QMainWindow):
                 'screen_size_1': [self.monitor_pixels[1]]
             })
 
-        # Add row to DataFrame using concat
         self.df = pd.concat([self.df, new_row], ignore_index=True)
         print(self.df)
 
 
     
     def add_to_paths(self, postfix: str, path:str) -> str:
-         # Список значений postfix, при которых функция не будет выполнять сохранение
         skip_postfixes = ['left_eye', 'right_eye', 'original']
-        #
+        
         # pxx, dayxx, filename-postfix
         if postfix in skip_postfixes:
             print(f"Skipping saving for postfix '{postfix}'.")
             return
         parts = path.split(os.sep)
-        # Выбрать необходимые части пути (pxx, dayxx, filename без расширения)
+        
         relevant_parts = parts[-3:-1]  # pxx и dayxx
-        # Concatenate relevant parts into a string
+        
         file_id = '/'.join(relevant_parts) + '/' + os.path.splitext(parts[-1])[0]
         print(f"relevant_parts {file_id}")
-        #a = file_id.split('-')[0]
-        # Проверяем, содержится ли postfix в списке skip_postfixes
         if file_id.split('-')[0] in self.used_file_ids:
             print(f"File ID '{file_id.split('-')[0]}' has already been used. Skipping.")
             return None
         else:
-            # Если file_id новый, добавляем его в список использованных
             self.used_file_ids.append(file_id.split('-')[0])
             input_string = file_id.split('-')[0]
             output_string = input_string.replace("/", "\\")
             print(f"file_id {output_string}")
             return output_string
     
-
     def closeEvent(self, event):
-        # This method is called automatically when the window is about to close.
-        self.save_data(self.path_to_h5)  # Save the data
-        #print("Data saved on window close.")
-        event.accept()  # Accept the close event to close the window
+        self.save_data(self.path_to_h5) 
+        event.accept() 
 
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
-        painter.setBrush(QtGui.QBrush(QtGui.QColor(255, 0, 0)))  # красный цвет круга
+        painter.setBrush(QtGui.QBrush(QtGui.QColor(255, 0, 0)))
         painter.setPen(QtCore.Qt.NoPen)
         painter.drawEllipse(self.circle_pos, self.circle_radius, self.circle_radius)
-
-
-        # Catch key press events
         self.keyPressEvent = self.handleKeyPressEvents
 
     def save_data(self, path='data.h5'):
         with h5py.File(path, 'w') as h5file:
-            # Convert DataFrame columns to lists or numpy arrays as needed
             file_name_base = self.df['file_name_base'].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x).tolist()
             gaze_location = self.df[['gaze_location_0', 'gaze_location_1']].to_numpy(dtype=np.int32)  # Ensure float32 for better compatibility
             gaze_pitch = self.df['gaze_pitch'].to_numpy(dtype=np.float32)
             gaze_yaw = self.df['gaze_yaw'].to_numpy(dtype=np.float32)
             screen_size = self.df[['screen_size_0', 'screen_size_1']].to_numpy(dtype=np.int32)
 
-            # Create datasets
             h5file.create_dataset('file_name_base', data=np.array(file_name_base, dtype='S'), maxshape=(None,)) 
             h5file.create_dataset('gaze_location', data=gaze_location, maxshape=(None, 2), dtype=np.int32)
             h5file.create_dataset('gaze_pitch', data=gaze_pitch, maxshape=(None,), dtype=np.float32)
@@ -531,8 +477,6 @@ class MainApp(QtWidgets.QMainWindow):
         if event.key() in [QtCore.Qt.Key_Q, QtCore.Qt.Key_Escape]:
             self.save_data(self.path_to_h5)
             self.close()
-            #self.stat_window = StatApp()
-            #self.stat_window.show()
 
 class StatApp(QtWidgets.QWidget):
     def __init__(self):
